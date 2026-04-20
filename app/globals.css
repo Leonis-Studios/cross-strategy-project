@@ -1,26 +1,141 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Font families — must be inline: reference Next.js runtime CSS vars */
+  --font-playfair: var(--font-playfair);
+  --font-barlow: var(--font-barlow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* Colors */
+  --color-brand-jet-black: #2d3142ff;
+  --color-brand-blue-slate: #4f5d75ff;
+  --color-brand-silver: #bfc0c0ff;
+  --color-brand-white: #ffffffff;
+  --color-brand-coral-glow: #ef8354ff;
+
+  /* Font sizes — --text-* generates text-* utilities in Tailwind v4 */
+  --text-display-sm: 44px;
+  --text-display-md: 56px;
+  --text-display-lg: 68px;
+  --text-display-xl: 80px;
+  --text-display-2xl: 100px;
+  --text-display-3xl: 130px;
+  --text-metric: 52px;
+  --text-quote-mark: 64px;
+  --text-body: 20px;
+  --text-label: 16px;
+  --text-subheadline: 22px;
+  --text-stat: 36px;
+
+  /* Font weights */
+  --font-weight-body: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Shadows */
+  --shadow-box: 5px 5px 0px #ef8354ff;
+}
+
+/*
+ * ============================================================
+ * COLOR CONTRAST STANDARDS  (WCAG 2.1 AA)
+ * ============================================================
+ * Normal text (<18pt / <14pt bold): 4.5:1 minimum
+ * Large text  (≥18pt / ≥14pt bold): 3.0:1 minimum
+ * Re-verify any time a token hex value changes.
+ *
+ * ── bg-brand-white (#ffffff) ─────────────────────────────────
+ *   text-brand-jet-black   #2d3142  →  12.89:1  ✓ AA normal
+ *   text-brand-blue-slate  #4f5d75  →   6.66:1  ✓ AA normal
+ *   text-brand-brown       #2c2825  →  14.61:1  ✓ AA normal
+ *   text-brand-cognac      #8c6a4e  →   4.90:1  ✓ AA normal  (secondary text)
+ *   text-brand-muted       #7a6e65  →   4.95:1  ✓ AA normal  (secondary text)
+ *   text-brand-silver      #bfc0c0  →   1.82:1  ✗ FAIL — decorative only
+ *   text-brand-coral-glow  #ef8354  →   2.61:1  ✗ FAIL — decorative only
+ *
+ * ── bg-brand-jet-black (#2d3142) ─────────────────────────────
+ *   text-brand-white       #ffffff  →  12.89:1  ✓ AA normal
+ *   text-brand-silver      #bfc0c0  →   7.07:1  ✓ AA normal
+ *   text-brand-coral-glow  #ef8354  →   4.94:1  ✓ AA normal  (accent)
+ *   text-brand-blue-slate  #4f5d75  →   1.94:1  ✗ FAIL
+ *   text-brand-jet-black   #2d3142  →   1.00:1  ✗ FAIL — same color
+ *
+ * ── bg-brand-blue-slate (#4f5d75) ────────────────────────────
+ *   text-brand-white       #ffffff  →   6.66:1  ✓ AA normal
+ *   text-brand-silver      #bfc0c0  →   3.65:1  ✓ AA large only (≥18pt)
+ *   text-brand-coral-glow  #ef8354  →   2.55:1  ✗ FAIL
+ *   text-brand-jet-black   #2d3142  →   1.94:1  ✗ FAIL
+ *
+ * ── bg-brand-brown (#2c2825) ─────────────────────────────────
+ *   text-brand-white       #ffffff  →  14.61:1  ✓ AA normal
+ *   text-brand-silver      #bfc0c0  →   8.01:1  ✓ AA normal
+ *   text-brand-coral-glow  #ef8354  →   5.60:1  ✓ AA normal  (accent)
+ *
+ * ── NEVER use for readable text ──────────────────────────────
+ *   bg-brand-white     + text-brand-silver      →  1.82:1
+ *   bg-brand-white     + text-brand-coral-glow  →  2.61:1
+ *   bg-brand-jet-black + text-brand-jet-black   →  1.00:1
+ *   bg-brand-jet-black + text-brand-blue-slate  →  1.94:1
+ *   bg-brand-blue-slate + text-brand-jet-black  →  1.94:1
+ * ============================================================
+ */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
   }
 }
 
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+.fade-up-item {
+  opacity: 0;
+}
+
+.is-visible .fade-up-item {
+  animation: fade-up 0.6s ease-out forwards;
+}
+
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.35s;
+}
+.stagger-4 {
+  animation-delay: 0.5s;
+}
+.stagger-5 {
+  animation-delay: 0.65s;
+}
+
+.small-caps {
+  font-variant: small-caps;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-brand-jet-black);
+  color: var(--color-brand-white);
+  font-family: var(--font-barlow), sans-serif;
 }
