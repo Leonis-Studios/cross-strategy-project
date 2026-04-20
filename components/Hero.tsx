@@ -30,7 +30,7 @@ export default function Hero() {
             <div className="relative">
               {/* Image placeholder */}
               <div
-                className="aspect-[4/5] w-full bg-brand-blue-slate border border-brand-silver flex items-center justify-center"
+                className="aspect-4/5 w-full bg-brand-blue-slate border border-brand-silver flex items-center justify-center"
                 aria-hidden="true"
               >
                 <span className="font-barlow text-brand-silver text-label font-medium">
@@ -40,7 +40,7 @@ export default function Hero() {
 
               {/* Floating stat card */}
               <div
-                className="absolute bottom-6 left-0 -translate-x-0 md:-translate-x-8 z-10 bg-brand-white border-l-4 border-brand-coral-glow shadow-box p-5"
+                className="absolute bottom-6 left-0 translate-x-0 md:-translate-x-8 z-10 bg-brand-white border-l-4 border-brand-coral-glow shadow-box p-5"
                 aria-label="240+ Brands in Retail"
               >
                 <p className="font-playfair text-stat text-brand-coral-glow font-bold leading-none">
@@ -119,11 +119,11 @@ export default function Hero() {
             className="flex whitespace-nowrap animate-marquee"
             aria-label="Retail partners"
           >
-            <span className="flex-shrink-0 font-barlow font-medium text-brand-silver small-caps tracking-widest text-label px-8">
+            <span className="shrink-0 font-barlow font-medium text-brand-silver small-caps tracking-widest text-label px-8">
               {MARQUEE_TEXT}
             </span>
             <span
-              className="flex-shrink-0 font-barlow font-medium text-brand-silver small-caps tracking-widest text-label px-8"
+              className="shrink-0 font-barlow font-medium text-brand-silver small-caps tracking-widest text-label px-8"
               aria-hidden="true"
             >
               {MARQUEE_TEXT}
