@@ -1,0 +1,6 @@
+export { hero } from './hero'
+export { testimonial } from './testimonial'
+export { metric } from './metric'
+export { retailer } from './retailer'
+export { seo } from './seo'
+export { page } from './page'

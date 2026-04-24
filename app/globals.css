@@ -8,11 +8,11 @@
 
 @theme {
   /* Colors */
-  --color-brand-jet-black: #2d3142ff;
-  --color-brand-blue-slate: #4f5d75ff;
-  --color-brand-silver: #bfc0c0ff;
-  --color-brand-white: #ffffffff;
-  --color-brand-coral-glow: #ef8354ff;
+  --color-brand-jet-black: #1a1a1aff;
+  --color-brand-dim-grey: #706f6fff;
+  --color-brand-silver: #b5afafff;
+  --color-brand-alabaster: #dbdbdbff;
+  --color-brand-red: #ef2626ff;
 
   /* Font sizes — --text-* generates text-* utilities in Tailwind v4 */
   --text-display-sm: 44px;
@@ -23,9 +23,9 @@
   --text-display-3xl: 130px;
   --text-metric: 52px;
   --text-quote-mark: 64px;
-  --text-body: 20px;
-  --text-label: 16px;
-  --text-subheadline: 22px;
+  --text-body: 22px;
+  --text-label: 18px;
+  --text-subheadline: 25px;
   --text-stat: 36px;
 
   /* Font weights */
@@ -35,7 +35,7 @@
   --font-weight-bold: 700;
 
   /* Shadows */
-  --shadow-box: 5px 5px 0px #ef8354ff;
+  --shadow-box: 5px 5px 0px #ef2626ff;
 }
 
 /*
@@ -46,39 +46,26 @@
  * Large text  (≥18pt / ≥14pt bold): 3.0:1 minimum
  * Re-verify any time a token hex value changes.
  *
- * ── bg-brand-white (#ffffff) ─────────────────────────────────
- *   text-brand-jet-black   #2d3142  →  12.89:1  ✓ AA normal
- *   text-brand-blue-slate  #4f5d75  →   6.66:1  ✓ AA normal
- *   text-brand-brown       #2c2825  →  14.61:1  ✓ AA normal
- *   text-brand-cognac      #8c6a4e  →   4.90:1  ✓ AA normal  (secondary text)
- *   text-brand-muted       #7a6e65  →   4.95:1  ✓ AA normal  (secondary text)
- *   text-brand-silver      #bfc0c0  →   1.82:1  ✗ FAIL — decorative only
- *   text-brand-coral-glow  #ef8354  →   2.61:1  ✗ FAIL — decorative only
+ * ── bg-brand-jet-black (#1a1a1a) ─────────────────────────────
+ *   text-brand-alabaster   #dbdbdb  →  13.74:1  ✓ AA normal
+ *   text-brand-silver      #b5afaf  →   8.02:1  ✓ AA normal
+ *   text-brand-red         #ef2626  →   4.58:1  ✓ AA normal  (accent)
+ *   text-brand-dim-grey    #706f6f  →   3.93:1  ✗ FAIL — large text only
  *
- * ── bg-brand-jet-black (#2d3142) ─────────────────────────────
- *   text-brand-white       #ffffff  →  12.89:1  ✓ AA normal
- *   text-brand-silver      #bfc0c0  →   7.07:1  ✓ AA normal
- *   text-brand-coral-glow  #ef8354  →   4.94:1  ✓ AA normal  (accent)
- *   text-brand-blue-slate  #4f5d75  →   1.94:1  ✗ FAIL
- *   text-brand-jet-black   #2d3142  →   1.00:1  ✗ FAIL — same color
+ * ── bg-brand-alabaster (#dbdbdb) ─────────────────────────────
+ *   text-brand-jet-black   #1a1a1a  →  13.74:1  ✓ AA normal
+ *   text-brand-dim-grey    #706f6f  →   3.51:1  ✗ FAIL — large text only
+ *   text-brand-silver      #b5afaf  →   1.71:1  ✗ FAIL — decorative only
+ *   text-brand-red         #ef2626  →   3.24:1  ✗ FAIL — large text only
  *
- * ── bg-brand-blue-slate (#4f5d75) ────────────────────────────
- *   text-brand-white       #ffffff  →   6.66:1  ✓ AA normal
- *   text-brand-silver      #bfc0c0  →   3.65:1  ✓ AA large only (≥18pt)
- *   text-brand-coral-glow  #ef8354  →   2.55:1  ✗ FAIL
- *   text-brand-jet-black   #2d3142  →   1.94:1  ✗ FAIL
- *
- * ── bg-brand-brown (#2c2825) ─────────────────────────────────
- *   text-brand-white       #ffffff  →  14.61:1  ✓ AA normal
- *   text-brand-silver      #bfc0c0  →   8.01:1  ✓ AA normal
- *   text-brand-coral-glow  #ef8354  →   5.60:1  ✓ AA normal  (accent)
+ * ── bg-brand-dim-grey (#706f6f) ──────────────────────────────
+ *   text-brand-alabaster   #dbdbdb  →   3.51:1  ✓ AA large only (≥18pt)
+ *   text-brand-jet-black   #1a1a1a  →   3.93:1  ✗ FAIL — large text only
  *
  * ── NEVER use for readable text ──────────────────────────────
- *   bg-brand-white     + text-brand-silver      →  1.82:1
- *   bg-brand-white     + text-brand-coral-glow  →  2.61:1
- *   bg-brand-jet-black + text-brand-jet-black   →  1.00:1
- *   bg-brand-jet-black + text-brand-blue-slate  →  1.94:1
- *   bg-brand-blue-slate + text-brand-jet-black  →  1.94:1
+ *   bg-brand-alabaster + text-brand-silver   →  1.71:1
+ *   bg-brand-alabaster + text-brand-red      →  3.24:1  (large only, prefer jet-black for body text)
+ *   bg-brand-dim-grey  + text-brand-red      →  avoid
  * ============================================================
  */
 
@@ -136,6 +123,6 @@
 
 body {
   background-color: var(--color-brand-jet-black);
-  color: var(--color-brand-white);
+  color: var(--color-brand-alabaster);
   font-family: var(--font-barlow), sans-serif;
 }

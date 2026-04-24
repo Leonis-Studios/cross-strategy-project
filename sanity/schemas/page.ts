@@ -1,0 +1,58 @@
+import { defineType, defineField } from 'sanity'
+
+export const page = defineType({
+  name: 'page',
+  title: 'Page',
+  type: 'document',
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Page Title',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'title', maxLength: 96 },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'reference',
+      to: [{ type: 'seo' }],
+    }),
+    defineField({
+      name: 'hero',
+      title: 'Hero Section',
+      type: 'reference',
+      to: [{ type: 'hero' }],
+    }),
+    defineField({
+      name: 'testimonials',
+      title: 'Testimonials',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
+    }),
+    defineField({
+      name: 'metrics',
+      title: 'Metrics',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'metric' }] }],
+    }),
+    defineField({
+      name: 'retailers',
+      title: 'Retailers',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'retailer' }] }],
+    }),
+  ],
+  preview: {
+    select: { title: 'title', slug: 'slug.current' },
+    prepare({ title, slug }: Record<string, string>) {
+      return { title, subtitle: `/${slug}` }
+    },
+  },
+})
