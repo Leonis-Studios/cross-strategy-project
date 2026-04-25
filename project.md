@@ -78,6 +78,50 @@ Personal consulting website for **[Owner Name]**, a retail placement consultant 
 
 ---
 
+## Standard for Every New Component / Page
+
+Every new section component and page **must** include all of the following — no exceptions:
+
+### 1. Sanity Schema
+- Create `sanity/schemas/<name>.ts` with `defineType` / `defineField`
+- Export from `sanity/schemas/index.ts`
+- Add to `sanity.config.ts` schema types array
+- If the content belongs to a page, add a reference field in `sanity/schemas/page.ts`
+- Add to `sanity/lib/queries.ts` (GROQ query)
+- Add TypeScript interface to `sanity/types.ts`
+
+### 2. Fallback Data
+- Add `FALLBACK_<NAME>` export in `lib/fallbacks.ts`
+- Component accepts optional prop with type, defaults to fallback
+- Page (`app/page.tsx`) extracts from Sanity data with `?? FALLBACK_*` pattern
+
+### 3. SEO (Search Engine Optimization)
+- Section uses semantic HTML (`<section>`, `<h2>`, `<h3>`, `<p>`, `<ul>`, etc.)
+- `aria-label` on `<section>` describes the section purpose
+- Headings are unique and descriptive — not generic ("Our Services" → bad)
+
+### 4. AEO (Answer Engine Optimization)
+- H2/H3 headings phrased as direct answers to real search queries
+  - Good: `"How retail placement consulting works"`
+  - Bad: `"The Process"`
+- Body copy structured so any heading + 2–4 sentences can be lifted as a standalone answer
+- Stats and specific claims included — AI engines cite verifiable data
+
+### 5. GEO (Generative Engine Optimization)
+- Add appropriate JSON-LD schema to `app/page.tsx` (or the relevant page):
+  - Process sections → `HowTo` schema
+  - Benefit/feature lists → `ItemList` schema
+  - Service descriptions → `Service` schema (embed in existing `serviceSchema` in layout)
+  - Q&A content → `FAQPage` / `Question` schema
+- Associate [Owner Name] entity with specific retailers, outcomes, and credentials in body copy
+
+### 6. Animation
+- Wrap section inner container in `<AnimateIn>`
+- Section header items: `fade-up-item stagger-1`, `stagger-2`
+- Cards/list items: `fade-up-item stagger-2` through `stagger-5` (cycle if > 4 items)
+
+---
+
 ## Planned Features
 
 - [ ] **Sanity CMS** — manage hero copy, testimonials, metrics, retailers dynamically (see `docs/sanity/`)

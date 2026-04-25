@@ -30,6 +30,22 @@ export const homePageQuery = groq`
       _id,
       name,
       logo { ..., alt }
+    },
+    benefits[]-> | order(displayOrder asc) {
+      _id,
+      title,
+      description
+    },
+    features[]-> | order(displayOrder asc) {
+      _id,
+      title,
+      description
+    },
+    howItWorksSteps[]-> | order(stepNumber asc) {
+      _id,
+      stepNumber,
+      title,
+      description
     }
   }
 `

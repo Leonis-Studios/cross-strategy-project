@@ -35,9 +35,33 @@ export interface RetailerData {
   logo?: SanityImage
 }
 
+export interface BenefitData {
+  _id: string
+  title: string
+  description: string
+  displayOrder?: number
+}
+
+export interface FeatureData {
+  _id: string
+  title: string
+  description: string
+  displayOrder?: number
+}
+
+export interface HowItWorksStepData {
+  _id: string
+  stepNumber: number
+  title: string
+  description: string
+}
+
 export interface PageData {
   hero?: HeroData
   testimonials?: TestimonialData[]
   metrics?: MetricData[]
   retailers?: RetailerData[]
+  benefits?: BenefitData[]
+  features?: FeatureData[]
+  howItWorksSteps?: HowItWorksStepData[]
 }

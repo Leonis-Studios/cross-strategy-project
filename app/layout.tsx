@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Barlow } from 'next/font/google'
 import './globals.css'
 import JsonLd from '@/components/JsonLd'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -148,7 +150,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <JsonLd schema={personSchema} />
         <JsonLd schema={serviceSchema} />
-        {children}
+        <Navbar />
+        <div className="flex-1">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   )

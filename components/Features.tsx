@@ -1,0 +1,63 @@
+import AnimateIn from './AnimateIn'
+import type { FeatureData } from '@/sanity/types'
+import { FALLBACK_FEATURES } from '@/lib/fallbacks'
+
+const STAGGER = ['stagger-2', 'stagger-3', 'stagger-4', 'stagger-2', 'stagger-3', 'stagger-4'] as const
+
+interface FeaturesProps {
+  features?: FeatureData[]
+}
+
+export default function Features({ features = FALLBACK_FEATURES }: FeaturesProps) {
+  return (
+    <section
+      id="features"
+      className="bg-brand-alabaster py-24 px-6 lg:px-12"
+      aria-label="What successful brands bring to the table"
+    >
+      <AnimateIn className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
+            Is This You?
+          </p>
+          <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
+          <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight max-w-2xl mx-auto">
+            What do you{' '}
+            <em className="italic text-brand-red">bring to the table?</em>
+          </h2>
+          <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-xl mx-auto leading-relaxed">
+            The best retail partnerships start with a brand that&apos;s ready. Here&apos;s what
+            separates the brands that land shelf space from the ones that don&apos;t.
+          </p>
+        </div>
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {features.map((f, i) => (
+            <div
+              key={f._id}
+              className={`fade-up-item ${STAGGER[i % 6]} group relative overflow-hidden bg-white p-8 hover:shadow-box transition-shadow duration-300`}
+            >
+              <span
+                aria-hidden="true"
+                className="absolute right-3 top-0 font-barlow font-bold text-brand-red/[0.07] text-[80px] leading-none select-none pointer-events-none"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <p className="font-barlow font-bold text-brand-red text-label tracking-wider mb-4">
+                {String(i + 1).padStart(2, '0')}
+              </p>
+              <h3 className="font-barlow font-bold text-brand-jet-black text-subheadline mb-3">
+                {f.title}
+              </h3>
+              <p className="font-barlow text-brand-dim-grey text-label leading-relaxed">
+                {f.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </AnimateIn>
+    </section>
+  )
+}

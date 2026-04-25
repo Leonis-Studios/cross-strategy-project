@@ -3,21 +3,30 @@ import { homePageQuery } from '@/sanity/lib/queries'
 import type { PageData } from '@/sanity/types'
 import Hero from '@/components/Hero'
 import SocialProof from '@/components/SocialProof'
+import Benefits from '@/components/Benefits'
+import Features from '@/components/Features'
+import HowItWorks from '@/components/HowItWorks'
 import JsonLd from '@/components/JsonLd'
 import {
   FALLBACK_HERO,
   FALLBACK_METRICS,
   FALLBACK_RETAILERS,
   FALLBACK_TESTIMONIALS,
+  FALLBACK_BENEFITS,
+  FALLBACK_FEATURES,
+  FALLBACK_HOW_IT_WORKS_STEPS,
 } from '@/lib/fallbacks'
 
 export default async function Home() {
   const data: PageData = (await client.fetch(homePageQuery)) ?? {}
 
-  const hero         = data.hero             ?? FALLBACK_HERO
-  const metrics      = data.metrics?.length      ? data.metrics      : FALLBACK_METRICS
-  const retailers    = data.retailers?.length    ? data.retailers    : FALLBACK_RETAILERS
-  const testimonials = data.testimonials?.length ? data.testimonials : FALLBACK_TESTIMONIALS
+  const hero              = data.hero                    ?? FALLBACK_HERO
+  const metrics           = data.metrics?.length             ? data.metrics           : FALLBACK_METRICS
+  const retailers         = data.retailers?.length           ? data.retailers         : FALLBACK_RETAILERS
+  const testimonials      = data.testimonials?.length        ? data.testimonials      : FALLBACK_TESTIMONIALS
+  const benefits          = data.benefits?.length            ? data.benefits          : FALLBACK_BENEFITS
+  const features          = data.features?.length            ? data.features          : FALLBACK_FEATURES
+  const howItWorksSteps   = data.howItWorksSteps?.length     ? data.howItWorksSteps   : FALLBACK_HOW_IT_WORKS_STEPS
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -66,15 +75,46 @@ export default async function Home() {
     ],
   }
 
+  const howItWorksSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'How retail placement consulting works',
+    description:
+      'The 4-step process for getting your Amazon or DTC brand onto retail shelves at Walmart, Target, Whole Foods, and 1,200+ other stores.',
+    step: howItWorksSteps.map((step, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      name: step.title,
+      text: step.description,
+    })),
+  }
+
+  const benefitsSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: 'Benefits of working with [Owner Name]',
+    itemListElement: benefits.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.title,
+      description: b.description,
+    })),
+  }
+
   return (
     <main>
       <JsonLd schema={faqSchema} />
+      <JsonLd schema={howItWorksSchema} />
+      <JsonLd schema={benefitsSchema} />
       <Hero data={hero} metrics={metrics} />
       <SocialProof
         retailers={retailers}
         testimonials={testimonials}
         metrics={metrics}
       />
+      <Benefits benefits={benefits} />
+      <Features features={features} />
+      <HowItWorks steps={howItWorksSteps} />
     </main>
   )
 }

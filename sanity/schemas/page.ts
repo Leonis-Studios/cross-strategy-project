@@ -48,6 +48,24 @@ export const page = defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'retailer' }] }],
     }),
+    defineField({
+      name: 'benefits',
+      title: 'Benefits',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'benefit' }] }],
+    }),
+    defineField({
+      name: 'features',
+      title: 'Features (What You Bring)',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'feature' }] }],
+    }),
+    defineField({
+      name: 'howItWorksSteps',
+      title: 'How It Works Steps',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'howItWorksStep' }] }],
+    }),
   ],
   preview: {
     select: { title: 'title', slug: 'slug.current' },
