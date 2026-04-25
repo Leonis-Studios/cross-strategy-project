@@ -37,23 +37,31 @@ export default function Features({ features = FALLBACK_FEATURES }: FeaturesProps
           {features.map((f, i) => (
             <div
               key={f._id}
-              className={`fade-up-item ${STAGGER[i % 6]} group relative overflow-hidden bg-white p-8 hover:shadow-box transition-shadow duration-300`}
+              className={`fade-up-item ${STAGGER[i % 6]} group flex flex-col overflow-hidden bg-white hover:shadow-box transition-shadow duration-300`}
             >
-              <span
-                aria-hidden="true"
-                className="absolute right-3 top-0 font-barlow font-bold text-brand-red/[0.07] text-[80px] leading-none select-none pointer-events-none"
-              >
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <p className="font-barlow font-bold text-brand-red text-label tracking-wider mb-4">
-                {String(i + 1).padStart(2, '0')}
-              </p>
-              <h3 className="font-barlow font-bold text-brand-jet-black text-subheadline mb-3">
-                {f.title}
-              </h3>
-              <p className="font-barlow text-brand-dim-grey text-label leading-relaxed">
-                {f.description}
-              </p>
+              {/* Shelf tag color strip */}
+              <div className="h-1 bg-brand-red shrink-0" aria-hidden="true" />
+
+              {/* Feature banner */}
+              <div className="bg-brand-jet-black px-8 py-2">
+                <span className="font-barlow font-bold text-white text-xs tracking-widest uppercase line-clamp-1">
+                  {f.title}
+                </span>
+              </div>
+
+              <div className="flex flex-col flex-1 p-8">
+                {/* Category badge */}
+                <p className="small-caps font-barlow font-bold text-brand-red tracking-widest text-sm mb-4">
+                  Feature
+                </p>
+
+                <h3 className="font-barlow font-bold text-brand-jet-black text-subheadline leading-snug mb-3">
+                  {f.title}
+                </h3>
+                <p className="font-barlow font-medium text-brand-dim-grey text-label leading-relaxed mt-auto pt-4 border-t border-brand-alabaster">
+                  {f.description}
+                </p>
+              </div>
             </div>
           ))}
         </div>
