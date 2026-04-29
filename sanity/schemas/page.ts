@@ -66,6 +66,18 @@ export const page = defineType({
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'howItWorksStep' }] }],
     }),
+    defineField({
+      name: 'cta',
+      title: 'Call to Action Section',
+      type: 'reference',
+      to: [{ type: 'cta' }],
+    }),
+    defineField({
+      name: 'faqs',
+      title: 'FAQs',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'faq' }] }],
+    }),
   ],
   preview: {
     select: { title: 'title', slug: 'slug.current' },

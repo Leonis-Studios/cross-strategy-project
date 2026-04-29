@@ -1,5 +1,16 @@
 import { groq } from 'next-sanity'
 
+export const aboutPageQuery = groq`
+  *[_type == "aboutPage"][0] {
+    ownerName,
+    ownerTitle,
+    bio,
+    photo { ..., alt },
+    statsHighlight[] { value, label },
+    standoutQuote
+  }
+`
+
 export const homePageQuery = groq`
   *[_type == "page" && slug.current == "home"][0] {
     hero-> {
@@ -46,6 +57,21 @@ export const homePageQuery = groq`
       stepNumber,
       title,
       description
+    },
+    cta-> {
+      eyebrow,
+      headline,
+      headlineAccent,
+      subheadline,
+      ctaPrimary,
+      ctaPrimaryHref,
+      ctaSecondary,
+      ctaSecondaryHref
+    },
+    faqs[]-> | order(displayOrder asc) {
+      _id,
+      question,
+      answer
     }
   }
 `

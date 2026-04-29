@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: "Track Record", href: "/#track-record" },
   { label: "Benefits", href: "/#benefits" },
   { label: "How It Works", href: "/#how-it-works" },
-  { label: "Contact", href: "/#contact" },
+  { label: "About", href: "/about" },
 ];
 
 export default function Navbar() {

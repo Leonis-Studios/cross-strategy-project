@@ -56,6 +56,33 @@ export interface HowItWorksStepData {
   description: string
 }
 
+export interface CtaData {
+  eyebrow?: string
+  headline: string
+  headlineAccent?: string
+  subheadline?: string
+  ctaPrimary?: string
+  ctaPrimaryHref?: string
+  ctaSecondary?: string
+  ctaSecondaryHref?: string
+}
+
+export interface FaqData {
+  _id: string
+  question: string
+  answer: string
+  displayOrder?: number
+}
+
+export interface AboutPageData {
+  ownerName?: string
+  ownerTitle?: string
+  bio?: string
+  photo?: SanityImage
+  statsHighlight?: { value: string; label: string }[]
+  standoutQuote?: string
+}
+
 export interface PageData {
   hero?: HeroData
   testimonials?: TestimonialData[]
@@ -64,4 +91,6 @@ export interface PageData {
   benefits?: BenefitData[]
   features?: FeatureData[]
   howItWorksSteps?: HowItWorksStepData[]
+  cta?: CtaData
+  faqs?: FaqData[]
 }
