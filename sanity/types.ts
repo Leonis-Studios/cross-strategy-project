@@ -94,3 +94,29 @@ export interface PageData {
   cta?: CtaData
   faqs?: FaqData[]
 }
+
+export interface BlogCategoryData {
+  _id: string
+  title: string
+  slug: { current: string }
+  description?: string
+}
+
+export interface BlogPostSummary {
+  _id: string
+  title: string
+  slug: { current: string }
+  publishedAt?: string
+  excerpt?: string
+  coverImage?: SanityImage
+  categories?: BlogCategoryData[]
+  tags?: string[]
+  featured?: boolean
+  readingTime?: number
+}
+
+export interface BlogPostData extends BlogPostSummary {
+  body?: unknown[]
+  seoTitle?: string
+  seoDescription?: string
+}

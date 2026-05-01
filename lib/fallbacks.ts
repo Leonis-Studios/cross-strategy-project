@@ -1,4 +1,4 @@
-import type { AboutPageData, BenefitData, CtaData, FaqData, FeatureData, HeroData, HowItWorksStepData, MetricData, RetailerData, TestimonialData } from '@/sanity/types'
+import type { AboutPageData, BenefitData, BlogCategoryData, BlogPostSummary, CtaData, FaqData, FeatureData, HeroData, HowItWorksStepData, MetricData, RetailerData, TestimonialData } from '@/sanity/types'
 
 export const FALLBACK_HERO: HeroData = {
   eyebrow: 'Amazon & DTC Sellers → Retail Shelves',
@@ -201,6 +201,93 @@ export const FALLBACK_ABOUT_PAGE: AboutPageData = {
   standoutQuote:
     '"The fastest path to retail shelves is through the right relationships. I\'ve spent a decade building them — so your brand doesn\'t have to start from zero."',
 }
+
+export const FALLBACK_BLOG_CATEGORIES: BlogCategoryData[] = [
+  {
+    _id: 'cat-1',
+    title: 'Retail Strategy',
+    slug: { current: 'retail-strategy' },
+    description: 'Insights on getting your brand onto retail shelves and winning at brick-and-mortar.',
+  },
+  {
+    _id: 'cat-2',
+    title: 'Buyer Relationships',
+    slug: { current: 'buyer-relationships' },
+    description: 'How to build, approach, and maintain relationships with retail buyers.',
+  },
+  {
+    _id: 'cat-3',
+    title: 'Brand Readiness',
+    slug: { current: 'brand-readiness' },
+    description: 'Preparing your Amazon or DTC brand for the demands of retail distribution.',
+  },
+  {
+    _id: 'cat-4',
+    title: 'Retailer Guides',
+    slug: { current: 'retailer-guides' },
+    description: 'Retailer-specific playbooks for Walmart, Target, Whole Foods, and more.',
+  },
+]
+
+export const FALLBACK_BLOG_POSTS: BlogPostSummary[] = [
+  {
+    _id: 'post-1',
+    title: 'How to Get Your Product Into Walmart: The Complete Playbook',
+    slug: { current: 'how-to-get-product-into-walmart' },
+    publishedAt: '2024-11-01T00:00:00Z',
+    excerpt:
+      'Most brands approach Walmart the wrong way. After placing 40+ brands in Walmart stores, here\'s what actually works — from building buyer relationships to getting your packaging right.',
+    featured: true,
+    readingTime: 8,
+    categories: [
+      { _id: 'cat-4', title: 'Retailer Guides', slug: { current: 'retailer-guides' } },
+      { _id: 'cat-1', title: 'Retail Strategy', slug: { current: 'retail-strategy' } },
+    ],
+    tags: ['Walmart', 'Retail Placement', 'Buyer Pitch', 'Purchase Order'],
+  },
+  {
+    _id: 'post-2',
+    title: 'What Retail Buyers Actually Want From Your Pitch Deck',
+    slug: { current: 'what-retail-buyers-want-pitch-deck' },
+    publishedAt: '2024-10-15T00:00:00Z',
+    excerpt:
+      'After sitting on both sides of the table, I know exactly what makes a buyer lean forward — and what makes them pass. Here\'s how to build a deck that gets to yes.',
+    featured: false,
+    readingTime: 6,
+    categories: [
+      { _id: 'cat-2', title: 'Buyer Relationships', slug: { current: 'buyer-relationships' } },
+    ],
+    tags: ['Pitch Deck', 'Retail Buyers', 'Sell Sheet', 'Category Analysis'],
+  },
+  {
+    _id: 'post-3',
+    title: 'Is Your Brand Retail-Ready? The 6-Point Audit Every DTC Founder Needs',
+    slug: { current: 'retail-readiness-audit-dtc-brands' },
+    publishedAt: '2024-09-22T00:00:00Z',
+    excerpt:
+      'Most DTC brands fail in retail not because their product is bad, but because they weren\'t ready. Run this audit before you talk to a single buyer.',
+    featured: false,
+    readingTime: 7,
+    categories: [
+      { _id: 'cat-3', title: 'Brand Readiness', slug: { current: 'brand-readiness' } },
+    ],
+    tags: ['Brand Readiness', 'DTC', 'Margins', 'Packaging', 'Velocity'],
+  },
+  {
+    _id: 'post-4',
+    title: 'The Whole Foods Placement Process: Timeline, Buyers, and What Actually Works',
+    slug: { current: 'whole-foods-placement-process' },
+    publishedAt: '2024-08-30T00:00:00Z',
+    excerpt:
+      'Whole Foods remains one of the most coveted — and most misunderstood — retail doors for emerging brands. Here\'s a clear-eyed breakdown of how placements actually happen.',
+    featured: false,
+    readingTime: 9,
+    categories: [
+      { _id: 'cat-4', title: 'Retailer Guides', slug: { current: 'retailer-guides' } },
+    ],
+    tags: ['Whole Foods', 'Natural Grocery', 'Regional Buyers', 'Local Producer Program'],
+  },
+]
 
 export const FALLBACK_TESTIMONIALS: TestimonialData[] = [
   {
