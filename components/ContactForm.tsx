@@ -12,7 +12,7 @@ export default function ContactForm() {
   return (
     <section
       id="contact"
-      className="bg-brand-jet-black py-24 px-6 lg:px-12 border-t border-brand-dim-grey"
+      className="bg-brand-jet-black py-24 px-6 lg:px-12"
       aria-label="Contact form"
     >
       <AnimateIn className="max-w-3xl mx-auto">

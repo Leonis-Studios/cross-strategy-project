@@ -84,22 +84,20 @@ export default async function BlogPage() {
       <JsonLd schema={blogSchema} />
       <JsonLd schema={itemListSchema} />
 
-      {/* ── Blog hero ── */}
+      {/* ── Blog header ── */}
       <section
-        className="bg-brand-jet-black pt-32 pb-20 px-6 lg:px-12 border-b border-[#333333]"
+        className="bg-brand-jet-black pt-32 pb-16 px-6 lg:px-12 border-b border-brand-silver/15"
         aria-label="Retail Insights Blog"
       >
         <AnimateIn className="max-w-7xl mx-auto">
-          <div className="fade-up-item stagger-1">
-            <p className="small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label mb-3">
-              Retail Insights
-            </p>
-            <div className="w-12 h-0.5 bg-brand-red mb-8" aria-hidden="true" />
-          </div>
-          <h1 className="font-playfair text-display-lg md:text-display-xl text-brand-alabaster leading-none mb-6 fade-up-item stagger-2">
-            The Blog
+          <p className="font-barlow font-bold text-brand-dim-grey tracking-widest text-xs uppercase mb-4 fade-up-item stagger-1">
+            Retail Insights
+          </p>
+          <h1 className="font-playfair text-display-lg md:text-display-xl leading-none mb-5 fade-up-item stagger-2">
+            <span className="text-brand-red">The</span>
+            <span className="text-brand-alabaster"> Blog</span>
           </h1>
-          <p className="font-barlow text-brand-silver text-body md:text-subheadline max-w-2xl leading-relaxed fade-up-item stagger-3">
+          <p className="font-barlow text-brand-silver text-body max-w-2xl leading-relaxed fade-up-item stagger-3">
             Tactics, frameworks, and firsthand insights on getting consumer brands into major retail
             chains — written by someone who has done it 240+ times.
           </p>

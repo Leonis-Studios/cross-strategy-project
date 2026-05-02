@@ -17,7 +17,8 @@
       "Bash(npx tsc *)",
       "Bash(node *)",
       "Bash(npx next *)",
-      "Bash(git stash *)"
+      "Bash(git stash *)",
+      "Bash(Get-ChildItem *)"
     ]
   }
 }

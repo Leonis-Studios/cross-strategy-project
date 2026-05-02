@@ -1,10 +1,7 @@
 "use client";
 
-import { Fragment, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import type { HeroData, MetricData } from "@/sanity/types";
-
-const MARQUEE_TEXT =
-  "Walmart · Target · Whole Foods · Costco · Nordstrom · Kroger · CVS · Walgreens · Sprouts · Meijer · ";
 
 interface HeroProps {
   data: HeroData | null;
@@ -12,149 +9,177 @@ interface HeroProps {
 }
 
 export default function Hero({ data, metrics }: HeroProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const el = containerRef.current;
+    const el = sectionRef.current;
     if (!el) return;
     requestAnimationFrame(() => el.classList.add("is-visible"));
   }, []);
 
-  const floatNumber = data?.floatingStatNumber ?? "240+";
-  const floatLabel = data?.floatingStatLabel ?? "Brands in Retail";
+  const displayMetrics =
+    metrics.length > 0
+      ? metrics.slice(0, 3)
+      : [
+          { _id: "m1", number: "240+", label: "Brands Placed" },
+          { _id: "m2", number: "$180M+", label: "Retail Revenue" },
+          { _id: "m3", number: "1,200+", label: "Store Doors" },
+        ];
 
   return (
-    <section
-      className="bg-brand-jet-black min-h-[90vh] flex items-center"
-      aria-label="Hero"
-    >
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full py-16">
-        {/* Main grid */}
+    <div className="hero-outer-shadow">
+      <section
+        ref={sectionRef}
+        aria-label="Start your retail placement journey"
+        className="relative overflow-hidden lg:min-h-[90vh]"
+      >
+        {/* Desktop diagonal background — left (light) */}
         <div
-          ref={containerRef}
-          className="grid grid-cols-1 md:grid-cols-[55%_45%] gap-12 lg:gap-16 items-center"
-        >
-          {/* RIGHT COLUMN — image, appears first on mobile */}
-          <div className="order-first md:order-last">
-            <div className="relative">
-              {/* Image placeholder */}
+          className="hidden lg:block absolute inset-0 bg-brand-alabaster"
+          style={{ clipPath: "polygon(0 0, 55% 0, calc(55% - 120px) 100%, 0 100%)" }}
+          aria-hidden="true"
+        />
+        {/* Desktop diagonal background — right (dark) */}
+        <div
+          className="hidden lg:block absolute inset-0 bg-brand-jet-black"
+          style={{ clipPath: "polygon(55% 0, 100% 0, 100% 100%, calc(55% - 120px) 100%)" }}
+          aria-hidden="true"
+        />
+
+        {/* Subtle blue tint along diagonal split */}
+        <div
+          className="hidden lg:block absolute inset-0 pointer-events-none"
+          style={{
+            background: 'linear-gradient(82deg, transparent 46%, rgba(70, 120, 210, 0.09) 50%, rgba(70, 120, 210, 0.09) 52%, transparent 56%)'
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Two-panel content grid */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 lg:min-h-[90vh]">
+
+          {/* LEFT PANEL — owner-focused (light theme) */}
+          <div className="relative flex flex-col justify-center overflow-hidden px-6 lg:px-16 py-12 lg:py-28 bg-brand-alabaster lg:bg-transparent">
+            {/* Accent bar */}
+            <div
+              className="hero-sweep absolute top-0 left-0 right-0 h-1 bg-brand-red"
+              aria-hidden="true"
+            />
+
+            {/* Sliding content wrapper */}
+            <div className="hero-slide-left flex flex-col">
+              {/* Eyebrow */}
+              <span className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-red tracking-widest text-label uppercase mb-3">
+                Retail Placement Consultant
+              </span>
+
+              {/* Name heading */}
+              <h1 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-xl leading-[0.9] text-brand-jet-black mb-4">
+                {data?.headline ?? "[Owner Name]"}
+              </h1>
+
+              {/* Credentials subtitle */}
+              <p className="fade-up-item stagger-3 font-barlow text-body text-brand-dim-grey mb-6">
+                {data?.subheadline ??
+                  "240+ brands placed · $180M+ in retail revenue · 1,200+ store doors opened"}
+              </p>
+
+              {/* Divider */}
               <div
-                className="aspect-4/5 w-full bg-brand-dim-grey border border-brand-silver flex items-center justify-center"
+                className="fade-up-item stagger-3 h-px w-16 bg-brand-red mb-6"
                 aria-hidden="true"
-              >
-                <span className="font-barlow text-brand-silver text-label font-medium">
-                  Owner Photography
-                </span>
-              </div>
+              />
 
-              {/* Floating stat card */}
+              {/* Bio */}
+              <p className="fade-up-item stagger-4 font-barlow text-label text-brand-dim-grey leading-relaxed max-w-sm mb-10">
+                I help Amazon-native and DTC brands earn shelf space at Walmart,
+                Target, Whole Foods, Costco, and every major U.S. retailer in
+                between — from first pitch to purchase order.
+              </p>
+
+              {/* Stat cards */}
               <div
-                className="absolute bottom-6 left-0 translate-x-0 md:-translate-x-8 z-10 bg-brand-alabaster border-l-4 border-brand-red shadow-box p-5"
-                aria-label={`${floatNumber} ${floatLabel}`}
+                className="flex gap-4"
+                role="list"
+                aria-label="Career highlights"
               >
-                <p className="font-playfair text-stat text-brand-red font-bold leading-none">
-                  {floatNumber}
-                </p>
-                <p className="font-barlow font-semibold text-brand-jet-black text-label mt-1">
-                  {floatLabel}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* LEFT COLUMN — text */}
-          <div className="flex flex-col gap-6">
-            {/* Eyebrow */}
-            <span className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-red tracking-widest text-label">
-              {data?.eyebrow ?? "Amazon & DTC Sellers → Retail Shelves"}
-            </span>
-
-            {/* Headline */}
-            <h1 className="fade-up-item stagger-2 font-playfair text-display-lg md:text-display-2xl lg:text-display-3xl leading-[0.95] text-brand-alabaster">
-              {data?.headline ?? "I get your brand on"}
-              {(data?.headlineAccent ?? "retail shelves.") && (
-                <>
-                  <br />
-                  <em className="italic text-brand-red">
-                    {data?.headlineAccent ?? "retail shelves."}
-                  </em>
-                </>
-              )}
-            </h1>
-
-            {/* Subheadline */}
-            <p className="fade-up-item stagger-3 font-barlow text-subheadline text-brand-silver max-w-120 leading-relaxed">
-              {data?.subheadline ?? (
-                <>
-                  I&apos;m{" "}
-                  <strong className="text-brand-alabaster font-semibold">
-                    [Owner Name]
-                  </strong>
-                  , a retail placement consultant who has helped 240+ Amazon and
-                  DTC brands secure shelf space at America&apos;s top retailers
-                  — from first pitch to purchase order.
-                </>
-              )}
-            </p>
-
-            {/* CTAs */}
-            <div className="fade-up-item stagger-4 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
-              <a
-                href={data?.ctaPrimaryHref ?? "#"}
-                className="w-full sm:w-auto bg-brand-red text-brand-alabaster font-barlow font-bold px-8 py-4 rounded-none hover:opacity-90 transition-colors duration-200 text-center"
-              >
-                {data?.ctaPrimary ?? "Work With Me"}
-              </a>
-              <a
-                href={data?.ctaSecondaryHref ?? "#track-record"}
-                className="font-barlow font-semibold text-brand-red hover:underline transition-all duration-200"
-              >
-                {data?.ctaSecondary ?? "See My Track Record →"}
-              </a>
-            </div>
-
-            {/* Trust signals — reuse global metrics */}
-            {metrics.length > 0 && (
-              <div className="fade-up-item stagger-5 flex flex-wrap items-center gap-3 font-barlow font-semibold text-brand-silver text-label">
-                {metrics.map((m, i) => (
-                  <Fragment key={m._id}>
-                    {i > 0 && (
-                      <span
-                        className="w-1 h-1 rounded-full bg-brand-silver inline-block"
-                        aria-hidden="true"
-                      />
-                    )}
-                    <span>
-                      {m.number} {m.label}
-                    </span>
-                  </Fragment>
+                {displayMetrics.map((m, i) => (
+                  <div
+                    key={m._id}
+                    role="listitem"
+                    className={`fade-up-item stagger-${i + 5} stat-card-lift flex-1 bg-white shadow-box p-3 lg:p-4 border border-brand-alabaster`}
+                  >
+                    <p className="font-playfair font-bold text-stat text-brand-red leading-none">
+                      {m.number}
+                    </p>
+                    <p className="font-barlow text-xs text-brand-dim-grey mt-2 leading-tight">
+                      {m.label}
+                    </p>
+                  </div>
                 ))}
               </div>
-            )}
+            </div>
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="h-px bg-brand-dim-grey my-10" aria-hidden="true" />
-
-        {/* Marquee strip */}
-        <div className="bg-brand-dim-grey py-4 overflow-hidden -mx-6 lg:-mx-12 px-0">
-          <div
-            className="flex whitespace-nowrap animate-marquee"
-            aria-label="Retailers where I've placed brands"
-          >
-            <span className="shrink-0 font-barlow font-semibold text-brand-alabaster small-caps tracking-widest text-label px-8">
-              {MARQUEE_TEXT}
-            </span>
-            <span
-              className="shrink-0 font-barlow font-semibold text-brand-alabaster small-caps tracking-widest text-label px-8"
+          {/* RIGHT PANEL — CTA (dark theme) */}
+          <div className="relative flex flex-col justify-center overflow-hidden px-6 lg:px-16 py-12 lg:py-28 bg-brand-jet-black lg:bg-transparent">
+            {/* Accent bar */}
+            <div
+              className="hero-sweep absolute top-0 left-0 right-0 h-1 bg-brand-red"
               aria-hidden="true"
-            >
-              {MARQUEE_TEXT}
-            </span>
+            />
+
+            {/* Sliding content wrapper */}
+            <div className="hero-slide-right flex flex-col max-w-md mx-auto">
+              {/* Headline */}
+              <h2 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-lg leading-[0.95] text-brand-alabaster mb-5">
+                Get your brand on
+                <br />
+                <em className="italic text-brand-red">retail shelves.</em>
+              </h2>
+
+              {/* Subheading */}
+              <p className="fade-up-item stagger-3 font-barlow text-body text-brand-silver mb-8 leading-relaxed">
+                Book a free strategy call. I&apos;ll map the right retail
+                targets for your brand and show you exactly what it takes to
+                land purchase orders.
+              </p>
+
+              {/* Trust signals */}
+              <ul
+                className="fade-up-item stagger-4 flex flex-col gap-3 mb-10"
+                aria-label="What to expect"
+              >
+                {[
+                  "No pitch — just an honest assessment",
+                  "No pressure — cancel anytime",
+                  "Response within 24 hours",
+                ].map((signal) => (
+                  <li
+                    key={signal}
+                    className="flex items-center gap-3 font-barlow text-label text-brand-silver"
+                  >
+                    <span className="text-brand-red font-bold leading-none">✓</span>
+                    {signal}
+                  </li>
+                ))}
+              </ul>
+
+              {/* CTA button */}
+              <a
+                href="mailto:contact@crossstrat.com"
+                className="fade-up-item stagger-5 block w-full bg-brand-red text-brand-alabaster font-barlow font-bold py-4 px-6 text-body text-center hover:opacity-90 transition-opacity duration-200 shadow-[4px_4px_0px_rgba(0,0,0,0.5)] mb-4"
+              >
+                Book My Free Strategy Call →
+              </a>
+
+              <p className="fade-up-item stagger-5 font-barlow text-xs text-brand-dim-grey text-center">
+                Your information is never shared or sold.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

@@ -10,6 +10,7 @@ import CallToAction from '@/components/CallToAction'
 import FAQ from '@/components/FAQ'
 import ContactForm from '@/components/ContactForm'
 import JsonLd from '@/components/JsonLd'
+import SectionDivider from '@/components/SectionDivider'
 import {
   FALLBACK_HERO,
   FALLBACK_METRICS,
@@ -103,11 +104,17 @@ export default async function Home() {
         testimonials={testimonials}
         metrics={metrics}
       />
+      <SectionDivider from="dark" to="dark" />
       <Benefits benefits={benefits} />
+      <SectionDivider from="dark" to="light" />
       <Features features={features} />
+      <SectionDivider from="light" to="dark" />
       <HowItWorks steps={howItWorksSteps} />
+      <SectionDivider from="dark" to="light" />
       <CallToAction data={cta} />
+      <SectionDivider from="light" to="dark" />
       <FAQ faqs={faqs} />
+      <SectionDivider from="dark" to="dark" />
       <ContactForm />
     </main>
   )

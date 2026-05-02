@@ -49,10 +49,10 @@ export default function BlogSearch({ posts, categories }: Props) {
   return (
     <>
       {/* ── Search + filter bar ── */}
-      <div className="bg-[#1a1a1a] border-b border-[#333333] py-8 px-6 lg:px-12 sticky top-[72px] z-10">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-5 items-start md:items-center">
+      <div className="bg-brand-jet-black border-b border-brand-silver/15 py-6 px-6 lg:px-12 sticky top-[72px] z-10">
+        <div className="max-w-7xl mx-auto flex flex-wrap gap-x-6 gap-y-3 items-center">
           {/* Search input */}
-          <div className="relative w-full md:max-w-sm">
+          <div className="relative w-full md:w-72 shrink-0">
             <svg
               className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-brand-dim-grey pointer-events-none"
               fill="none"
@@ -70,7 +70,7 @@ export default function BlogSearch({ posts, categories }: Props) {
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search articles…"
               aria-label="Search blog articles"
-              className="w-full bg-brand-jet-black border border-[#444444] text-brand-alabaster font-barlow text-label pl-11 pr-10 py-2.5 focus:outline-none focus:border-brand-red transition-colors placeholder:text-brand-dim-grey"
+              className="w-full bg-brand-jet-black border border-brand-silver/25 text-brand-alabaster font-barlow text-label pl-11 pr-10 py-2.5 focus:outline-none focus:border-brand-red transition-colors placeholder:text-brand-dim-grey"
             />
             {query && (
               <button
@@ -90,7 +90,7 @@ export default function BlogSearch({ posts, categories }: Props) {
               className={`font-barlow font-semibold text-xs tracking-widest uppercase px-4 py-2 border transition-colors ${
                 !activeCategory
                   ? 'bg-brand-red border-brand-red text-white'
-                  : 'border-[#444444] text-brand-dim-grey hover:border-brand-alabaster hover:text-brand-alabaster'
+                  : 'border-brand-silver/30 text-brand-dim-grey hover:border-brand-alabaster hover:text-brand-alabaster'
               }`}
             >
               All
@@ -106,7 +106,7 @@ export default function BlogSearch({ posts, categories }: Props) {
                 className={`font-barlow font-semibold text-xs tracking-widest uppercase px-4 py-2 border transition-colors ${
                   activeCategory === cat.slug.current
                     ? 'bg-brand-red border-brand-red text-white'
-                    : 'border-[#444444] text-brand-dim-grey hover:border-brand-alabaster hover:text-brand-alabaster'
+                    : 'border-brand-silver/30 text-brand-dim-grey hover:border-brand-alabaster hover:text-brand-alabaster'
                 }`}
               >
                 {cat.title}
@@ -118,12 +118,12 @@ export default function BlogSearch({ posts, categories }: Props) {
 
       {/* ── Results ── */}
       <section
-        className="bg-brand-jet-black py-16 px-6 lg:px-12 min-h-[60vh]"
+        className="bg-brand-jet-black"
         aria-label="Blog articles"
       >
         <div className="max-w-7xl mx-auto">
           {isFiltered && (
-            <p className="font-barlow text-brand-dim-grey text-label mb-8">
+            <p className="font-barlow text-brand-dim-grey text-label px-6 lg:px-12 pt-8 pb-4">
               {filtered.length} article{filtered.length !== 1 ? 's' : ''} found
             </p>
           )}
