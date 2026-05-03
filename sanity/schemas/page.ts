@@ -37,16 +37,10 @@ export const page = defineType({
       of: [{ type: 'reference', to: [{ type: 'testimonial' }] }],
     }),
     defineField({
-      name: 'metrics',
-      title: 'Metrics',
+      name: 'credentials',
+      title: 'Credentials',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'metric' }] }],
-    }),
-    defineField({
-      name: 'retailers',
-      title: 'Retailers',
-      type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'retailer' }] }],
+      of: [{ type: 'reference', to: [{ type: 'credential' }] }],
     }),
     defineField({
       name: 'benefits',

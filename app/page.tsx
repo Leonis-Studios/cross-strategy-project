@@ -1,6 +1,6 @@
 import { client } from '@/sanity/lib/client'
 import { homePageQuery } from '@/sanity/lib/queries'
-import type { PageData } from '@/sanity/types'
+import type { HomePageData } from '@/sanity/types'
 import Hero from '@/components/Hero'
 import SocialProof from '@/components/SocialProof'
 import Benefits from '@/components/Benefits'
@@ -13,8 +13,7 @@ import JsonLd from '@/components/JsonLd'
 import SectionDivider from '@/components/SectionDivider'
 import {
   FALLBACK_HERO,
-  FALLBACK_METRICS,
-  FALLBACK_RETAILERS,
+  FALLBACK_CREDENTIALS,
   FALLBACK_TESTIMONIALS,
   FALLBACK_BENEFITS,
   FALLBACK_FEATURES,
@@ -23,12 +22,13 @@ import {
   FALLBACK_FAQS,
 } from '@/lib/fallbacks'
 
+export const revalidate = 3600
+
 export default async function Home() {
-  const data: PageData = (await client.fetch(homePageQuery)) ?? {}
+  const data: HomePageData = (await client.fetch(homePageQuery)) ?? {}
 
   const hero            = data.hero                    ?? FALLBACK_HERO
-  const metrics         = data.metrics?.length         ? data.metrics         : FALLBACK_METRICS
-  const retailers       = data.retailers?.length       ? data.retailers       : FALLBACK_RETAILERS
+  const credentials     = data.credentials?.length     ? data.credentials     : FALLBACK_CREDENTIALS
   const testimonials    = data.testimonials?.length    ? data.testimonials    : FALLBACK_TESTIMONIALS
   const benefits        = data.benefits?.length        ? data.benefits        : FALLBACK_BENEFITS
   const features        = data.features?.length        ? data.features        : FALLBACK_FEATURES
@@ -98,11 +98,10 @@ export default async function Home() {
       <JsonLd schema={ctaSchema} />
       <JsonLd schema={howItWorksSchema} />
       <JsonLd schema={benefitsSchema} />
-      <Hero data={hero} metrics={metrics} />
+      <Hero data={hero} credentials={credentials} />
       <SocialProof
-        retailers={retailers}
+        credentials={credentials}
         testimonials={testimonials}
-        metrics={metrics}
       />
       <SectionDivider from="dark" to="dark" />
       <Benefits benefits={benefits} />

@@ -1,4 +1,4 @@
-import type { AboutPageData, BenefitData, BlogCategoryData, BlogPostSummary, CtaData, FaqData, FeatureData, HeroData, HowItWorksStepData, MetricData, RetailerData, TestimonialData } from '@/sanity/types'
+import type { AboutPageData, BenefitData, BlogCategoryData, BlogPostSummary, CredentialData, CtaData, FaqData, FeatureData, HeroData, HowItWorksStepData, TestimonialData } from '@/sanity/types'
 
 export const FALLBACK_HERO: HeroData = {
   eyebrow: 'Amazon & DTC Sellers → Retail Shelves',
@@ -14,21 +14,22 @@ export const FALLBACK_HERO: HeroData = {
   floatingStatLabel: 'Brands in Retail',
 }
 
-export const FALLBACK_METRICS: MetricData[] = [
-  { _id: 'fallback-metric-1', number: '240+',   label: 'Brands Placed' },
-  { _id: 'fallback-metric-2', number: '$180M+',  label: 'Retail Revenue Generated' },
-  { _id: 'fallback-metric-3', number: '1,200+',  label: 'Store Doors Opened' },
-]
-
-export const FALLBACK_RETAILERS: RetailerData[] = [
-  { _id: 'fallback-retailer-1', name: 'Walmart' },
-  { _id: 'fallback-retailer-2', name: 'Target' },
-  { _id: 'fallback-retailer-3', name: 'Whole Foods' },
-  { _id: 'fallback-retailer-4', name: 'Costco' },
-  { _id: 'fallback-retailer-5', name: 'Kroger' },
-  { _id: 'fallback-retailer-6', name: 'CVS' },
-  { _id: 'fallback-retailer-7', name: 'Walgreens' },
-  { _id: 'fallback-retailer-8', name: 'Sprouts' },
+export const FALLBACK_CREDENTIALS: CredentialData[] = [
+  {
+    _id: 'fallback-credential-1',
+    title: 'Former Retail Buyer',
+    description: 'Built relationships inside buying organizations at major national chains before pivoting to the brand side.',
+  },
+  {
+    _id: 'fallback-credential-2',
+    title: 'National Retailer Network',
+    description: 'Direct access to buyers at Walmart, Target, Whole Foods, Costco, and 50+ regional chains.',
+  },
+  {
+    _id: 'fallback-credential-3',
+    title: 'End-to-End Partner',
+    description: 'Stays in the deal from first pitch through first re-order — no hand-offs, no guesswork.',
+  },
 ]
 
 export const FALLBACK_BENEFITS: BenefitData[] = [

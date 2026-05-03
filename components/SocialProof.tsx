@@ -1,36 +1,38 @@
-import type { RetailerData, TestimonialData, MetricData } from '@/sanity/types'
+import type { CredentialData, TestimonialData } from '@/sanity/types'
 
 interface SocialProofProps {
-  retailers: RetailerData[]
+  credentials: CredentialData[]
   testimonials: TestimonialData[]
-  metrics: MetricData[]
 }
 
-export default function SocialProof({ retailers, testimonials, metrics }: SocialProofProps) {
+export default function SocialProof({ credentials, testimonials }: SocialProofProps) {
   return (
     <div id="track-record">
-      {/* Part A + B — alabaster background */}
       <section className="bg-brand-alabaster py-24 px-6 lg:px-12" aria-label="Social proof">
         <div className="max-w-7xl mx-auto">
 
-          {/* Part A: Retailer Logo Grid */}
+          {/* Part A: Credentials */}
           <div className="text-center">
             <p className="small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-              Retailers Where I&apos;ve Placed Brands
+              Why Work With Me
             </p>
             <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-16" aria-hidden="true" />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {retailers.map((r) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {credentials.map((c) => (
               <div
-                key={r._id}
-                className="bg-brand-jet-black border border-brand-dim-grey p-6 flex flex-col items-center gap-3 shadow-box hover:bg-brand-dim-grey hover:border-brand-silver transition-all duration-200"
+                key={c._id}
+                className="bg-brand-jet-black border border-brand-dim-grey p-6 flex flex-col gap-3 shadow-box hover:border-brand-silver transition-all duration-200"
               >
-                <div className="w-8 h-8 bg-brand-dim-grey" aria-hidden="true" />
-                <span className="font-barlow font-semibold text-brand-alabaster text-label text-center">
-                  {r.name}
+                <span className="font-barlow font-semibold text-brand-alabaster text-label">
+                  {c.title}
                 </span>
+                {c.description && (
+                  <p className="font-barlow text-xs text-brand-silver leading-relaxed">
+                    {c.description}
+                  </p>
+                )}
               </div>
             ))}
           </div>
@@ -69,30 +71,6 @@ export default function SocialProof({ retailers, testimonials, metrics }: Social
                 </article>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Part C: Metrics Banner */}
-      <section
-        className="bg-brand-jet-black py-16 px-6 lg:px-12"
-        aria-label="Key metrics"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-brand-dim-grey/30">
-            {metrics.map((m) => (
-              <div
-                key={m._id}
-                className="flex flex-col items-center text-center px-8 py-10 md:py-0"
-              >
-                <span className="font-playfair text-metric text-brand-red font-bold leading-none">
-                  {m.number}
-                </span>
-                <span className="font-barlow text-label text-brand-alabaster uppercase tracking-widest mt-3 font-semibold">
-                  {m.label}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </section>

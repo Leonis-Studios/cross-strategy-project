@@ -6,6 +6,7 @@ import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { blogPostQuery, blogRelatedQuery, blogSitemapQuery } from '@/sanity/lib/queries'
 import type { BlogPostData, BlogPostSummary } from '@/sanity/types'
+import { FALLBACK_BLOG_POSTS } from '@/lib/fallbacks'
 import PortableTextRenderer from '@/components/blog/PortableTextRenderer'
 import BlogCard from '@/components/blog/BlogCard'
 import JsonLd from '@/components/JsonLd'
@@ -75,8 +76,12 @@ function formatDate(dateString: string): string {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
 
-  const post = await client.fetch<BlogPostData>(blogPostQuery, { slug }).catch(() => null)
-  if (!post) notFound()
+  let post = await client.fetch<BlogPostData>(blogPostQuery, { slug }).catch(() => null)
+  if (!post) {
+    const fallback = FALLBACK_BLOG_POSTS.find((p) => p.slug.current === slug)
+    if (!fallback) notFound()
+    post = { ...fallback, body: [] }
+  }
 
   const categoryIds = post.categories?.map((c) => c._id) ?? []
   const related = await client

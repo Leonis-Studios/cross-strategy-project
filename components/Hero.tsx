@@ -1,37 +1,25 @@
-"use client";
-
-import { useEffect, useRef } from "react";
-import type { HeroData, MetricData } from "@/sanity/types";
+import type { CredentialData, HeroData } from "@/sanity/types";
 
 interface HeroProps {
   data: HeroData | null;
-  metrics: MetricData[];
+  credentials: CredentialData[];
 }
 
-export default function Hero({ data, metrics }: HeroProps) {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    requestAnimationFrame(() => el.classList.add("is-visible"));
-  }, []);
-
-  const displayMetrics =
-    metrics.length > 0
-      ? metrics.slice(0, 3)
+export default function Hero({ data, credentials }: HeroProps) {
+  const displayCredentials =
+    credentials.length > 0
+      ? credentials.slice(0, 3)
       : [
-          { _id: "m1", number: "240+", label: "Brands Placed" },
-          { _id: "m2", number: "$180M+", label: "Retail Revenue" },
-          { _id: "m3", number: "1,200+", label: "Store Doors" },
+          { _id: "c1", title: "Former Retail Buyer", description: "Operated inside national chain buying organizations" },
+          { _id: "c2", title: "National Network", description: "Direct buyer relationships at 50+ retail chains" },
+          { _id: "c3", title: "End-to-End Partner", description: "First pitch through first re-order" },
         ];
 
   return (
     <div className="hero-outer-shadow">
       <section
-        ref={sectionRef}
         aria-label="Start your retail placement journey"
-        className="relative overflow-hidden lg:min-h-[90vh]"
+        className="relative overflow-hidden lg:min-h-[90vh] is-visible"
       >
         {/* Desktop diagonal background — left (light) */}
         <div
@@ -97,24 +85,26 @@ export default function Hero({ data, metrics }: HeroProps) {
                 between — from first pitch to purchase order.
               </p>
 
-              {/* Stat cards */}
+              {/* Credential cards */}
               <div
                 className="flex gap-4"
                 role="list"
-                aria-label="Career highlights"
+                aria-label="Consultant credentials"
               >
-                {displayMetrics.map((m, i) => (
+                {displayCredentials.map((c, i) => (
                   <div
-                    key={m._id}
+                    key={c._id}
                     role="listitem"
                     className={`fade-up-item stagger-${i + 5} stat-card-lift flex-1 bg-white shadow-box p-3 lg:p-4 border border-brand-alabaster`}
                   >
-                    <p className="font-playfair font-bold text-stat text-brand-red leading-none">
-                      {m.number}
+                    <p className="font-barlow font-bold text-xs text-brand-red uppercase tracking-wide leading-tight">
+                      {c.title}
                     </p>
-                    <p className="font-barlow text-xs text-brand-dim-grey mt-2 leading-tight">
-                      {m.label}
-                    </p>
+                    {c.description && (
+                      <p className="font-barlow text-xs text-brand-dim-grey mt-2 leading-tight">
+                        {c.description}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>

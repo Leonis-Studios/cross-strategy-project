@@ -1,13 +1,20 @@
-import Link from "next/link";
+import Link from 'next/link'
+import { client } from '@/sanity/lib/client'
+import { siteSettingsQuery } from '@/sanity/lib/queries'
+import type { SiteSettingsData } from '@/sanity/types'
 
 const FOOTER_LINKS = [
-  { label: "Track Record", href: "/#track-record" },
-  { label: "Benefits", href: "/#benefits" },
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Book a Call", href: "/#contact" },
-];
+  { label: 'Track Record', href: '/#track-record' },
+  { label: 'Benefits', href: '/#benefits' },
+  { label: 'How It Works', href: '/#how-it-works' },
+  { label: 'Book a Call', href: '/#contact' },
+]
 
-export default function Footer() {
+export default async function Footer() {
+  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const ownerName = settings.ownerName ?? '[Owner Name]'
+  const tagline = settings.footerTagline ?? 'Retail placement consulting for Amazon & DTC brands.'
+
   return (
     <footer className="bg-brand-jet-black border-t border-brand-dim-grey">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12 flex flex-col md:flex-row items-center md:items-start justify-between gap-8">
@@ -18,10 +25,10 @@ export default function Footer() {
             className="font-playfair text-brand-alabaster text-xl font-bold hover:text-brand-red transition-colors duration-200"
             aria-label="Homepage"
           >
-            [Owner Name]
+            {ownerName}
           </Link>
           <p className="font-barlow text-brand-dim-grey text-label max-w-xs text-center md:text-left leading-relaxed">
-            Retail placement consulting for Amazon & DTC brands.
+            {tagline}
           </p>
         </div>
 
@@ -45,9 +52,9 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-brand-dim-grey">
         <p className="max-w-7xl mx-auto px-6 lg:px-12 py-4 font-barlow text-brand-dim-grey text-sm text-center md:text-left">
-          &copy; {new Date().getFullYear()} [Owner Name]. All rights reserved.
+          &copy; {new Date().getFullYear()} {ownerName}. All rights reserved.
         </p>
       </div>
     </footer>
-  );
+  )
 }

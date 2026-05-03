@@ -72,65 +72,47 @@ export const aboutPageQuery = groq`
   }
 `
 
+export const siteSettingsQuery = groq`
+  *[_type == "siteSettings"][0] {
+    ownerName,
+    ownerTitle,
+    footerTagline
+  }
+`
+
 export const homePageQuery = groq`
-  *[_type == "page" && slug.current == "home"][0] {
-    hero-> {
-      eyebrow,
-      headline,
-      headlineAccent,
-      subheadline,
-      ctaPrimary,
-      ctaPrimaryHref,
-      ctaSecondary,
-      ctaSecondaryHref,
-      floatingStatNumber,
-      floatingStatLabel,
-      image { ..., alt }
+  *[_type == "homePage"][0] {
+    hero,
+    "credentials": credentials[] {
+      "_id": _key,
+      title,
+      description
     },
-    testimonials[]-> {
-      _id,
+    "testimonials": testimonials[] {
+      "_id": _key,
       quote,
       authorName,
       authorTitle
     },
-    metrics[]-> | order(displayOrder asc) {
-      _id,
-      number,
-      label
-    },
-    retailers[]->[active == true] | order(displayOrder asc) {
-      _id,
-      name,
-      logo { ..., alt }
-    },
-    benefits[]-> | order(displayOrder asc) {
-      _id,
+    "benefits": benefits[] {
+      "_id": _key,
       title,
       description
     },
-    features[]-> | order(displayOrder asc) {
-      _id,
+    "features": features[] {
+      "_id": _key,
       title,
       description
     },
-    howItWorksSteps[]-> | order(stepNumber asc) {
-      _id,
+    "howItWorksSteps": howItWorksSteps[] {
+      "_id": _key,
       stepNumber,
       title,
       description
     },
-    cta-> {
-      eyebrow,
-      headline,
-      headlineAccent,
-      subheadline,
-      ctaPrimary,
-      ctaPrimaryHref,
-      ctaSecondary,
-      ctaSecondaryHref
-    },
-    faqs[]-> | order(displayOrder asc) {
-      _id,
+    cta,
+    "faqs": faqs[] {
+      "_id": _key,
       question,
       answer
     }

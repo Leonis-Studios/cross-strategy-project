@@ -18,7 +18,8 @@
       "Bash(node *)",
       "Bash(npx next *)",
       "Bash(git stash *)",
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "Bash(Select-Object -Property Name, FullName)"
     ]
   }
 }

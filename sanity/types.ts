@@ -23,16 +23,10 @@ export interface TestimonialData {
   authorTitle?: string
 }
 
-export interface MetricData {
+export interface CredentialData {
   _id: string
-  number: string
-  label: string
-}
-
-export interface RetailerData {
-  _id: string
-  name: string
-  logo?: SanityImage
+  title: string
+  description?: string
 }
 
 export interface BenefitData {
@@ -83,16 +77,21 @@ export interface AboutPageData {
   standoutQuote?: string
 }
 
-export interface PageData {
+export interface HomePageData {
   hero?: HeroData
   testimonials?: TestimonialData[]
-  metrics?: MetricData[]
-  retailers?: RetailerData[]
+  credentials?: CredentialData[]
   benefits?: BenefitData[]
   features?: FeatureData[]
   howItWorksSteps?: HowItWorksStepData[]
   cta?: CtaData
   faqs?: FaqData[]
+}
+
+export interface SiteSettingsData {
+  ownerName?: string
+  ownerTitle?: string
+  footerTagline?: string
 }
 
 export interface BlogCategoryData {
