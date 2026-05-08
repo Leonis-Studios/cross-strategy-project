@@ -12,7 +12,9 @@ const fuseOptions = {
     { name: 'categories', weight: 0.2, getFn: (post: BlogPostSummary) =>
         post.categories?.map((c) => c.title).join(' ') ?? '',
     },
-    { name: 'tags', weight: 0.1 },
+    { name: 'tags', weight: 0.1, getFn: (post: BlogPostSummary) =>
+        post.tags?.map((t) => t.title).join(' ') ?? '',
+    },
   ],
   threshold: 0.35,
   includeScore: true,

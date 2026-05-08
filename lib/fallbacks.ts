@@ -2,6 +2,7 @@ import type {
   AboutPageData,
   BenefitData,
   BlogCategoryData,
+  BlogTagData,
   BlogPostSummary,
   CredentialData,
   CtaData,
@@ -271,7 +272,12 @@ export const FALLBACK_BLOG_POSTS: BlogPostSummary[] = [
         slug: { current: "retail-strategy" },
       },
     ],
-    tags: ["Walmart", "Retail Placement", "Buyer Pitch", "Purchase Order"],
+    tags: [
+      { _id: "tag-walmart", title: "Walmart", slug: { current: "walmart" } },
+      { _id: "tag-retail-placement", title: "Retail Placement", slug: { current: "retail-placement" } },
+      { _id: "tag-buyer-pitch", title: "Buyer Pitch", slug: { current: "buyer-pitch" } },
+      { _id: "tag-purchase-order", title: "Purchase Order", slug: { current: "purchase-order" } },
+    ] as BlogTagData[],
   },
   {
     _id: "post-2",
@@ -289,7 +295,12 @@ export const FALLBACK_BLOG_POSTS: BlogPostSummary[] = [
         slug: { current: "buyer-relationships" },
       },
     ],
-    tags: ["Pitch Deck", "Retail Buyers", "Sell Sheet", "Category Analysis"],
+    tags: [
+      { _id: "tag-pitch-deck", title: "Pitch Deck", slug: { current: "pitch-deck" } },
+      { _id: "tag-retail-buyers", title: "Retail Buyers", slug: { current: "retail-buyers" } },
+      { _id: "tag-sell-sheet", title: "Sell Sheet", slug: { current: "sell-sheet" } },
+      { _id: "tag-category-analysis", title: "Category Analysis", slug: { current: "category-analysis" } },
+    ] as BlogTagData[],
   },
   {
     _id: "post-3",
@@ -308,7 +319,13 @@ export const FALLBACK_BLOG_POSTS: BlogPostSummary[] = [
         slug: { current: "brand-readiness" },
       },
     ],
-    tags: ["Brand Readiness", "DTC", "Margins", "Packaging", "Velocity"],
+    tags: [
+      { _id: "tag-brand-readiness", title: "Brand Readiness", slug: { current: "brand-readiness" } },
+      { _id: "tag-dtc", title: "DTC", slug: { current: "dtc" } },
+      { _id: "tag-margins", title: "Margins", slug: { current: "margins" } },
+      { _id: "tag-packaging", title: "Packaging", slug: { current: "packaging" } },
+      { _id: "tag-velocity", title: "Velocity", slug: { current: "velocity" } },
+    ] as BlogTagData[],
   },
   {
     _id: "post-4",
@@ -328,11 +345,11 @@ export const FALLBACK_BLOG_POSTS: BlogPostSummary[] = [
       },
     ],
     tags: [
-      "Whole Foods",
-      "Natural Grocery",
-      "Regional Buyers",
-      "Local Producer Program",
-    ],
+      { _id: "tag-whole-foods", title: "Whole Foods", slug: { current: "whole-foods" } },
+      { _id: "tag-natural-grocery", title: "Natural Grocery", slug: { current: "natural-grocery" } },
+      { _id: "tag-regional-buyers", title: "Regional Buyers", slug: { current: "regional-buyers" } },
+      { _id: "tag-local-producer", title: "Local Producer Program", slug: { current: "local-producer-program" } },
+    ] as BlogTagData[],
   },
 ];
 

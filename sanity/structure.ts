@@ -43,6 +43,7 @@ export const structure: StructureResolver = (S) =>
             .items([
               S.documentTypeListItem('blogPost').title('Blog Posts'),
               S.documentTypeListItem('blogCategory').title('Categories'),
+              S.documentTypeListItem('blogTag').title('Tags'),
             ])
         ),
     ])

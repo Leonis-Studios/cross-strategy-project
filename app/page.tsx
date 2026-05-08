@@ -103,7 +103,7 @@ export default async function Home() {
         credentials={credentials}
         testimonials={testimonials}
       />
-      <SectionDivider from="dark" to="dark" />
+      <SectionDivider from="light" to="dark" />
       <Benefits benefits={benefits} />
       <SectionDivider from="dark" to="light" />
       <Features features={features} />

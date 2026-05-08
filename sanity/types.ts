@@ -94,6 +94,12 @@ export interface SiteSettingsData {
   footerTagline?: string
 }
 
+export interface BlogTagData {
+  _id: string
+  title: string
+  slug: { current: string }
+}
+
 export interface BlogCategoryData {
   _id: string
   title: string
@@ -109,7 +115,7 @@ export interface BlogPostSummary {
   excerpt?: string
   coverImage?: SanityImage
   categories?: BlogCategoryData[]
-  tags?: string[]
+  tags?: BlogTagData[]
   featured?: boolean
   readingTime?: number
 }

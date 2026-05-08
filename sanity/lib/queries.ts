@@ -10,7 +10,7 @@ export const blogListQuery = groq`
       excerpt,
       coverImage { ..., alt },
       "categories": categories[]-> { _id, title, slug },
-      tags,
+      "tags": tags[]-> { _id, title, slug },
       featured,
       readingTime
     },
@@ -32,7 +32,7 @@ export const blogPostQuery = groq`
     excerpt,
     coverImage { ..., alt },
     "categories": categories[]-> { _id, title, slug },
-    tags,
+    "tags": tags[]-> { _id, title, slug },
     featured,
     readingTime,
     body,
