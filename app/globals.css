@@ -28,11 +28,13 @@
   --text-subheadline: 25px;
   --text-stat: 36px;
 
-  /* Font weights */
+  /* Font weights — bumped one step up from Tailwind defaults */
   --font-weight-body: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+  --font-weight-normal: 500;    /* was 400 */
+  --font-weight-medium: 600;    /* was 500 */
+  --font-weight-semibold: 700;  /* was 600 */
+  --font-weight-bold: 700;      /* capped — Barlow max loaded weight */
+
 
   /* Shadows */
   --shadow-box: 5px 5px 0px #ef2626ff;
@@ -224,4 +226,5 @@ body {
   background-color: var(--color-brand-jet-black);
   color: var(--color-brand-alabaster);
   font-family: var(--font-barlow), sans-serif;
+  font-weight: 500;
 }

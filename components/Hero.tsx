@@ -16,10 +16,10 @@ export default function Hero({ data, credentials }: HeroProps) {
         ];
 
   return (
-    <div className="hero-outer-shadow">
+    <div className="hero-outer-shadow overflow-hidden">
       <section
         aria-label="Start your retail placement journey"
-        className="relative overflow-hidden lg:min-h-[90vh] is-visible"
+        className="relative overflow-hidden min-h-screen is-visible"
       >
         {/* Desktop diagonal background — left (light) */}
         <div
@@ -44,10 +44,10 @@ export default function Hero({ data, credentials }: HeroProps) {
         />
 
         {/* Two-panel content grid */}
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 lg:min-h-[90vh]">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-screen">
 
           {/* LEFT PANEL — owner-focused (light theme) */}
-          <div className="relative flex flex-col justify-center overflow-hidden px-6 lg:px-16 py-12 lg:py-28 bg-brand-alabaster lg:bg-transparent">
+          <div className="relative flex flex-col justify-center overflow-hidden px-6 lg:px-16 py-12 lg:py-20 bg-brand-alabaster lg:bg-transparent">
             {/* Accent bar */}
             <div
               className="hero-sweep absolute top-0 left-0 right-0 h-1 bg-brand-red"
@@ -62,8 +62,10 @@ export default function Hero({ data, credentials }: HeroProps) {
               </span>
 
               {/* Name heading */}
-              <h1 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-xl leading-[0.9] text-brand-jet-black mb-4">
+              <h1 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-lg leading-[0.9] text-brand-jet-black mb-4">
                 {data?.headline ?? "[Owner Name]"}
+                <br />
+                <em className="block italic text-brand-red mt-2">{data?.headlineAccent ?? "retail shelves."}</em>
               </h1>
 
               {/* Credentials subtitle */}
@@ -95,7 +97,7 @@ export default function Hero({ data, credentials }: HeroProps) {
                   <div
                     key={c._id}
                     role="listitem"
-                    className={`fade-up-item stagger-${i + 5} stat-card-lift flex-1 bg-white shadow-box p-3 lg:p-4 border border-brand-alabaster`}
+                    className={`fade-up-item stagger-${i + 5} stat-card-lift flex-1 min-w-0 bg-white shadow-box p-4 lg:p-5 border border-brand-alabaster`}
                   >
                     <p className="font-barlow font-bold text-xs text-brand-red uppercase tracking-wide leading-tight">
                       {c.title}
@@ -125,7 +127,7 @@ export default function Hero({ data, credentials }: HeroProps) {
               <h2 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-lg leading-[0.95] text-brand-alabaster mb-5">
                 Get your brand on
                 <br />
-                <em className="italic text-brand-red">retail shelves.</em>
+                <em className="italic text-brand-red">{data?.headlineAccent ?? "retail shelves."}</em>
               </h2>
 
               {/* Subheading */}

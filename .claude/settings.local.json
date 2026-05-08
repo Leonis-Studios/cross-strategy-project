@@ -19,7 +19,9 @@
       "Bash(npx next *)",
       "Bash(git stash *)",
       "Bash(Get-ChildItem *)",
-      "Bash(Select-Object -Property Name, FullName)"
+      "Bash(Select-Object -Property Name, FullName)",
+      "Bash(dir \"D:\\\\dev\\\\business\\\\crossstrat-project\" /s /b)",
+      "PowerShell(Get-Content \"D:\\\\dev\\\\business\\\\crossstrat-project\\\\app\\\\globals.css\" | Select-String -Pattern \"text-display|font-playfair|hero-slide|stat-card-lift|shadow-box|--text-|--font-|--shadow-\" | ForEach-Object { $_.ToString\\(\\) })"
     ]
   }
 }

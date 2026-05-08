@@ -9,14 +9,16 @@ interface FAQProps {
 export default function FAQ({ faqs = FALLBACK_FAQS }: FAQProps) {
   const count = faqs.length
 
+  if (!count) return null
+
   const gridClass =
     count <= 2
       ? 'grid-cols-1 max-w-2xl mx-auto'
-      : count <= 4
+      : count <= 6
         ? 'grid-cols-1 md:grid-cols-2'
-        : 'grid-cols-1 md:grid-cols-2'
+        : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
 
-  const cardPadding = count >= 5 ? 'p-6' : 'p-8'
+  const cardPadding = count >= 7 ? 'p-5' : count >= 5 ? 'p-6' : 'p-8'
 
   return (
     <section
