@@ -159,7 +159,7 @@ export default function Hero({ data, credentials }: HeroProps) {
 
               {/* CTA button */}
               <a
-                href="mailto:contact@crossstrat.com"
+                href="/#contact"
                 className="fade-up-item stagger-5 block w-full bg-brand-red text-brand-alabaster font-barlow font-bold py-4 px-6 text-body text-center hover:opacity-90 transition-opacity duration-200 shadow-[4px_4px_0px_rgba(0,0,0,0.5)] mb-4"
               >
                 Book My Free Strategy Call →

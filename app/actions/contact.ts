@@ -1,9 +1,13 @@
 "use server"
 
+import { Resend } from 'resend'
+
 export interface ContactFormState {
   ok: boolean
   error?: string
 }
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function sendContactMessage(
   _prev: ContactFormState,
@@ -23,8 +27,25 @@ export async function sendContactMessage(
     return { ok: false, error: 'Please enter a valid email address.' }
   }
 
-  // TODO: wire Resend (or similar) to send email notification
-  console.log('[contact form]', { name, email, company, message })
+  const { error } = await resend.emails.send({
+    // swap 'from' to a verified domain address once crossstrat.com is verified in Resend
+    from: 'CrossStrat <onboarding@resend.dev>',
+    to: 'contact@crossstrat.com',
+    replyTo: email,
+    subject: `New lead: ${name}`,
+    html: `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Company:</strong> ${company || '—'}</p>
+      <p><strong>Message:</strong></p>
+      <p>${message}</p>
+    `,
+  })
+
+  if (error) {
+    console.error('[contact form] Resend error', error)
+    return { ok: false, error: 'Failed to send message. Please try again.' }
+  }
 
   return { ok: true }
 }

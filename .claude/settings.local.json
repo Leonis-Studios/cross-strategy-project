@@ -23,7 +23,11 @@
       "Bash(dir \"D:\\\\dev\\\\business\\\\crossstrat-project\" /s /b)",
       "PowerShell(Get-Content \"D:\\\\dev\\\\business\\\\crossstrat-project\\\\app\\\\globals.css\" | Select-String -Pattern \"text-display|font-playfair|hero-slide|stat-card-lift|shadow-box|--text-|--font-|--shadow-\" | ForEach-Object { $_.ToString\\(\\) })",
       "Bash(Select-Object -ExpandProperty FullName)",
-      "PowerShell(Get-ChildItem -Path \"D:\\\\dev\\\\business\\\\crossstrat-project\" -Recurse -Directory | Where-Object { $_.Name -match \"app|sanity|schemas\" } | Select-Object -ExpandProperty FullName)"
+      "PowerShell(Get-ChildItem -Path \"D:\\\\dev\\\\business\\\\crossstrat-project\" -Recurse -Directory | Where-Object { $_.Name -match \"app|sanity|schemas\" } | Select-Object -ExpandProperty FullName)",
+      "PowerShell(Get-ChildItem \"D:\\\\dev\\\\business\\\\crossstrat-project\" -Depth 2 | Where-Object { $_.FullName -notmatch \"node_modules\" } | Select-Object FullName)",
+      "PowerShell(Test-Path *)",
+      "PowerShell(Split-Path *)",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\dev\\\\business\\\\crossstrat-project\" -Exclude node_modules, .next | Select-Object Name, @{Name=\"Type\"; Expression={if\\($_.PSIsContainer\\){\"DIR\"}else{\"FILE\"}}} | Format-Table -AutoSize)"
     ]
   }
 }
