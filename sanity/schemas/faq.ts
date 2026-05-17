@@ -9,6 +9,7 @@ export const faq = defineType({
       name: 'question',
       title: 'Question',
       type: 'string',
+      description: 'The question as it appears on the site',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -16,13 +17,14 @@ export const faq = defineType({
       title: 'Answer',
       type: 'text',
       rows: 4,
+      description: 'Full answer shown when the question is expanded',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'displayOrder',
       title: 'Display Order',
       type: 'number',
-      description: 'Lower numbers appear first',
+      description: 'Controls the order. Lower number = shown first.',
     }),
   ],
   preview: {
