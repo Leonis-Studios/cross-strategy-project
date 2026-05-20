@@ -32,8 +32,8 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const { data: rawData } = await sanityFetch<AboutPageData | null>({ query: aboutPageQuery })
-  const data: AboutPageData = rawData ?? FALLBACK_ABOUT_PAGE
+  const { data: rawData } = await sanityFetch({ query: aboutPageQuery })
+  const data: AboutPageData = (rawData as AboutPageData | null) ?? FALLBACK_ABOUT_PAGE
 
   const about: AboutPageData = {
     ownerName:      data.ownerName      ?? FALLBACK_ABOUT_PAGE.ownerName,
