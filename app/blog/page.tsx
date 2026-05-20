@@ -34,7 +34,8 @@ export default async function BlogPage() {
   let categories: BlogCategoryData[] = FALLBACK_BLOG_CATEGORIES
 
   try {
-    const { data } = await sanityFetch<{ posts: BlogPostSummary[]; categories: BlogCategoryData[] }>({ query: blogListQuery })
+    const { data: rawData } = await sanityFetch({ query: blogListQuery })
+    const data = rawData as { posts: BlogPostSummary[]; categories: BlogCategoryData[] } | null
     if (data?.posts?.length) posts = data.posts
     if (data?.categories?.length) categories = data.categories
   } catch {

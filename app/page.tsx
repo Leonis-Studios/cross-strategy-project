@@ -23,8 +23,8 @@ import {
 } from '@/lib/fallbacks'
 
 export default async function Home() {
-  const { data: rawData } = await sanityFetch<HomePageData>({ query: homePageQuery })
-  const data: HomePageData = rawData ?? {}
+  const { data: rawData } = await sanityFetch({ query: homePageQuery })
+  const data: HomePageData = (rawData as HomePageData | null) ?? {}
 
   const hero            = data.hero                    ?? FALLBACK_HERO
   const credentials     = data.credentials?.length     ? data.credentials     : FALLBACK_CREDENTIALS

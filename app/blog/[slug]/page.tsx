@@ -75,8 +75,8 @@ function formatDate(dateString: string): string {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
 
-  let post: BlogPostData | null = await sanityFetch<BlogPostData>({ query: blogPostQuery, params: { slug } })
-    .then(r => r.data)
+  let post: BlogPostData | null = await sanityFetch({ query: blogPostQuery, params: { slug } })
+    .then(r => r.data as BlogPostData)
     .catch(() => null)
 
   if (!post) {
@@ -86,8 +86,8 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const categoryIds = post.categories?.map((c) => c._id) ?? []
-  const related: BlogPostSummary[] = await sanityFetch<BlogPostSummary[]>({ query: blogRelatedQuery, params: { slug, categoryIds } })
-    .then(r => r.data ?? [])
+  const related: BlogPostSummary[] = await sanityFetch({ query: blogRelatedQuery, params: { slug, categoryIds } })
+    .then(r => (r.data as BlogPostSummary[] | null) ?? [])
     .catch(() => [])
 
   const coverUrl = post.coverImage
