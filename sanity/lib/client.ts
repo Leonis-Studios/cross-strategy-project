@@ -6,4 +6,8 @@ export const client = createClient({
   apiVersion: '2026-04-24',
   useCdn: process.env.NODE_ENV === 'production',
   token: process.env.SANITY_API_READ_TOKEN,
+  stega: {
+    enabled: process.env.NODE_ENV !== 'production',
+    studioUrl: '/studio',
+  },
 })

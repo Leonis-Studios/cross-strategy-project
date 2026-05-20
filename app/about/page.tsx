@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
-import { client } from '@/sanity/lib/client'
+import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
 import { aboutPageQuery } from '@/sanity/lib/queries'
 import type { AboutPageData } from '@/sanity/types'
@@ -32,7 +32,8 @@ export const metadata: Metadata = {
 }
 
 export default async function AboutPage() {
-  const data: AboutPageData = (await client.fetch(aboutPageQuery)) ?? FALLBACK_ABOUT_PAGE
+  const { data: rawData } = await sanityFetch<AboutPageData | null>({ query: aboutPageQuery })
+  const data: AboutPageData = rawData ?? FALLBACK_ABOUT_PAGE
 
   const about: AboutPageData = {
     ownerName:      data.ownerName      ?? FALLBACK_ABOUT_PAGE.ownerName,

@@ -33,7 +33,11 @@
       "Bash(Select-Object -First 30)",
       "Bash(Format-List FullName)",
       "Bash(Select-Object -First 20)",
-      "Bash(Select-Object Name, PSIsContainer)"
+      "Bash(Select-Object Name, PSIsContainer)",
+      "PowerShell(Get-ChildItem *)",
+      "Bash(dir *)",
+      "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
+      "mcp__Sanity__create_documents_from_json"
     ]
   }
 }

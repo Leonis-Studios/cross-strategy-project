@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
+import { presentationTool } from 'sanity/presentation'
 import { homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost } from './sanity/schemas'
 import { structure } from './sanity/structure'
 
@@ -10,7 +11,17 @@ export default defineConfig({
   basePath: '/studio',
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production',
-  plugins: [structureTool({ structure }), visionTool()],
+  plugins: [
+    structureTool({ structure }),
+    visionTool(),
+    presentationTool({
+      previewUrl: {
+        draftMode: {
+          enable: '/api/draft-mode/enable',
+        },
+      },
+    }),
+  ],
   schema: {
     types: [homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost],
   },

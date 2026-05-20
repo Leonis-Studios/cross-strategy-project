@@ -1,13 +1,11 @@
 import type { Metadata } from 'next'
-import { client } from '@/sanity/lib/client'
+import { sanityFetch } from '@/sanity/lib/live'
 import { blogListQuery } from '@/sanity/lib/queries'
 import { FALLBACK_BLOG_POSTS, FALLBACK_BLOG_CATEGORIES } from '@/lib/fallbacks'
 import type { BlogCategoryData, BlogPostSummary } from '@/sanity/types'
 import BlogSearch from '@/components/blog/BlogSearch'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-
-export const revalidate = 3600
 
 const SITE_URL = 'https://example.com' // TODO: replace with live domain
 
@@ -36,9 +34,7 @@ export default async function BlogPage() {
   let categories: BlogCategoryData[] = FALLBACK_BLOG_CATEGORIES
 
   try {
-    const data = await client.fetch<{ posts: BlogPostSummary[]; categories: BlogCategoryData[] }>(
-      blogListQuery
-    )
+    const { data } = await sanityFetch<{ posts: BlogPostSummary[]; categories: BlogCategoryData[] }>({ query: blogListQuery })
     if (data?.posts?.length) posts = data.posts
     if (data?.categories?.length) categories = data.categories
   } catch {

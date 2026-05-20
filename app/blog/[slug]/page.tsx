@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
+import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
 import { blogPostQuery, blogRelatedQuery, blogSitemapQuery } from '@/sanity/lib/queries'
 import type { BlogPostData, BlogPostSummary } from '@/sanity/types'
@@ -11,8 +12,6 @@ import PortableTextRenderer from '@/components/blog/PortableTextRenderer'
 import BlogCard from '@/components/blog/BlogCard'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-
-export const revalidate = 3600
 
 const SITE_URL = 'https://example.com' // TODO: replace with live domain
 
@@ -76,7 +75,10 @@ function formatDate(dateString: string): string {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
 
-  let post = await client.fetch<BlogPostData>(blogPostQuery, { slug }).catch(() => null)
+  let post: BlogPostData | null = await sanityFetch<BlogPostData>({ query: blogPostQuery, params: { slug } })
+    .then(r => r.data)
+    .catch(() => null)
+
   if (!post) {
     const fallback = FALLBACK_BLOG_POSTS.find((p) => p.slug.current === slug)
     if (!fallback) notFound()
@@ -84,8 +86,8 @@ export default async function BlogPostPage({ params }: Props) {
   }
 
   const categoryIds = post.categories?.map((c) => c._id) ?? []
-  const related = await client
-    .fetch<BlogPostSummary[]>(blogRelatedQuery, { slug, categoryIds })
+  const related: BlogPostSummary[] = await sanityFetch<BlogPostSummary[]>({ query: blogRelatedQuery, params: { slug, categoryIds } })
+    .then(r => r.data ?? [])
     .catch(() => [])
 
   const coverUrl = post.coverImage

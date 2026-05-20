@@ -4,6 +4,7 @@ import './globals.css'
 import JsonLd from '@/components/JsonLd'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { SanityLive } from '@/sanity/lib/live'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -155,6 +156,7 @@ export default function RootLayout({
           {children}
         </div>
         <Footer />
+        <SanityLive />
       </body>
     </html>
   )

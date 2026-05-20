@@ -1,4 +1,4 @@
-import { client } from '@/sanity/lib/client'
+import { sanityFetch } from '@/sanity/lib/live'
 import { homePageQuery } from '@/sanity/lib/queries'
 import type { HomePageData } from '@/sanity/types'
 import Hero from '@/components/Hero'
@@ -22,10 +22,9 @@ import {
   FALLBACK_FAQS,
 } from '@/lib/fallbacks'
 
-export const revalidate = 3600
-
 export default async function Home() {
-  const data: HomePageData = (await client.fetch(homePageQuery)) ?? {}
+  const { data: rawData } = await sanityFetch<HomePageData>({ query: homePageQuery })
+  const data: HomePageData = rawData ?? {}
 
   const hero            = data.hero                    ?? FALLBACK_HERO
   const credentials     = data.credentials?.length     ? data.credentials     : FALLBACK_CREDENTIALS

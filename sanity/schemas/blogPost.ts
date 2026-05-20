@@ -9,12 +9,14 @@ export const blogPost = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
+      description: 'H1 on the article page, blog grid card, and browser tab. Aim for 50–70 chars. e.g. "How to Get Your Product Into Walmart: The Complete Playbook"',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
+      description: 'URL path for this post: yourdomain.com/blog/your-slug. Click "Generate" to auto-fill from the title. Hyphens, no spaces, lowercase. e.g. how-to-get-product-into-walmart',
       options: { source: 'title', maxLength: 96 },
       validation: (Rule) => Rule.required(),
     }),
@@ -22,6 +24,7 @@ export const blogPost = defineType({
       name: 'publishedAt',
       title: 'Published At',
       type: 'datetime',
+      description: 'Date shown in the article header. Controls sort order — newest first in the blog listing. Pre-date for scheduled content.',
       initialValue: () => new Date().toISOString(),
     }),
     defineField({
@@ -50,12 +53,14 @@ export const blogPost = defineType({
       name: 'categories',
       title: 'Categories',
       type: 'array',
+      description: 'Broad topic shown in red above the article title and used to find related posts. Assign 1–2. Create new ones in the "Blog Category" document type.',
       of: [defineArrayMember({ type: 'reference', to: [{ type: 'blogCategory' }] })],
     }),
     defineField({
       name: 'tags',
       title: 'Tags',
       type: 'array',
+      description: 'Fine-grained labels shown at the bottom of the article page. Assign 3–5. Create new ones in the "Blog Tag" document type.',
       of: [defineArrayMember({ type: 'reference', to: [{ type: 'blogTag' }] })],
     }),
     defineField({
@@ -69,19 +74,31 @@ export const blogPost = defineType({
       name: 'readingTime',
       title: 'Reading Time (minutes)',
       type: 'number',
+      description: 'Shown as "X min read" in the article header. Estimate ~200 words/min and round up. A 1,200-word post ≈ 5 min.',
     }),
     defineField({
       name: 'body',
       title: 'Body',
       type: 'array',
+      description: 'Full article content. Use H2 for major sections, H3 for sub-sections — do not add H1 (the title above is already H1). Inline images need Alt Text.',
       of: [
         defineArrayMember({ type: 'block' }),
         defineArrayMember({
           type: 'image',
           options: { hotspot: true },
           fields: [
-            defineField({ name: 'alt', title: 'Alt Text', type: 'string' }),
-            defineField({ name: 'caption', title: 'Caption', type: 'string' }),
+            defineField({
+              name: 'alt',
+              title: 'Alt Text',
+              type: 'string',
+              description: 'Describe the image for screen readers and Google Images. Be specific: "Walmart buyer meeting" not "meeting"',
+            }),
+            defineField({
+              name: 'caption',
+              title: 'Caption',
+              type: 'string',
+              description: 'Optional text shown below the image. Use for attribution or context the image alone does not convey.',
+            }),
           ],
         }),
       ],
