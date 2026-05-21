@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Barlow } from 'next/font/google'
 import './globals.css'
+import { draftMode } from 'next/headers'
+import { VisualEditing } from 'next-sanity'
 import JsonLd from '@/components/JsonLd'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
@@ -138,11 +140,12 @@ const serviceSchema = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const { isEnabled } = await draftMode()
   return (
     <html
       lang="en"
@@ -156,6 +159,7 @@ export default function RootLayout({
           {children}
         </div>
         <Footer />
+        {isEnabled && <VisualEditing />}
         <SanityLive />
       </body>
     </html>

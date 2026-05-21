@@ -1,7 +1,7 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
-import { presentationTool } from 'sanity/presentation'
+import { defineLocations, presentationTool } from 'sanity/presentation'
 import { homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost } from './sanity/schemas'
 import { structure } from './sanity/structure'
 
@@ -15,6 +15,14 @@ export default defineConfig({
     structureTool({ structure }),
     visionTool(),
     presentationTool({
+      resolve: {
+        locations: {
+          homePage: defineLocations({
+            select: { title: 'hero.headline' },
+            resolve: () => ({ locations: [{ title: 'Home', href: '/' }] }),
+          }),
+        },
+      },
       previewUrl: {
         draftMode: {
           enable: '/api/draft-mode/enable',

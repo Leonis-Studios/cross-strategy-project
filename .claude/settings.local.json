@@ -37,7 +37,8 @@
       "PowerShell(Get-ChildItem *)",
       "Bash(dir *)",
       "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
-      "mcp__Sanity__create_documents_from_json"
+      "mcp__Sanity__create_documents_from_json",
+      "Bash(powershell *)"
     ]
   }
 }
