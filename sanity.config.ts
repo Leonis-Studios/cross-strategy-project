@@ -2,8 +2,13 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { defineLocations, presentationTool } from 'sanity/presentation'
-import { homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost } from './sanity/schemas'
+import {
+  homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost,
+  hero, cta, testimonial, metric, benefit, feature, howItWorksStep, faq, credential, retailer,
+} from './sanity/schemas'
 import { structure } from './sanity/structure'
+
+const homeLocation = { locations: [{ title: 'Home', href: '/' }] }
 
 export default defineConfig({
   name: 'crossstrat',
@@ -19,7 +24,47 @@ export default defineConfig({
         locations: {
           homePage: defineLocations({
             select: { title: 'hero.headline' },
-            resolve: () => ({ locations: [{ title: 'Home', href: '/' }] }),
+            resolve: () => homeLocation,
+          }),
+          hero: defineLocations({
+            select: { title: 'headline' },
+            resolve: () => homeLocation,
+          }),
+          cta: defineLocations({
+            select: { title: 'headline' },
+            resolve: () => homeLocation,
+          }),
+          testimonial: defineLocations({
+            select: { title: 'authorName' },
+            resolve: () => homeLocation,
+          }),
+          credential: defineLocations({
+            select: { title: 'title' },
+            resolve: () => homeLocation,
+          }),
+          benefit: defineLocations({
+            select: { title: 'title' },
+            resolve: () => homeLocation,
+          }),
+          feature: defineLocations({
+            select: { title: 'title' },
+            resolve: () => homeLocation,
+          }),
+          howItWorksStep: defineLocations({
+            select: { title: 'title' },
+            resolve: () => homeLocation,
+          }),
+          faq: defineLocations({
+            select: { title: 'question' },
+            resolve: () => homeLocation,
+          }),
+          retailer: defineLocations({
+            select: { title: 'name' },
+            resolve: () => homeLocation,
+          }),
+          metric: defineLocations({
+            select: { title: 'number' },
+            resolve: () => homeLocation,
           }),
         },
       },
@@ -31,6 +76,9 @@ export default defineConfig({
     }),
   ],
   schema: {
-    types: [homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost],
+    types: [
+      homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost,
+      hero, cta, testimonial, metric, benefit, feature, howItWorksStep, faq, credential, retailer,
+    ],
   },
 })

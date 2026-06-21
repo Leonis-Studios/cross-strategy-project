@@ -1,4 +1,9 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
+import { createElement } from 'react'
+import type { ReactNode } from 'react'
+
+const blockquoteComponent = ({ children }: { children: ReactNode }) =>
+  createElement('blockquote', null, children)
 
 export const blogPost = defineType({
   name: 'blogPost',
@@ -82,7 +87,16 @@ export const blogPost = defineType({
       type: 'array',
       description: 'Full article content. Use H2 for major sections, H3 for sub-sections — do not add H1 (the title above is already H1). Inline images need Alt Text.',
       of: [
-        defineArrayMember({ type: 'block' }),
+        defineArrayMember({
+          type: 'block',
+          styles: [
+            { title: 'Normal',    value: 'normal' },
+            { title: 'Heading 2', value: 'h2' },
+            { title: 'Heading 3', value: 'h3' },
+            { title: 'Heading 4', value: 'h4' },
+            { title: 'Quote',     value: 'blockquote', component: blockquoteComponent },
+          ],
+        }),
         defineArrayMember({
           type: 'image',
           options: { hotspot: true },

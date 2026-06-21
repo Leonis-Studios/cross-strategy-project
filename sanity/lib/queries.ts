@@ -81,40 +81,57 @@ export const siteSettingsQuery = groq`
 `
 
 export const homePageQuery = groq`
-  *[_type == "homePage"][0] {
-    hero,
-    "credentials": credentials[] {
-      "_id": _key,
-      title,
-      description
-    },
-    "testimonials": testimonials[] {
-      "_id": _key,
-      quote,
-      authorName,
-      authorTitle
-    },
-    "benefits": benefits[] {
-      "_id": _key,
-      title,
-      description
-    },
-    "features": features[] {
-      "_id": _key,
-      title,
-      description
-    },
-    "howItWorksSteps": howItWorksSteps[] {
-      "_id": _key,
-      stepNumber,
-      title,
-      description
-    },
-    cta,
-    "faqs": faqs[] {
-      "_id": _key,
-      question,
-      answer
-    }
+  {
+    "hero": select(
+      defined(*[_type == "hero" && _id == "homeHero"][0]) => *[_type == "hero" && _id == "homeHero"][0] {
+        eyebrow, headline, headlineAccent, subheadline,
+        ctaPrimary, ctaPrimaryHref, ctaSecondary, ctaSecondaryHref,
+        floatingStatNumber, floatingStatLabel, image
+      },
+      *[_type == "homePage"][0].hero
+    ),
+    "credentials": select(
+      count(*[_type == "credential"]) > 0 => *[_type == "credential"] | order(displayOrder asc) {
+        "_id": _id, title, description
+      },
+      *[_type == "homePage"][0].credentials[] { "_id": _key, title, description }
+    ),
+    "testimonials": select(
+      count(*[_type == "testimonial"]) > 0 => *[_type == "testimonial"] | order(_createdAt asc) {
+        "_id": _id, quote, authorName, authorTitle
+      },
+      *[_type == "homePage"][0].testimonials[] { "_id": _key, quote, authorName, authorTitle }
+    ),
+    "benefits": select(
+      count(*[_type == "benefit"]) > 0 => *[_type == "benefit"] | order(displayOrder asc) {
+        "_id": _id, title, description
+      },
+      *[_type == "homePage"][0].benefits[] { "_id": _key, title, description }
+    ),
+    "features": select(
+      count(*[_type == "feature"]) > 0 => *[_type == "feature"] | order(displayOrder asc) {
+        "_id": _id, title, description
+      },
+      *[_type == "homePage"][0].features[] { "_id": _key, title, description }
+    ),
+    "howItWorksSteps": select(
+      count(*[_type == "howItWorksStep"]) > 0 => *[_type == "howItWorksStep"] | order(stepNumber asc) {
+        "_id": _id, stepNumber, title, description
+      },
+      *[_type == "homePage"][0].howItWorksSteps[] { "_id": _key, stepNumber, title, description }
+    ),
+    "cta": select(
+      defined(*[_type == "cta" && _id == "homeCta"][0]) => *[_type == "cta" && _id == "homeCta"][0] {
+        eyebrow, headline, headlineAccent, subheadline,
+        ctaPrimary, ctaPrimaryHref, ctaSecondary, ctaSecondaryHref
+      },
+      *[_type == "homePage"][0].cta
+    ),
+    "faqs": select(
+      count(*[_type == "faq"]) > 0 => *[_type == "faq"] | order(displayOrder asc) {
+        "_id": _id, question, answer
+      },
+      *[_type == "homePage"][0].faqs[] { "_id": _key, question, answer }
+    )
   }
 `

@@ -38,7 +38,8 @@
       "Bash(dir *)",
       "Bash(grep -E \"\\\\.\\(tsx|ts\\)$\")",
       "mcp__Sanity__create_documents_from_json",
-      "Bash(powershell *)"
+      "Bash(powershell *)",
+      "Bash(findstr -i sanity)"
     ]
   }
 }
