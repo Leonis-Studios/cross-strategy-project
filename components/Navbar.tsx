@@ -11,7 +11,11 @@ const NAV_LINKS = [
   { label: "Blog", href: "/blog" },
 ];
 
-export default function Navbar() {
+interface NavbarProps {
+  logoText?: string
+}
+
+export default function Navbar({ logoText = "[Owner Name]" }: NavbarProps) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -26,7 +30,7 @@ export default function Navbar() {
           className="font-playfair text-brand-alabaster text-xl font-bold hover:text-brand-red transition-colors duration-200 shrink-0"
           aria-label="Homepage"
         >
-          [Owner Name]
+          {logoText}
         </Link>
 
         {/* Desktop links */}

@@ -12,7 +12,7 @@ const FOOTER_LINKS = [
 
 export default async function Footer() {
   const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
-  const ownerName = settings.ownerName ?? '[Owner Name]'
+  const ownerName = settings.logoText ?? settings.ownerName ?? '[Owner Name]'
   const tagline = settings.footerTagline ?? 'Retail placement consulting for Amazon & DTC brands.'
 
   return (

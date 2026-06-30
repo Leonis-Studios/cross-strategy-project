@@ -16,24 +16,36 @@ import {
   FALLBACK_CREDENTIALS,
   FALLBACK_TESTIMONIALS,
   FALLBACK_BENEFITS,
+  FALLBACK_BENEFITS_SECTION,
   FALLBACK_FEATURES,
+  FALLBACK_FEATURES_SECTION,
   FALLBACK_HOW_IT_WORKS_STEPS,
+  FALLBACK_HOW_IT_WORKS_SECTION,
   FALLBACK_CTA,
   FALLBACK_FAQS,
+  FALLBACK_FAQ_SECTION,
+  FALLBACK_SOCIAL_PROOF_SECTION,
+  FALLBACK_CONTACT_SECTION,
 } from '@/lib/fallbacks'
 
 export default async function Home() {
   const { data: rawData } = await sanityFetch({ query: homePageQuery })
   const data: HomePageData = (rawData as HomePageData | null) ?? {}
 
-  const hero            = data.hero                    ?? FALLBACK_HERO
+  const hero            = { ...FALLBACK_HERO, ...(data.hero ?? {}) }
   const credentials     = data.credentials?.length     ? data.credentials     : FALLBACK_CREDENTIALS
   const testimonials    = data.testimonials?.length    ? data.testimonials    : FALLBACK_TESTIMONIALS
+  const socialProof     = { ...FALLBACK_SOCIAL_PROOF_SECTION,    ...(data.socialProof     ?? {}) }
   const benefits        = data.benefits?.length        ? data.benefits        : FALLBACK_BENEFITS
+  const benefitsSection = { ...FALLBACK_BENEFITS_SECTION,        ...(data.benefitsSection ?? {}) }
   const features        = data.features?.length        ? data.features        : FALLBACK_FEATURES
+  const featuresSection = { ...FALLBACK_FEATURES_SECTION,        ...(data.featuresSection ?? {}) }
   const howItWorksSteps = data.howItWorksSteps?.length ? data.howItWorksSteps : FALLBACK_HOW_IT_WORKS_STEPS
-  const cta             = data.cta                     ?? FALLBACK_CTA
+  const howItWorksSection = { ...FALLBACK_HOW_IT_WORKS_SECTION,  ...(data.howItWorksSection ?? {}) }
+  const cta             = { ...FALLBACK_CTA,                     ...(data.cta             ?? {}) }
   const faqs            = data.faqs?.length            ? data.faqs            : FALLBACK_FAQS
+  const faqSection      = { ...FALLBACK_FAQ_SECTION,             ...(data.faqSection      ?? {}) }
+  const contactSection  = { ...FALLBACK_CONTACT_SECTION,         ...(data.contactSection  ?? {}) }
 
   const faqSchema = {
     '@context': 'https://schema.org',
@@ -101,19 +113,20 @@ export default async function Home() {
       <SocialProof
         credentials={credentials}
         testimonials={testimonials}
+        section={socialProof}
       />
       <SectionDivider from="light" to="dark" />
-      <Benefits benefits={benefits} />
+      <Benefits benefits={benefits} section={benefitsSection} />
       <SectionDivider from="dark" to="light" />
-      <Features features={features} />
+      <Features features={features} section={featuresSection} />
       <SectionDivider from="light" to="dark" />
-      <HowItWorks steps={howItWorksSteps} />
+      <HowItWorks steps={howItWorksSteps} section={howItWorksSection} />
       <SectionDivider from="dark" to="light" />
       <CallToAction data={cta} />
       <SectionDivider from="light" to="dark" />
-      <FAQ faqs={faqs} />
+      <FAQ faqs={faqs} section={faqSection} />
       <SectionDivider from="dark" to="dark" />
-      <ContactForm />
+      <ContactForm section={contactSection} />
     </main>
   )
 }

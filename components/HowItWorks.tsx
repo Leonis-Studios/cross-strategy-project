@@ -1,14 +1,28 @@
 import AnimateIn from './AnimateIn'
-import type { HowItWorksStepData } from '@/sanity/types'
+import type { HowItWorksSection, HowItWorksStepData } from '@/sanity/types'
 import { FALLBACK_HOW_IT_WORKS_STEPS } from '@/lib/fallbacks'
 
 const STAGGER = ['stagger-2', 'stagger-3', 'stagger-4', 'stagger-5'] as const
 
 interface HowItWorksProps {
   steps?: HowItWorksStepData[]
+  section: HowItWorksSection
 }
 
-export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS }: HowItWorksProps) {
+function SplitHeadline({ headline, accent, className }: { headline: string; accent?: string; className: string }) {
+  if (!accent || !headline.includes(accent)) {
+    return <h2 className={className}>{headline}</h2>
+  }
+  const before = headline.slice(0, headline.lastIndexOf(accent)).trimEnd()
+  return (
+    <h2 className={className}>
+      {before}{' '}
+      <em className="italic text-brand-red">{accent}</em>
+    </h2>
+  )
+}
+
+export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS, section }: HowItWorksProps) {
   return (
     <section
       id="how-it-works"
@@ -19,17 +33,19 @@ export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS }: HowI
         {/* Header */}
         <div className="text-center mb-16">
           <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-            The Process
+            {section.howItWorksEyebrow}
           </p>
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
-          <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-3xl mx-auto">
-            How retail placement{' '}
-            <em className="italic text-brand-red">consulting works</em>
-          </h2>
-          <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
-            From brand audit to purchase order — a proven 4-step process that has placed
-            240+ brands across America&apos;s top retail chains.
-          </p>
+          <SplitHeadline
+            headline={section.howItWorksHeadline ?? ''}
+            accent={section.howItWorksHeadlineAccent}
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-3xl mx-auto"
+          />
+          {section.howItWorksSubheadline && (
+            <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
+              {section.howItWorksSubheadline}
+            </p>
+          )}
         </div>
 
         {/* Steps */}

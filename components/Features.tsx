@@ -1,14 +1,28 @@
 import AnimateIn from './AnimateIn'
-import type { FeatureData } from '@/sanity/types'
+import type { FeatureData, FeaturesSection } from '@/sanity/types'
 import { FALLBACK_FEATURES } from '@/lib/fallbacks'
 
 const STAGGER = ['stagger-2', 'stagger-3', 'stagger-4', 'stagger-2', 'stagger-3', 'stagger-4'] as const
 
 interface FeaturesProps {
   features?: FeatureData[]
+  section: FeaturesSection
 }
 
-export default function Features({ features = FALLBACK_FEATURES }: FeaturesProps) {
+function SplitHeadline({ headline, accent, className }: { headline: string; accent?: string; className: string }) {
+  if (!accent || !headline.includes(accent)) {
+    return <h2 className={className}>{headline}</h2>
+  }
+  const before = headline.slice(0, headline.lastIndexOf(accent)).trimEnd()
+  return (
+    <h2 className={className}>
+      {before}{' '}
+      <em className="italic text-brand-red">{accent}</em>
+    </h2>
+  )
+}
+
+export default function Features({ features = FALLBACK_FEATURES, section }: FeaturesProps) {
   return (
     <section
       id="features"
@@ -19,17 +33,19 @@ export default function Features({ features = FALLBACK_FEATURES }: FeaturesProps
         {/* Header */}
         <div className="text-center mb-16">
           <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-            Is This You?
+            {section.featuresEyebrow}
           </p>
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
-          <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight max-w-2xl mx-auto">
-            What do you{' '}
-            <em className="italic text-brand-red">bring to the table?</em>
-          </h2>
-          <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-xl mx-auto leading-relaxed">
-            The best retail partnerships start with a brand that&apos;s ready. Here&apos;s what
-            separates the brands that land shelf space from the ones that don&apos;t.
-          </p>
+          <SplitHeadline
+            headline={section.featuresHeadline ?? ''}
+            accent={section.featuresHeadlineAccent}
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight max-w-2xl mx-auto"
+          />
+          {section.featuresSubheadline && (
+            <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-xl mx-auto leading-relaxed">
+              {section.featuresSubheadline}
+            </p>
+          )}
         </div>
 
         {/* Cards */}

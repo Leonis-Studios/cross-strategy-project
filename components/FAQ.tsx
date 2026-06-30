@@ -1,12 +1,26 @@
 import AnimateIn from './AnimateIn'
-import type { FaqData } from '@/sanity/types'
+import type { FaqData, FaqSection } from '@/sanity/types'
 import { FALLBACK_FAQS } from '@/lib/fallbacks'
 
 interface FAQProps {
   faqs?: FaqData[]
+  section: FaqSection
 }
 
-export default function FAQ({ faqs = FALLBACK_FAQS }: FAQProps) {
+function SplitHeadline({ headline, accent, className }: { headline: string; accent?: string; className: string }) {
+  if (!accent || !headline.includes(accent)) {
+    return <h2 className={className}>{headline}</h2>
+  }
+  const before = headline.slice(0, headline.lastIndexOf(accent)).trimEnd()
+  return (
+    <h2 className={className}>
+      {before}{' '}
+      <em className="italic text-brand-red">{accent}</em>
+    </h2>
+  )
+}
+
+export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
   const count = faqs.length
 
   if (!count) return null
@@ -30,13 +44,14 @@ export default function FAQ({ faqs = FALLBACK_FAQS }: FAQProps) {
         {/* Header */}
         <div className="text-center mb-16">
           <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-            Common Questions
+            {section.faqEyebrow}
           </p>
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
-          <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto">
-            Everything you need to{' '}
-            <em className="italic text-brand-red">know before we talk</em>
-          </h2>
+          <SplitHeadline
+            headline={section.faqHeadline ?? ''}
+            accent={section.faqHeadlineAccent}
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto"
+          />
           {count > 0 && (
             <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
               {count} question{count !== 1 ? 's' : ''} answered. Don&apos;t see yours?{' '}

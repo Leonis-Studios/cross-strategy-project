@@ -3,11 +3,35 @@
 import { useActionState } from 'react'
 import { sendContactMessage, type ContactFormState } from '@/app/actions/contact'
 import AnimateIn from './AnimateIn'
+import type { ContactSection } from '@/sanity/types'
 
 const INITIAL_STATE: ContactFormState = { ok: false }
 
-export default function ContactForm() {
+interface ContactFormProps {
+  section?: ContactSection
+}
+
+function SplitHeadline({ headline, accent, className }: { headline: string; accent?: string; className: string }) {
+  if (!accent || !headline.includes(accent)) {
+    return <h2 className={className}>{headline}</h2>
+  }
+  const before = headline.slice(0, headline.lastIndexOf(accent)).trimEnd()
+  return (
+    <h2 className={className}>
+      {before}{' '}
+      <em className="italic text-brand-red">{accent}</em>
+    </h2>
+  )
+}
+
+export default function ContactForm({ section }: ContactFormProps) {
   const [state, action, pending] = useActionState(sendContactMessage, INITIAL_STATE)
+
+  const eyebrow        = section?.contactEyebrow        ?? 'Get In Touch'
+  const headline       = section?.contactHeadline       ?? 'Ready to get your brand on shelves?'
+  const headlineAccent = section?.contactHeadlineAccent ?? 'on shelves?'
+  const subheadline    = section?.contactSubheadline    ?? "Send a message and we'll follow up within one business day."
+  const successMsg     = section?.contactSuccessMessage ?? "We'll be in touch within one business day."
 
   return (
     <section
@@ -19,15 +43,16 @@ export default function ContactForm() {
         {/* Header */}
         <div className="text-center mb-12">
           <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-            Get In Touch
+            {eyebrow}
           </p>
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
-          <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight">
-            Ready to get your brand{' '}
-            <em className="italic text-brand-red">on shelves?</em>
-          </h2>
+          <SplitHeadline
+            headline={headline}
+            accent={headlineAccent}
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight"
+          />
           <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
-            Send a message and we&apos;ll follow up within one business day.
+            {subheadline}
           </p>
         </div>
 
@@ -38,7 +63,7 @@ export default function ContactForm() {
               Message received.
             </p>
             <p className="font-barlow text-brand-silver text-body mt-4 leading-relaxed">
-              We&apos;ll be in touch within one business day.
+              {successMsg}
             </p>
           </div>
         ) : (

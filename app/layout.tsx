@@ -6,7 +6,9 @@ import { VisualEditing } from 'next-sanity/visual-editing'
 import JsonLd from '@/components/JsonLd'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { SanityLive } from '@/sanity/lib/live'
+import { SanityLive, sanityFetch } from '@/sanity/lib/live'
+import { siteSettingsQuery } from '@/sanity/lib/queries'
+import type { SiteSettingsData } from '@/sanity/types'
 
 const playfairDisplay = Playfair_Display({
   variable: '--font-playfair',
@@ -146,6 +148,10 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   const { isEnabled } = await draftMode()
+  const { data: settingsRaw } = await sanityFetch({ query: siteSettingsQuery })
+  const settings = (settingsRaw as SiteSettingsData | null) ?? {}
+  const logoText = settings.logoText ?? settings.ownerName ?? '[Owner Name]'
+
   return (
     <html
       lang="en"
@@ -154,7 +160,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col">
         <JsonLd schema={personSchema} />
         <JsonLd schema={serviceSchema} />
-        <Navbar />
+        <Navbar logoText={logoText} />
         <div className="flex-1">
           {children}
         </div>

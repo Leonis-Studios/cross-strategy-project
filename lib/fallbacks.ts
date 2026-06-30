@@ -1,30 +1,88 @@
 import type {
   AboutPageData,
   BenefitData,
+  BenefitsSection,
   BlogCategoryData,
   BlogTagData,
   BlogPostSummary,
+  ContactSection,
   CredentialData,
   CtaData,
   FaqData,
+  FaqSection,
   FeatureData,
+  FeaturesSection,
   HeroData,
+  HowItWorksSection,
   HowItWorksStepData,
+  SocialProofSection,
   TestimonialData,
 } from "@/sanity/types";
 
 export const FALLBACK_HERO: HeroData = {
-  eyebrow: "Amazon & DTC Sellers → Retail Shelves",
+  eyebrow: "Retail Placement Consultant",
   headline: "I get your brand on ",
   headlineAccent: "retail shelves.",
   subheadline:
     "[Owner Name] — retail placement consultant. 240+ brands placed across Walmart, Target, Whole Foods, Costco, and 1,200+ store doors.",
-  ctaPrimary: "Work With Me",
-  ctaPrimaryHref: "#contact",
+  bioText:
+    "I help Amazon-native and DTC brands earn shelf space at Walmart, Target, Whole Foods, Costco, and every major U.S. retailer in between — from first pitch to purchase order.",
+  rightPanelHeadline: "Get your brand on",
+  rightPanelSubheadline:
+    "Book a free strategy call. I'll map the right retail targets for your brand and show you exactly what it takes to land purchase orders.",
+  trustSignals: [
+    { text: "No pitch — just an honest assessment" },
+    { text: "No pressure — cancel anytime" },
+    { text: "Response within 24 hours" },
+  ],
+  ctaPrivacyNote: "Your information is never shared or sold.",
+  ctaPrimary: "Book My Free Strategy Call →",
+  ctaPrimaryHref: "/#contact",
   ctaSecondary: "See My Track Record →",
   ctaSecondaryHref: "#track-record",
   floatingStatNumber: "240+",
   floatingStatLabel: "Brands in Retail",
+};
+
+export const FALLBACK_SOCIAL_PROOF_SECTION: SocialProofSection = {
+  credentialsHeadline: "Why Work With Me",
+  testimonialsHeadline: "What My Clients Say",
+};
+
+export const FALLBACK_BENEFITS_SECTION: BenefitsSection = {
+  benefitsEyebrow: "Why Work With Me",
+  benefitsHeadline: "What you get when you work with me",
+  benefitsHeadlineAccent: "work with me",
+};
+
+export const FALLBACK_FEATURES_SECTION: FeaturesSection = {
+  featuresEyebrow: "Is This You?",
+  featuresHeadline: "What do you bring to the table?",
+  featuresHeadlineAccent: "bring to the table?",
+  featuresSubheadline:
+    "The best retail partnerships start with a brand that's ready. Here's what separates the brands that land shelf space from the ones that don't.",
+};
+
+export const FALLBACK_HOW_IT_WORKS_SECTION: HowItWorksSection = {
+  howItWorksEyebrow: "The Process",
+  howItWorksHeadline: "How retail placement consulting works",
+  howItWorksHeadlineAccent: "consulting works",
+  howItWorksSubheadline:
+    "From brand audit to purchase order — a proven 4-step process that has placed 240+ brands across America's top retail chains.",
+};
+
+export const FALLBACK_FAQ_SECTION: FaqSection = {
+  faqEyebrow: "Common Questions",
+  faqHeadline: "Everything you need to know before we talk",
+  faqHeadlineAccent: "know before we talk",
+};
+
+export const FALLBACK_CONTACT_SECTION: ContactSection = {
+  contactEyebrow: "Get In Touch",
+  contactHeadline: "Ready to get your brand on shelves?",
+  contactHeadlineAccent: "on shelves?",
+  contactSubheadline: "Send a message and we'll follow up within one business day.",
+  contactSuccessMessage: "We'll be in touch within one business day.",
 };
 
 export const FALLBACK_CREDENTIALS: CredentialData[] = [

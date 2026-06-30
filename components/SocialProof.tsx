@@ -1,11 +1,12 @@
-import type { CredentialData, TestimonialData } from '@/sanity/types'
+import type { CredentialData, SocialProofSection, TestimonialData } from '@/sanity/types'
 
 interface SocialProofProps {
   credentials: CredentialData[]
   testimonials: TestimonialData[]
+  section: SocialProofSection
 }
 
-export default function SocialProof({ credentials, testimonials }: SocialProofProps) {
+export default function SocialProof({ credentials, testimonials, section }: SocialProofProps) {
   return (
     <div id="track-record">
       <section className="bg-brand-alabaster py-24 px-6 lg:px-12" aria-label="Social proof">
@@ -14,7 +15,7 @@ export default function SocialProof({ credentials, testimonials }: SocialProofPr
           {/* Part A: Credentials */}
           <div className="text-center">
             <p className="small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-              Why Work With Me
+              {section.credentialsHeadline}
             </p>
             <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-16" aria-hidden="true" />
           </div>
@@ -40,7 +41,7 @@ export default function SocialProof({ credentials, testimonials }: SocialProofPr
           {/* Part B: Testimonials */}
           <div className="mt-20">
             <p className="small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label text-center mb-10">
-              What My Clients Say
+              {section.testimonialsHeadline}
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

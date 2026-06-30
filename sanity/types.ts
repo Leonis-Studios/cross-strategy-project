@@ -7,6 +7,11 @@ export interface HeroData {
   headline: string
   headlineAccent?: string
   subheadline: string
+  bioText?: string
+  rightPanelHeadline?: string
+  rightPanelSubheadline?: string
+  trustSignals?: { text: string }[]
+  ctaPrivacyNote?: string
   ctaPrimary?: string
   ctaPrimaryHref?: string
   ctaSecondary?: string
@@ -14,6 +19,45 @@ export interface HeroData {
   floatingStatNumber?: string
   floatingStatLabel?: string
   image?: SanityImage
+}
+
+export interface SocialProofSection {
+  credentialsHeadline?: string
+  testimonialsHeadline?: string
+}
+
+export interface BenefitsSection {
+  benefitsEyebrow?: string
+  benefitsHeadline?: string
+  benefitsHeadlineAccent?: string
+}
+
+export interface FeaturesSection {
+  featuresEyebrow?: string
+  featuresHeadline?: string
+  featuresHeadlineAccent?: string
+  featuresSubheadline?: string
+}
+
+export interface HowItWorksSection {
+  howItWorksEyebrow?: string
+  howItWorksHeadline?: string
+  howItWorksHeadlineAccent?: string
+  howItWorksSubheadline?: string
+}
+
+export interface FaqSection {
+  faqEyebrow?: string
+  faqHeadline?: string
+  faqHeadlineAccent?: string
+}
+
+export interface ContactSection {
+  contactEyebrow?: string
+  contactHeadline?: string
+  contactHeadlineAccent?: string
+  contactSubheadline?: string
+  contactSuccessMessage?: string
 }
 
 export interface TestimonialData {
@@ -79,18 +123,26 @@ export interface AboutPageData {
 
 export interface HomePageData {
   hero?: HeroData
-  testimonials?: TestimonialData[]
+  socialProof?: SocialProofSection
   credentials?: CredentialData[]
+  testimonials?: TestimonialData[]
+  benefitsSection?: BenefitsSection
   benefits?: BenefitData[]
+  featuresSection?: FeaturesSection
   features?: FeatureData[]
+  howItWorksSection?: HowItWorksSection
   howItWorksSteps?: HowItWorksStepData[]
   cta?: CtaData
+  faqSection?: FaqSection
   faqs?: FaqData[]
+  contactSection?: ContactSection
 }
 
 export interface SiteSettingsData {
   ownerName?: string
   ownerTitle?: string
+  logoText?: string
+  calendarUrl?: string
   footerTagline?: string
 }
 

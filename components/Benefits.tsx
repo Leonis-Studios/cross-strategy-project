@@ -1,14 +1,28 @@
 import AnimateIn from './AnimateIn'
-import type { BenefitData } from '@/sanity/types'
+import type { BenefitData, BenefitsSection } from '@/sanity/types'
 import { FALLBACK_BENEFITS } from '@/lib/fallbacks'
 
 const STAGGER = ['stagger-2', 'stagger-3', 'stagger-4', 'stagger-5'] as const
 
 interface BenefitsProps {
   benefits?: BenefitData[]
+  section: BenefitsSection
 }
 
-export default function Benefits({ benefits = FALLBACK_BENEFITS }: BenefitsProps) {
+function SplitHeadline({ headline, accent, className }: { headline: string; accent?: string; className: string }) {
+  if (!accent || !headline.includes(accent)) {
+    return <h2 className={className}>{headline}</h2>
+  }
+  const before = headline.slice(0, headline.lastIndexOf(accent)).trimEnd()
+  return (
+    <h2 className={className}>
+      {before}{' '}
+      <em className="italic text-brand-red">{accent}</em>
+    </h2>
+  )
+}
+
+export default function Benefits({ benefits = FALLBACK_BENEFITS, section }: BenefitsProps) {
   return (
     <section
       id="benefits"
@@ -19,13 +33,14 @@ export default function Benefits({ benefits = FALLBACK_BENEFITS }: BenefitsProps
         {/* Header */}
         <div className="text-center mb-16">
           <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-            Why Work With Me
+            {section.benefitsEyebrow}
           </p>
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
-          <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto">
-            What you get when you{' '}
-            <em className="italic text-brand-red">work with me</em>
-          </h2>
+          <SplitHeadline
+            headline={section.benefitsHeadline ?? ''}
+            accent={section.benefitsHeadlineAccent}
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto"
+          />
         </div>
 
         {/* Cards */}
