@@ -115,22 +115,65 @@ export default function ContactForm({ section }: ContactFormProps) {
               </div>
             </div>
 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="contact-company"
+                  className="font-barlow font-semibold text-brand-silver text-label tracking-wide"
+                >
+                  Brand / Company{' '}
+                  <span className="text-brand-dim-grey font-normal">(optional)</span>
+                </label>
+                <input
+                  id="contact-company"
+                  name="company"
+                  type="text"
+                  autoComplete="organization"
+                  className="bg-[#1a1a1a] border border-brand-dim-grey text-brand-alabaster font-barlow text-body px-4 py-3 placeholder:text-brand-dim-grey focus:outline-none focus:border-brand-red transition-colors duration-200"
+                  placeholder="Your Brand Co."
+                />
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor="contact-brand-url"
+                  className="font-barlow font-semibold text-brand-silver text-label tracking-wide"
+                >
+                  Brand URL{' '}
+                  <span className="text-brand-dim-grey font-normal">(optional)</span>
+                </label>
+                <input
+                  id="contact-brand-url"
+                  name="brandUrl"
+                  type="url"
+                  autoComplete="url"
+                  className="bg-[#1a1a1a] border border-brand-dim-grey text-brand-alabaster font-barlow text-body px-4 py-3 placeholder:text-brand-dim-grey focus:outline-none focus:border-brand-red transition-colors duration-200"
+                  placeholder="https://yourbrand.com"
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-2">
               <label
-                htmlFor="contact-company"
+                htmlFor="contact-revenue"
                 className="font-barlow font-semibold text-brand-silver text-label tracking-wide"
               >
-                Brand / Company{' '}
-                <span className="text-brand-dim-grey font-normal">(optional)</span>
+                Annual Company Revenue <span className="text-brand-red" aria-hidden="true">*</span>
               </label>
-              <input
-                id="contact-company"
-                name="company"
-                type="text"
-                autoComplete="organization"
-                className="bg-[#1a1a1a] border border-brand-dim-grey text-brand-alabaster font-barlow text-body px-4 py-3 placeholder:text-brand-dim-grey focus:outline-none focus:border-brand-red transition-colors duration-200"
-                placeholder="Your Brand Co."
-              />
+              <select
+                id="contact-revenue"
+                name="annualRevenue"
+                required
+                defaultValue=""
+                className="bg-[#1a1a1a] border border-brand-dim-grey text-brand-alabaster font-barlow text-body px-4 py-3 focus:outline-none focus:border-brand-red transition-colors duration-200"
+              >
+                <option value="" disabled>Select range</option>
+                <option value="$0-$2M">$0-$2M</option>
+                <option value="$2-$5M">$2-$5M</option>
+                <option value="$5-$25M">$5-$25M</option>
+                <option value="$25-$50M">$25-$50M</option>
+                <option value="$50M+">$50M+</option>
+              </select>
             </div>
 
             <div className="flex flex-col gap-2">
@@ -146,7 +189,7 @@ export default function ContactForm({ section }: ContactFormProps) {
                 required
                 rows={5}
                 className="bg-[#1a1a1a] border border-brand-dim-grey text-brand-alabaster font-barlow text-body px-4 py-3 placeholder:text-brand-dim-grey focus:outline-none focus:border-brand-red transition-colors duration-200 resize-none"
-                placeholder="Tell us about your brand — current channels, target retailers, timeline..."
+                placeholder="Tell us about your company and why you are interested in retail"
               />
             </div>
 

@@ -5,15 +5,14 @@ import { notFound } from 'next/navigation'
 import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
-import { blogPostQuery, blogRelatedQuery, blogSitemapQuery } from '@/sanity/lib/queries'
-import type { BlogPostData, BlogPostSummary } from '@/sanity/types'
+import { blogPostQuery, blogRelatedQuery, blogSitemapQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { BlogPostData, BlogPostSummary, SiteSettingsData } from '@/sanity/types'
 import { FALLBACK_BLOG_POSTS } from '@/lib/fallbacks'
 import PortableTextRenderer from '@/components/blog/PortableTextRenderer'
 import BlogCard from '@/components/blog/BlogCard'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-
-const SITE_URL = 'https://example.com' // TODO: replace with live domain
+import { SITE_URL } from '@/lib/site'
 
 type Props = { params: Promise<{ slug: string }> }
 
@@ -33,6 +32,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const post = await client.fetch<BlogPostData>(blogPostQuery, { slug })
     if (!post) return { title: 'Article Not Found' }
 
+    const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+    const ownerName = settings.ownerName ?? '[Owner Name]'
+
     const title = post.seoTitle ?? post.title
     const description = post.seoDescription ?? post.excerpt ?? ''
     const ogImage = post.coverImage
@@ -49,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         title,
         description,
         publishedTime: post.publishedAt,
-        authors: ['[Owner Name]'],
+        authors: [ownerName],
         ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630, alt: title }] } : {}),
       },
       twitter: {
@@ -74,6 +76,9 @@ function formatDate(dateString: string): string {
 
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
+
+  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const ownerName = settings.ownerName ?? '[Owner Name]'
 
   let post: BlogPostData | null = await sanityFetch({ query: blogPostQuery, params: { slug } })
     .then(r => r.data as BlogPostData)
@@ -104,9 +109,9 @@ export default async function BlogPostPage({ params }: Props) {
     dateModified: post.publishedAt,
     author: {
       '@type': 'Person',
-      name: '[Owner Name]',
+      name: ownerName,
       url: SITE_URL,
-      jobTitle: 'Retail Placement Consultant',
+      jobTitle: settings.ownerTitle ?? 'Retail Placement Consultant',
     },
     publisher: {
       '@type': 'Organization',
@@ -184,7 +189,7 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* Meta */}
           <div className="flex flex-wrap items-center gap-4 font-barlow text-brand-dim-grey text-label fade-up-item stagger-4">
-            <span className="text-brand-silver font-semibold">[Owner Name]</span>
+            <span className="text-brand-silver font-semibold">{ownerName}</span>
             {post.publishedAt && (
               <>
                 <span aria-hidden="true" className="text-[#444444]">·</span>
@@ -285,7 +290,7 @@ export default async function BlogPostPage({ params }: Props) {
       {/* ── Inline CTA ── */}
       <section
         className="bg-brand-jet-black px-6 lg:px-12 py-20 border-t border-[#333333]"
-        aria-label="Work with [Owner Name]"
+        aria-label={`Work with ${ownerName}`}
       >
         <AnimateIn className="max-w-4xl mx-auto text-center">
           <div className="w-12 h-0.5 bg-brand-red mx-auto mb-6 fade-up-item stagger-1" aria-hidden="true" />

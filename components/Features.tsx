@@ -66,11 +66,6 @@ export default function Features({ features = FALLBACK_FEATURES, section }: Feat
               </div>
 
               <div className="flex flex-col flex-1 p-8">
-                {/* Category badge */}
-                <p className="small-caps font-barlow font-bold text-brand-red tracking-widest text-sm mb-4">
-                  Feature
-                </p>
-
                 <h3 className="font-barlow font-bold text-brand-jet-black text-subheadline leading-snug mb-3">
                   {f.title}
                 </h3>

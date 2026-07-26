@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import { sanityFetch } from '@/sanity/lib/live'
-import { blogListQuery } from '@/sanity/lib/queries'
+import { client } from '@/sanity/lib/client'
+import { blogListQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import { FALLBACK_BLOG_POSTS, FALLBACK_BLOG_CATEGORIES } from '@/lib/fallbacks'
-import type { BlogCategoryData, BlogPostSummary } from '@/sanity/types'
+import type { BlogCategoryData, BlogPostSummary, SiteSettingsData } from '@/sanity/types'
 import BlogSearch from '@/components/blog/BlogSearch'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-
-const SITE_URL = 'https://example.com' // TODO: replace with live domain
+import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'Retail Insights Blog | [Owner Name] — Retail Placement Consultant',
@@ -33,6 +33,9 @@ export default async function BlogPage() {
   let posts: BlogPostSummary[] = FALLBACK_BLOG_POSTS
   let categories: BlogCategoryData[] = FALLBACK_BLOG_CATEGORIES
 
+  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const ownerName = settings.ownerName ?? '[Owner Name]'
+
   try {
     const { data: rawData } = await sanityFetch({ query: blogListQuery })
     const data = rawData as { posts: BlogPostSummary[]; categories: BlogCategoryData[] } | null
@@ -45,15 +48,15 @@ export default async function BlogPage() {
   const blogSchema = {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: 'Retail Insights — [Owner Name]',
+    name: `Retail Insights — ${ownerName}`,
     description:
       'Tactics, frameworks, and firsthand insights on getting consumer brands into major retail chains.',
     url: `${SITE_URL}/blog`,
     author: {
       '@type': 'Person',
-      name: '[Owner Name]',
+      name: ownerName,
       url: SITE_URL,
-      jobTitle: 'Retail Placement Consultant',
+      jobTitle: settings.ownerTitle ?? 'Retail Placement Consultant',
     },
     publisher: {
       '@type': 'Organization',

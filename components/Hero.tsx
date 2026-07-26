@@ -138,8 +138,6 @@ export default function Hero({ data, credentials }: HeroProps) {
               {/* Headline */}
               <h2 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-lg leading-[0.95] text-brand-alabaster mb-5">
                 {rightPanelHeadline}
-                <br />
-                <em className="italic text-brand-red">{headlineAccent}</em>
               </h2>
 
               {/* Subheading */}

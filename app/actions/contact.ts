@@ -13,13 +13,15 @@ export async function sendContactMessage(
   _prev: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
-  const name    = (formData.get('name')    as string)?.trim()
-  const email   = (formData.get('email')   as string)?.trim()
-  const company = (formData.get('company') as string)?.trim()
-  const message = (formData.get('message') as string)?.trim()
+  const name          = (formData.get('name')          as string)?.trim()
+  const email         = (formData.get('email')         as string)?.trim()
+  const company       = (formData.get('company')       as string)?.trim()
+  const brandUrl      = (formData.get('brandUrl')      as string)?.trim()
+  const annualRevenue = (formData.get('annualRevenue') as string)?.trim()
+  const message       = (formData.get('message')       as string)?.trim()
 
-  if (!name || !email || !message) {
-    return { ok: false, error: 'Name, email, and message are required.' }
+  if (!name || !email || !annualRevenue || !message) {
+    return { ok: false, error: 'Name, email, annual revenue, and message are required.' }
   }
 
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -37,6 +39,8 @@ export async function sendContactMessage(
       <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
       <p><strong>Company:</strong> ${company || '—'}</p>
+      <p><strong>Brand URL:</strong> ${brandUrl || '—'}</p>
+      <p><strong>Annual Revenue:</strong> ${annualRevenue}</p>
       <p><strong>Message:</strong></p>
       <p>${message}</p>
     `,

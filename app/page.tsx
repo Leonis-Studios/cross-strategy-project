@@ -1,6 +1,7 @@
 import { sanityFetch } from '@/sanity/lib/live'
-import { homePageQuery } from '@/sanity/lib/queries'
-import type { HomePageData } from '@/sanity/types'
+import { client } from '@/sanity/lib/client'
+import { homePageQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import type { HomePageData, SiteSettingsData } from '@/sanity/types'
 import Hero from '@/components/Hero'
 import SocialProof from '@/components/SocialProof'
 import Benefits from '@/components/Benefits'
@@ -31,6 +32,8 @@ import {
 export default async function Home() {
   const { data: rawData } = await sanityFetch({ query: homePageQuery })
   const data: HomePageData = (rawData as HomePageData | null) ?? {}
+  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const ownerName = settings.ownerName ?? '[Owner Name]'
 
   const hero            = { ...FALLBACK_HERO, ...(data.hero ?? {}) }
   const credentials     = data.credentials?.length     ? data.credentials     : FALLBACK_CREDENTIALS
@@ -66,7 +69,7 @@ export default async function Home() {
     name: 'Retail Placement Consulting',
     provider: {
       '@type': 'Person',
-      name: '[Owner Name]',
+      name: ownerName,
     },
     description:
       'End-to-end retail placement consulting for Amazon and DTC brands — from buyer introductions to purchase order. 240+ brands placed across Walmart, Target, Whole Foods, and 1,200+ store doors.',
@@ -94,7 +97,7 @@ export default async function Home() {
   const benefitsSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: 'Benefits of working with [Owner Name]',
+    name: `Benefits of working with ${ownerName}`,
     itemListElement: benefits.map((b, i) => ({
       '@type': 'ListItem',
       position: i + 1,

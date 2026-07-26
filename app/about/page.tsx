@@ -8,8 +8,7 @@ import { FALLBACK_ABOUT_PAGE } from '@/lib/fallbacks'
 import ContactForm from '@/components/ContactForm'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-
-const SITE_URL = 'https://example.com' // TODO: replace with live domain
+import { SITE_URL } from '@/lib/site'
 
 export const metadata: Metadata = {
   title: 'About [Owner Name] | Retail Placement Consultant',

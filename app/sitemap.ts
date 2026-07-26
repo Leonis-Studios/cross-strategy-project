@@ -1,8 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { client } from '@/sanity/lib/client'
 import { blogSitemapQuery } from '@/sanity/lib/queries'
-
-const SITE_URL = 'https://example.com' // TODO: replace with live domain
+import { SITE_URL } from '@/lib/site'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
