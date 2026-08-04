@@ -2,8 +2,8 @@ import type { CredentialData, HeroData } from "@/sanity/types";
 import { FALLBACK_HERO } from "@/lib/fallbacks";
 
 interface HeroProps {
-  data: HeroData
-  credentials: CredentialData[]
+  data: HeroData;
+  credentials: CredentialData[];
 }
 
 export default function Hero({ data, credentials }: HeroProps) {
@@ -11,22 +11,42 @@ export default function Hero({ data, credentials }: HeroProps) {
     credentials.length > 0
       ? credentials.slice(0, 3)
       : [
-          { _id: "c1", title: "Former Retail Buyer", description: "Operated inside national chain buying organizations" },
-          { _id: "c2", title: "National Network", description: "Direct buyer relationships at 50+ retail chains" },
-          { _id: "c3", title: "End-to-End Partner", description: "First pitch through first re-order" },
+          {
+            _id: "c1",
+            title: "Former Retail Buyer",
+            description: "Operated inside national chain buying organizations",
+          },
+          {
+            _id: "c2",
+            title: "National Network",
+            description: "Direct buyer relationships at 50+ retail chains",
+          },
+          {
+            _id: "c3",
+            title: "End-to-End Partner",
+            description: "First pitch through first re-order",
+          },
         ];
 
-  const eyebrow            = data.eyebrow            ?? FALLBACK_HERO.eyebrow
-  const headline           = data.headline           ?? FALLBACK_HERO.headline
-  const headlineAccent     = data.headlineAccent     ?? FALLBACK_HERO.headlineAccent
-  const subheadline        = data.subheadline        ?? FALLBACK_HERO.subheadline
-  const bioText            = data.bioText            ?? FALLBACK_HERO.bioText
-  const rightPanelHeadline = data.rightPanelHeadline ?? FALLBACK_HERO.rightPanelHeadline
-  const rightPanelSub      = data.rightPanelSubheadline ?? FALLBACK_HERO.rightPanelSubheadline
-  const trustSignals       = data.trustSignals?.length ? data.trustSignals : FALLBACK_HERO.trustSignals ?? []
-  const ctaPrimary         = data.ctaPrimary         ?? FALLBACK_HERO.ctaPrimary ?? "Book My Free Strategy Call →"
-  const ctaPrimaryHref     = data.ctaPrimaryHref     ?? FALLBACK_HERO.ctaPrimaryHref ?? "/#contact"
-  const ctaPrivacyNote     = data.ctaPrivacyNote     ?? FALLBACK_HERO.ctaPrivacyNote
+  const eyebrow = data.eyebrow ?? FALLBACK_HERO.eyebrow;
+  const headline = data.headline ?? FALLBACK_HERO.headline;
+  const headlineAccent = data.headlineAccent ?? FALLBACK_HERO.headlineAccent;
+  const subheadline = data.subheadline ?? FALLBACK_HERO.subheadline;
+  const bioText = data.bioText ?? FALLBACK_HERO.bioText;
+  const rightPanelHeadline =
+    data.rightPanelHeadline ?? FALLBACK_HERO.rightPanelHeadline;
+  const rightPanelSub =
+    data.rightPanelSubheadline ?? FALLBACK_HERO.rightPanelSubheadline;
+  const trustSignals = data.trustSignals?.length
+    ? data.trustSignals
+    : (FALLBACK_HERO.trustSignals ?? []);
+  const ctaPrimary =
+    data.ctaPrimary ??
+    FALLBACK_HERO.ctaPrimary ??
+    "Book My Free Strategy Call →";
+  const ctaPrimaryHref =
+    data.ctaPrimaryHref ?? FALLBACK_HERO.ctaPrimaryHref ?? "/#contact";
+  const ctaPrivacyNote = data.ctaPrivacyNote ?? FALLBACK_HERO.ctaPrivacyNote;
 
   return (
     <div className="hero-outer-shadow overflow-hidden">
@@ -37,13 +57,18 @@ export default function Hero({ data, credentials }: HeroProps) {
         {/* Desktop diagonal background — left (light) */}
         <div
           className="hidden lg:block absolute inset-0 bg-brand-alabaster"
-          style={{ clipPath: "polygon(0 0, 55% 0, calc(55% - 120px) 100%, 0 100%)" }}
+          style={{
+            clipPath: "polygon(0 0, 55% 0, calc(55% - 120px) 100%, 0 100%)",
+          }}
           aria-hidden="true"
         />
         {/* Desktop diagonal background — right (dark) */}
         <div
           className="hidden lg:block absolute inset-0 bg-brand-jet-black"
-          style={{ clipPath: "polygon(55% 0, 100% 0, 100% 100%, calc(55% - 120px) 100%)" }}
+          style={{
+            clipPath:
+              "polygon(55% 0, 100% 0, 100% 100%, calc(55% - 120px) 100%)",
+          }}
           aria-hidden="true"
         />
 
@@ -51,14 +76,14 @@ export default function Hero({ data, credentials }: HeroProps) {
         <div
           className="hidden lg:block absolute inset-0 pointer-events-none"
           style={{
-            background: 'linear-gradient(82deg, transparent 46%, rgba(70, 120, 210, 0.09) 50%, rgba(70, 120, 210, 0.09) 52%, transparent 56%)'
+            background:
+              "linear-gradient(82deg, transparent 46%, rgba(70, 120, 210, 0.09) 50%, rgba(70, 120, 210, 0.09) 52%, transparent 56%)",
           }}
           aria-hidden="true"
         />
 
         {/* Two-panel content grid */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-
           {/* LEFT PANEL — owner-focused (light theme) */}
           <div className="relative flex flex-col justify-center overflow-hidden px-6 lg:px-16 py-12 lg:py-20 bg-brand-alabaster lg:bg-transparent">
             {/* Accent bar */}
@@ -78,7 +103,9 @@ export default function Hero({ data, credentials }: HeroProps) {
               <h1 className="fade-up-item stagger-2 font-playfair text-display-sm lg:text-display-lg leading-[0.9] text-brand-jet-black mb-4">
                 {headline}
                 <br />
-                <em className="block italic text-brand-red mt-2">{headlineAccent}</em>
+                <em className="block italic text-brand-red mt-2">
+                  {headlineAccent}
+                </em>
               </h1>
 
               {/* Credentials subtitle */}
@@ -158,7 +185,9 @@ export default function Hero({ data, credentials }: HeroProps) {
                       key={signal.text}
                       className="flex items-center gap-3 font-barlow text-label text-brand-silver"
                     >
-                      <span className="text-brand-red font-bold leading-none">✓</span>
+                      <span className="text-brand-red font-bold leading-none">
+                        ✓
+                      </span>
                       {signal.text}
                     </li>
                   ))}
