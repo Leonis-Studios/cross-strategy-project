@@ -71,7 +71,7 @@ export default function BlogSearch({ posts, categories }: Props) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search articles…"
-              aria-label="Search blog articles"
+              aria-label="Search content articles"
               className="w-full bg-brand-jet-black border border-brand-silver/25 text-brand-alabaster font-barlow text-label pl-11 pr-10 py-2.5 focus:outline-none focus:border-brand-red transition-colors placeholder:text-brand-dim-grey"
             />
             {query && (
@@ -121,7 +121,7 @@ export default function BlogSearch({ posts, categories }: Props) {
       {/* ── Results ── */}
       <section
         className="bg-brand-jet-black"
-        aria-label="Blog articles"
+        aria-label="Content articles"
       >
         <div className="max-w-7xl mx-auto">
           {isFiltered && (

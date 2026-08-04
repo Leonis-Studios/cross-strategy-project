@@ -37,7 +37,7 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
   return (
     <section
       id="faq"
-      className="bg-brand-jet-black py-24 px-6 lg:px-12"
+      className="bg-brand-alabaster py-24 px-6 lg:px-12"
       aria-label="Frequently asked questions about retail placement consulting"
     >
       <AnimateIn className="max-w-7xl mx-auto">
@@ -50,10 +50,10 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
           <SplitHeadline
             headline={section.faqHeadline ?? ''}
             accent={section.faqHeadlineAccent}
-            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto"
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight max-w-2xl mx-auto"
           />
           {count > 0 && (
-            <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
+            <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-xl mx-auto leading-relaxed">
               {count} question{count !== 1 ? 's' : ''} answered. Don&apos;t see yours?{' '}
               <a href="#contact" className="text-brand-red hover:underline">
                 Book a call.
@@ -69,7 +69,7 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
             return (
               <article
                 key={item._id}
-                className={`fade-up-item ${stagger} bg-[#222222] border border-brand-dim-grey shadow-[var(--shadow-box)] ${cardPadding}`}
+                className={`fade-up-item ${stagger} bg-white border border-brand-alabaster shadow-[var(--shadow-box)] ${cardPadding}`}
                 itemScope
                 itemType="https://schema.org/Question"
               >
@@ -82,14 +82,14 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
                     <span className="font-barlow font-bold text-white text-xs leading-none">Q</span>
                   </div>
                   <h3
-                    className="font-barlow font-bold text-brand-alabaster text-subheadline leading-snug"
+                    className="font-barlow font-bold text-brand-jet-black text-subheadline leading-snug"
                     itemProp="name"
                   >
                     {item.question}
                   </h3>
                 </div>
 
-                <div className="w-full h-px bg-brand-dim-grey/40 mb-4" aria-hidden="true" />
+                <div className="w-full h-px bg-brand-alabaster mb-4" aria-hidden="true" />
 
                 <div
                   itemScope
@@ -97,7 +97,7 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
                   itemProp="acceptedAnswer"
                 >
                   <p
-                    className="font-barlow text-brand-silver text-label leading-relaxed"
+                    className="font-barlow text-brand-dim-grey text-label leading-relaxed"
                     itemProp="text"
                   >
                     {item.answer}

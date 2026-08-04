@@ -15,23 +15,23 @@
   --color-brand-red: #ef2626ff;
 
   /* Font sizes — --text-* generates text-* utilities in Tailwind v4 */
-  --text-display-sm: 44px;
-  --text-display-md: 56px;
-  --text-display-lg: 68px;
-  --text-display-xl: 80px;
-  --text-display-2xl: 100px;
-  --text-display-3xl: 130px;
-  --text-metric: 52px;
-  --text-quote-mark: 64px;
-  --text-body: 22px;
-  --text-label: 20px;
-  --text-subheadline: 25px;
-  --text-stat: 36px;
+  --text-display-sm: 48px;
+  --text-display-md: 60px;
+  --text-display-lg: 72px;
+  --text-display-xl: 86px;
+  --text-display-2xl: 108px;
+  --text-display-3xl: 140px;
+  --text-metric: 56px;
+  --text-quote-mark: 68px;
+  --text-body: 24px;
+  --text-label: 22px;
+  --text-subheadline: 27px;
+  --text-stat: 39px;
 
   /* Font weights — bumped one step up from Tailwind defaults */
   --font-weight-body: 400;
-  --font-weight-normal: 500;    /* was 400 */
-  --font-weight-medium: 600;    /* was 500 */
+  --font-weight-normal: 600;    /* was 500, originally 400 */
+  --font-weight-medium: 700;    /* was 600, originally 500 */
   --font-weight-semibold: 700;  /* was 600 */
   --font-weight-bold: 700;      /* capped — Barlow max loaded weight */
 
@@ -226,5 +226,5 @@ body {
   background-color: var(--color-brand-jet-black);
   color: var(--color-brand-alabaster);
   font-family: var(--font-barlow), sans-serif;
-  font-weight: 500;
+  font-weight: 600;
 }

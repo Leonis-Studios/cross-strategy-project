@@ -8,7 +8,7 @@ const NAV_LINKS = [
   { label: "Benefits", href: "/#benefits" },
   { label: "How It Works", href: "/#how-it-works" },
   { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Content", href: "/blog" },
 ];
 
 interface NavbarProps {

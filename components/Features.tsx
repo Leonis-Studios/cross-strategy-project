@@ -26,7 +26,7 @@ export default function Features({ features = FALLBACK_FEATURES, section }: Feat
   return (
     <section
       id="features"
-      className="bg-brand-alabaster py-24 px-6 lg:px-12"
+      className="bg-brand-jet-black py-24 px-6 lg:px-12"
       aria-label="What successful brands bring to the table"
     >
       <AnimateIn className="max-w-7xl mx-auto">
@@ -39,10 +39,10 @@ export default function Features({ features = FALLBACK_FEATURES, section }: Feat
           <SplitHeadline
             headline={section.featuresHeadline ?? ''}
             accent={section.featuresHeadlineAccent}
-            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight max-w-2xl mx-auto"
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto"
           />
           {section.featuresSubheadline && (
-            <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-xl mx-auto leading-relaxed">
+            <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
               {section.featuresSubheadline}
             </p>
           )}
@@ -53,23 +53,23 @@ export default function Features({ features = FALLBACK_FEATURES, section }: Feat
           {features.map((f, i) => (
             <div
               key={f._id}
-              className={`fade-up-item ${STAGGER[i % 6]} group flex flex-col overflow-hidden bg-white hover:shadow-box transition-shadow duration-300`}
+              className={`fade-up-item ${STAGGER[i % 6]} group flex flex-col overflow-hidden bg-[#222222] border border-brand-dim-grey hover:shadow-box transition-shadow duration-300`}
             >
               {/* Shelf tag color strip */}
               <div className="h-1 bg-brand-red shrink-0" aria-hidden="true" />
 
               {/* Feature banner */}
-              <div className="bg-brand-jet-black px-8 py-2">
+              <div className="bg-brand-red px-8 py-2">
                 <span className="font-barlow font-bold text-white text-xs tracking-widest uppercase line-clamp-1">
                   {f.title}
                 </span>
               </div>
 
               <div className="flex flex-col flex-1 p-8">
-                <h3 className="font-barlow font-bold text-brand-jet-black text-subheadline leading-snug mb-3">
+                <h3 className="font-barlow font-bold text-brand-alabaster text-subheadline leading-snug mb-3">
                   {f.title}
                 </h3>
-                <p className="font-barlow font-medium text-brand-dim-grey text-label leading-relaxed mt-auto pt-4 border-t border-brand-alabaster">
+                <p className="font-barlow font-medium text-brand-silver text-label leading-relaxed mt-auto pt-4 border-t border-brand-dim-grey/40">
                   {f.description}
                 </p>
               </div>

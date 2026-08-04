@@ -153,7 +153,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
             <span aria-hidden="true">/</span>
             <Link href="/blog" className="hover:text-brand-alabaster transition-colors">
-              Blog
+              Content
             </Link>
             <span aria-hidden="true">/</span>
             <span className="text-brand-silver truncate max-w-[200px]">{post.title}</span>

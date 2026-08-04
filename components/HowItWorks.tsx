@@ -26,7 +26,7 @@ export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS, sectio
   return (
     <section
       id="how-it-works"
-      className="bg-brand-jet-black py-24 px-6 lg:px-12"
+      className="bg-brand-alabaster py-24 px-6 lg:px-12"
       aria-label="How retail placement consulting works"
     >
       <AnimateIn className="max-w-7xl mx-auto">
@@ -39,10 +39,10 @@ export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS, sectio
           <SplitHeadline
             headline={section.howItWorksHeadline ?? ''}
             accent={section.howItWorksHeadlineAccent}
-            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-3xl mx-auto"
+            className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight max-w-3xl mx-auto"
           />
           {section.howItWorksSubheadline && (
-            <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
+            <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-xl mx-auto leading-relaxed">
               {section.howItWorksSubheadline}
             </p>
           )}
@@ -53,7 +53,7 @@ export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS, sectio
           {steps.map((step, i) => (
             <div
               key={step._id}
-              className={`fade-up-item ${STAGGER[i % 4]} flex flex-col bg-[#222222] border border-brand-dim-grey p-6 shadow-[var(--shadow-box)]`}
+              className={`fade-up-item ${STAGGER[i % 4]} flex flex-col bg-white border border-brand-alabaster p-6 shadow-[var(--shadow-box)]`}
             >
               <div
                 className="w-12 h-12 bg-brand-red flex items-center justify-center mb-6"
@@ -63,11 +63,11 @@ export default function HowItWorks({ steps = FALLBACK_HOW_IT_WORKS_STEPS, sectio
                   {String(step.stepNumber).padStart(2, '0')}
                 </span>
               </div>
-              <h3 className="font-barlow font-bold text-brand-alabaster text-subheadline min-h-[4rem] leading-snug">
+              <h3 className="font-barlow font-bold text-brand-jet-black text-subheadline min-h-[4rem] leading-snug">
                 {step.title}
               </h3>
-              <div className="w-full h-px bg-brand-dim-grey/40 my-4" aria-hidden="true" />
-              <p className="font-barlow text-brand-silver text-label leading-relaxed">
+              <div className="w-full h-px bg-brand-alabaster my-4" aria-hidden="true" />
+              <p className="font-barlow text-brand-dim-grey text-label leading-relaxed">
                 {step.description}
               </p>
             </div>

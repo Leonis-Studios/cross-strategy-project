@@ -51,9 +51,15 @@ export default async function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-brand-dim-grey">
-        <p className="max-w-7xl mx-auto px-6 lg:px-12 py-4 font-barlow text-brand-dim-grey text-sm text-center md:text-left">
-          &copy; {new Date().getFullYear()} {ownerName}. All rights reserved.
-        </p>
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 py-4 flex flex-col md:flex-row items-center justify-between gap-2">
+          <p className="font-barlow text-brand-dim-grey text-sm text-center md:text-left">
+            &copy; {new Date().getFullYear()} {ownerName}. All rights reserved.
+          </p>
+          <p className="font-barlow text-brand-dim-grey/60 text-sm text-center md:text-right flex items-center justify-center md:justify-end gap-2">
+            <span className="inline-block w-2.5 h-2.5 bg-brand-red" aria-hidden="true" />
+            Powered by Leonis Studios
+          </p>
+        </div>
       </div>
     </footer>
   )

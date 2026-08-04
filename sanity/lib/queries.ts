@@ -61,6 +61,16 @@ export const blogSitemapQuery = groq`
   }
 `
 
+export const mosaicQuery = groq`
+  *[_type == "mosaicItem"] | order(_createdAt asc) {
+    _id,
+    mediaType,
+    caption,
+    image { ..., alt },
+    "videoUrl": video.asset->url
+  }
+`
+
 export const aboutPageQuery = groq`
   *[_type == "aboutPage"][0] {
     ownerName,

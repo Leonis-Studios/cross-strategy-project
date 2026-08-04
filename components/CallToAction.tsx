@@ -10,7 +10,7 @@ export default function CallToAction({ data = FALLBACK_CTA }: CallToActionProps)
   return (
     <section
       id="contact"
-      className="bg-brand-alabaster py-24 px-6 lg:px-12"
+      className="bg-brand-jet-black py-24 px-6 lg:px-12"
       aria-label="Book a retail placement strategy call"
     >
       <AnimateIn className="max-w-4xl mx-auto text-center">
@@ -21,7 +21,7 @@ export default function CallToAction({ data = FALLBACK_CTA }: CallToActionProps)
         )}
         <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
 
-        <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-jet-black leading-tight">
+        <h2 className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight">
           {data.headline}
           {data.headlineAccent && (
             <>
@@ -32,7 +32,7 @@ export default function CallToAction({ data = FALLBACK_CTA }: CallToActionProps)
         </h2>
 
         {data.subheadline && (
-          <p className="fade-up-item stagger-3 font-barlow text-brand-dim-grey text-body mt-6 max-w-2xl mx-auto leading-relaxed">
+          <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-2xl mx-auto leading-relaxed">
             {data.subheadline}
           </p>
         )}

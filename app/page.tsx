@@ -4,6 +4,7 @@ import { homePageQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import type { HomePageData, SiteSettingsData } from '@/sanity/types'
 import Hero from '@/components/Hero'
 import SocialProof from '@/components/SocialProof'
+import Testimonials from '@/components/Testimonials'
 import Benefits from '@/components/Benefits'
 import Features from '@/components/Features'
 import HowItWorks from '@/components/HowItWorks'
@@ -113,22 +114,20 @@ export default async function Home() {
       <JsonLd schema={howItWorksSchema} />
       <JsonLd schema={benefitsSchema} />
       <Hero data={hero} credentials={credentials} />
-      <SocialProof
-        credentials={credentials}
-        testimonials={testimonials}
-        section={socialProof}
-      />
+      <SocialProof credentials={credentials} section={socialProof} />
       <SectionDivider from="light" to="dark" />
       <Benefits benefits={benefits} section={benefitsSection} />
       <SectionDivider from="dark" to="light" />
+      <Testimonials testimonials={testimonials} section={socialProof} />
+      <SectionDivider from="light" to="dark" />
       <Features features={features} section={featuresSection} />
-      <SectionDivider from="light" to="dark" />
-      <HowItWorks steps={howItWorksSteps} section={howItWorksSection} />
       <SectionDivider from="dark" to="light" />
-      <CallToAction data={cta} />
+      <HowItWorks steps={howItWorksSteps} section={howItWorksSection} />
       <SectionDivider from="light" to="dark" />
+      <CallToAction data={cta} />
+      <SectionDivider from="dark" to="light" />
       <FAQ faqs={faqs} section={faqSection} />
-      <SectionDivider from="dark" to="dark" />
+      <SectionDivider from="light" to="dark" />
       <ContactForm section={contactSection} />
     </main>
   )

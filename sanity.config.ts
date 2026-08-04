@@ -3,7 +3,7 @@ import { structureTool } from 'sanity/structure'
 import { visionTool } from '@sanity/vision'
 import { defineLocations, presentationTool } from 'sanity/presentation'
 import {
-  homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost,
+  homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost, mosaicItem,
   hero, cta, testimonial, metric, benefit, feature, howItWorksStep, faq, credential, retailer,
 } from './sanity/schemas'
 import { structure } from './sanity/structure'
@@ -77,7 +77,7 @@ export default defineConfig({
   ],
   schema: {
     types: [
-      homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost,
+      homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost, mosaicItem,
       hero, cta, testimonial, metric, benefit, feature, howItWorksStep, faq, credential, retailer,
     ],
   },

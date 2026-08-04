@@ -42,16 +42,18 @@ export const structure: StructureResolver = (S) =>
 
       S.divider(),
 
-      // ─── BLOG ─────────────────────────────────────────────────────────────
+      // ─── CONTENT ──────────────────────────────────────────────────────────
       S.listItem()
-        .title('📝  Blog')
+        .title('📝  Content')
         .child(
           S.list()
-            .title('Blog')
+            .title('Content')
             .items([
               S.documentTypeListItem('blogPost').title('📄  Blog Posts'),
               S.documentTypeListItem('blogCategory').title('🏷️  Categories'),
               S.documentTypeListItem('blogTag').title('🔖  Tags'),
+              S.divider(),
+              S.documentTypeListItem('mosaicItem').title('🎬  Media Mosaic'),
             ])
         ),
 

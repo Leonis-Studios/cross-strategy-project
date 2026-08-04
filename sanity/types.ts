@@ -177,3 +177,11 @@ export interface BlogPostData extends BlogPostSummary {
   seoTitle?: string
   seoDescription?: string
 }
+
+export interface MosaicItemData {
+  _id: string
+  mediaType: 'image' | 'video'
+  caption?: string
+  image?: SanityImage
+  videoUrl?: string
+}
