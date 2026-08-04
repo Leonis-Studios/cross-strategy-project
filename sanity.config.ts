@@ -66,6 +66,32 @@ export default defineConfig({
             select: { title: 'number' },
             resolve: () => homeLocation,
           }),
+          aboutPage: defineLocations({
+            select: { title: 'ownerName' },
+            resolve: () => ({ locations: [{ title: 'About', href: '/about' }] }),
+          }),
+          siteSettings: defineLocations({
+            select: { title: 'ownerName' },
+            resolve: () => ({ locations: [{ title: 'Site Settings', href: '/' }] }),
+          }),
+          blogPost: defineLocations({
+            select: { title: 'title', slug: 'slug.current' },
+            resolve: (doc) => ({
+              locations: [{ title: doc?.title ?? 'Post', href: `/blog/${doc?.slug}` }],
+            }),
+          }),
+          blogCategory: defineLocations({
+            select: { title: 'title' },
+            resolve: () => ({ locations: [{ title: 'Content', href: '/blog' }] }),
+          }),
+          blogTag: defineLocations({
+            select: { title: 'title' },
+            resolve: () => ({ locations: [{ title: 'Content', href: '/blog' }] }),
+          }),
+          mosaicItem: defineLocations({
+            select: { title: 'caption' },
+            resolve: () => ({ locations: [{ title: 'Content', href: '/blog' }] }),
+          }),
         },
       },
       previewUrl: {

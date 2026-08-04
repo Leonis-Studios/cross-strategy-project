@@ -43,8 +43,8 @@ export default async function AboutPage() {
     standoutQuote:  data.standoutQuote  ?? FALLBACK_ABOUT_PAGE.standoutQuote,
   }
 
-  const photoUrl = about.photo
-    ? urlFor(about.photo).width(800).height(1000).fit('crop').auto('format').url()
+  const photoUrl = (about.photo as { asset?: unknown } | undefined)?.asset
+    ? urlFor(about.photo!).width(800).height(1000).fit('crop').auto('format').url()
     : null
 
   const aboutPageSchema = {
