@@ -9,7 +9,7 @@ interface CallToActionProps {
 export default function CallToAction({ data = FALLBACK_CTA }: CallToActionProps) {
   return (
     <section
-      id="contact"
+      id="cta"
       className="bg-brand-jet-black py-24 px-6 lg:px-12"
       aria-label="Book a retail placement strategy call"
     >
