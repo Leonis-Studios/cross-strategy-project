@@ -26,6 +26,7 @@ export const blogListQuery = groq`
 export const blogPostQuery = groq`
   *[_type == "blogPost" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     publishedAt,
@@ -61,6 +62,16 @@ export const blogSitemapQuery = groq`
   }
 `
 
+export const blogFeedQuery = groq`
+  *[_type == "blogPost"] | order(publishedAt desc) [0...50] {
+    title,
+    "slug": slug.current,
+    excerpt,
+    publishedAt,
+    _updatedAt
+  }
+`
+
 export const mosaicQuery = groq`
   *[_type == "mosaicItem"] | order(_createdAt asc) {
     _id,
@@ -88,7 +99,11 @@ export const siteSettingsQuery = groq`
     ownerTitle,
     logoText,
     calendarUrl,
-    footerTagline
+    footerTagline,
+    mosaicEyebrow,
+    mosaicHeadline,
+    mosaicHeadlineAccent,
+    socialLinks[] { platform, url }
   }
 `
 

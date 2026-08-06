@@ -100,7 +100,22 @@ export default async function RootLayout({
     description:
       `${ownerName} is a retail placement consultant who has helped 240+ Amazon and DTC brands secure shelf space at Walmart, Target, Whole Foods, Costco, and 1,200+ retail doors, generating over $180M in retail revenue.`,
     url: SITE_URL,
-    sameAs: [],  // TODO: add LinkedIn URL, etc.
+    sameAs: settings.socialLinks?.map((l) => l.url) ?? [],
+  }
+
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: `${ownerName} — Retail Placement Consultant`,
+    url: SITE_URL,
+  }
+
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: logoText,
+    url: SITE_URL,
+    sameAs: settings.socialLinks?.map((l) => l.url) ?? [],
   }
 
   const serviceSchema = {
@@ -160,6 +175,8 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <JsonLd schema={personSchema} />
+        <JsonLd schema={websiteSchema} />
+        <JsonLd schema={organizationSchema} />
         <JsonLd schema={serviceSchema} />
         <Navbar logoText={logoText} />
         <div className="flex-1">

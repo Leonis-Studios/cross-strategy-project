@@ -36,13 +36,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const ownerName = settings.ownerName ?? '[Owner Name]'
 
     const title = post.seoTitle ?? post.title
-    const description = post.seoDescription ?? post.excerpt ?? ''
+    const description =
+      post.seoDescription ?? post.excerpt ?? `${title} — retail placement insights from ${ownerName}.`
     const ogImage = post.coverImage
       ? urlFor(post.coverImage).width(1200).height(630).fit('crop').auto('format').url()
       : undefined
 
     return {
-      title: `${title} | CrossStrat`,
+      title,
       description,
       alternates: { canonical: `/blog/${slug}` },
       openGraph: {
@@ -106,7 +107,7 @@ export default async function BlogPostPage({ params }: Props) {
     description: post.excerpt,
     url: `${SITE_URL}/blog/${slug}`,
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    dateModified: post._updatedAt ?? post.publishedAt,
     author: {
       '@type': 'Person',
       name: ownerName,
@@ -115,7 +116,7 @@ export default async function BlogPostPage({ params }: Props) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'CrossStrat',
+      name: settings.logoText ?? settings.ownerName ?? 'CrossStrat',
       url: SITE_URL,
     },
     ...(coverUrl ? { image: coverUrl } : {}),

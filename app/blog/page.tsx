@@ -10,24 +10,32 @@ import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
 import { SITE_URL } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'Retail Insights Content | [Owner Name] — Retail Placement Consultant',
-  description:
-    'Tactics, frameworks, and firsthand insights on getting Amazon and DTC brands onto shelves at Walmart, Target, Whole Foods, and beyond. Written by someone who has done it 240+ times.',
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    type: 'website',
-    url: `${SITE_URL}/blog`,
-    title: 'Retail Insights Content | [Owner Name]',
-    description:
-      'Tactics and frameworks on getting your brand into Walmart, Target, Whole Foods, and beyond — written by a retail placement consultant who has placed 240+ brands.',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Retail Insights Content | [Owner Name]',
-    description:
-      'Firsthand insights on getting Amazon and DTC brands onto retail shelves — 240+ placements, $180M+ in retail revenue.',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const ownerName = settings.ownerName ?? 'CrossStrat'
+
+  const description =
+    'Tactics, frameworks, and firsthand insights on getting Amazon and DTC brands onto shelves at Walmart, Target, Whole Foods, and beyond. Written by someone who has done it 240+ times.'
+
+  return {
+    title: `Retail Insights Content | ${ownerName} — Retail Placement Consultant`,
+    description,
+    alternates: {
+      canonical: '/blog',
+      types: { 'application/rss+xml': `${SITE_URL}/blog/feed.xml` },
+    },
+    openGraph: {
+      type: 'website',
+      url: `${SITE_URL}/blog`,
+      title: `Retail Insights Content | ${ownerName}`,
+      description,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `Retail Insights Content | ${ownerName}`,
+      description,
+    },
+  }
 }
 
 export default async function BlogPage() {
@@ -69,7 +77,7 @@ export default async function BlogPage() {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'CrossStrat',
+      name: settings.logoText ?? settings.ownerName ?? 'CrossStrat',
       url: SITE_URL,
     },
   }
@@ -117,7 +125,12 @@ export default async function BlogPage() {
       <BlogSearch posts={posts} categories={categories} />
 
       {/* ── Media mosaic ── */}
-      <MediaMosaic items={mosaicItems} />
+      <MediaMosaic
+        items={mosaicItems}
+        eyebrow={settings.mosaicEyebrow}
+        headline={settings.mosaicHeadline}
+        headlineAccent={settings.mosaicHeadlineAccent}
+      />
     </main>
   )
 }

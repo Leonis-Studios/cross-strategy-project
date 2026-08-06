@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
 import { aboutPageQuery } from '@/sanity/lib/queries'
@@ -10,24 +11,28 @@ import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
 import { SITE_URL } from '@/lib/site'
 
-export const metadata: Metadata = {
-  title: 'About [Owner Name] | Retail Placement Consultant',
-  description:
-    '[Owner Name] has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors — generating over $180M in retail revenue.',
-  alternates: { canonical: '/about' },
-  openGraph: {
-    type: 'profile',
-    url: `${SITE_URL}/about`,
-    title: 'About [Owner Name] | Retail Placement Consultant',
-    description:
-      '[Owner Name] has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors — generating over $180M in retail revenue.',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'About [Owner Name] | Retail Placement Consultant',
-    description:
-      '[Owner Name] has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors.',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const data = (await client.fetch<AboutPageData>(aboutPageQuery)) ?? FALLBACK_ABOUT_PAGE
+  const ownerName = data.ownerName ?? FALLBACK_ABOUT_PAGE.ownerName
+
+  const description = `${ownerName} has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors — generating over $180M in retail revenue.`
+
+  return {
+    title: `About ${ownerName} | Retail Placement Consultant`,
+    description,
+    alternates: { canonical: '/about' },
+    openGraph: {
+      type: 'profile',
+      url: `${SITE_URL}/about`,
+      title: `About ${ownerName} | Retail Placement Consultant`,
+      description,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `About ${ownerName} | Retail Placement Consultant`,
+      description,
+    },
+  }
 }
 
 export default async function AboutPage() {
@@ -80,10 +85,9 @@ export default async function AboutPage() {
   const contactPageSchema = {
     '@context': 'https://schema.org',
     '@type': 'ContactPage',
-    name: 'Contact [Owner Name]',
+    name: `Contact ${about.ownerName}`,
     url: `${SITE_URL}/about#contact`,
-    description:
-      'Get in touch with [Owner Name] to discuss retail placement consulting for your Amazon or DTC brand.',
+    description: `Get in touch with ${about.ownerName} to discuss retail placement consulting for your Amazon or DTC brand.`,
   }
 
   const paragraphs = about.bio?.split('\n\n').filter(Boolean) ?? []

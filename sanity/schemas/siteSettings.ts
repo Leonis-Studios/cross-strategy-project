@@ -1,4 +1,4 @@
-import { defineType, defineField } from 'sanity'
+import { defineType, defineField, defineArrayMember } from 'sanity'
 
 export const siteSettings = defineType({
   name: 'siteSettings',
@@ -42,6 +42,50 @@ export const siteSettings = defineType({
       type: 'text',
       rows: 2,
       description: 'Short tagline shown at the bottom of every page.',
+    }),
+    defineField({
+      name: 'mosaicEyebrow',
+      title: 'Media Section — Small Label',
+      type: 'string',
+      description: 'Tiny label above the media gallery heading on the blog page. e.g. "Behind The Scenes"',
+    }),
+    defineField({
+      name: 'mosaicHeadline',
+      title: 'Media Section — Heading',
+      type: 'string',
+      description: 'Main heading over the media gallery. e.g. "See it in"',
+    }),
+    defineField({
+      name: 'mosaicHeadlineAccent',
+      title: 'Media Section — Heading Italic Part',
+      type: 'string',
+      description: 'The words in the heading that appear in italic. e.g. "action"',
+    }),
+    defineField({
+      name: 'socialLinks',
+      title: 'Social Links',
+      type: 'array',
+      description: 'Links to your social/professional profiles (e.g. LinkedIn). Used in site structured data.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'platform',
+              title: 'Platform',
+              type: 'string',
+              description: 'e.g. "LinkedIn", "Instagram"',
+            }),
+            defineField({
+              name: 'url',
+              title: 'URL',
+              type: 'url',
+              validation: (r) => r.required(),
+            }),
+          ],
+          preview: { select: { title: 'platform', subtitle: 'url' } },
+        }),
+      ],
     }),
   ],
 })

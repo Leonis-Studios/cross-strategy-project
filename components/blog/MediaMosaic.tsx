@@ -4,9 +4,17 @@ import type { MosaicItemData } from '@/sanity/types'
 
 interface Props {
   items: MosaicItemData[]
+  eyebrow?: string
+  headline?: string
+  headlineAccent?: string
 }
 
-export default function MediaMosaic({ items }: Props) {
+export default function MediaMosaic({
+  items,
+  eyebrow = 'Behind The Scenes',
+  headline = 'See it in',
+  headlineAccent = 'action',
+}: Props) {
   if (items.length === 0) return null
 
   return (
@@ -14,11 +22,11 @@ export default function MediaMosaic({ items }: Props) {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <p className="small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-            Behind The Scenes
+            {eyebrow}
           </p>
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
           <h2 className="font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto">
-            See it in <em className="italic text-brand-red">action</em>
+            {headline} <em className="italic text-brand-red">{headlineAccent}</em>
           </h2>
         </div>
 

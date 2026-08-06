@@ -144,6 +144,10 @@ export interface SiteSettingsData {
   logoText?: string
   calendarUrl?: string
   footerTagline?: string
+  mosaicEyebrow?: string
+  mosaicHeadline?: string
+  mosaicHeadlineAccent?: string
+  socialLinks?: { platform?: string; url: string }[]
 }
 
 export interface BlogTagData {
@@ -173,6 +177,7 @@ export interface BlogPostSummary {
 }
 
 export interface BlogPostData extends BlogPostSummary {
+  _updatedAt?: string
   body?: unknown[]
   seoTitle?: string
   seoDescription?: string
