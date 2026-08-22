@@ -38,7 +38,14 @@ export const blogPostQuery = groq`
     readingTime,
     body,
     seoTitle,
-    seoDescription
+    seoDescription,
+    "seo": {
+      "title": coalesce(seoTitle, seo.title, title),
+      "description": coalesce(seoDescription, seo.description, excerpt),
+      "ogImage": coalesce(seo.ogImage, coverImage) { ..., alt },
+      "canonical": seo.canonical,
+      "noindex": coalesce(seo.noindex, false)
+    }
   }
 `
 
@@ -89,7 +96,14 @@ export const aboutPageQuery = groq`
     bio,
     photo { ..., alt },
     statsHighlight[] { value, label },
-    standoutQuote
+    standoutQuote,
+    "seo": {
+      "title": seo.title,
+      "description": coalesce(seo.description, bio),
+      "ogImage": coalesce(seo.ogImage, photo) { ..., alt },
+      "canonical": seo.canonical,
+      "noindex": coalesce(seo.noindex, false)
+    }
   }
 `
 
@@ -203,6 +217,13 @@ export const homePageQuery = groq`
     "contactSection": *[_type == "homePage"][0] {
       contactEyebrow, contactHeadline, contactHeadlineAccent,
       contactSubheadline, contactSuccessMessage
+    },
+    "seo": *[_type == "homePage"][0] {
+      "title": seo.title,
+      "description": coalesce(seo.description, hero.subheadline, hero.bioText),
+      "ogImage": coalesce(seo.ogImage, hero.image) { ..., alt },
+      "canonical": seo.canonical,
+      "noindex": coalesce(seo.noindex, false)
     }
   }
 `

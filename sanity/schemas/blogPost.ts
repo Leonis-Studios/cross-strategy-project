@@ -130,6 +130,11 @@ export const blogPost = defineType({
       rows: 2,
       description: 'Meta description for search engines (recommended: 150–160 chars)',
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   orderings: [
     {

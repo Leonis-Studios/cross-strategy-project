@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { stegaClean } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
@@ -27,43 +28,45 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
+  const post = await client.fetch<BlogPostData>(blogPostQuery, { slug }).then(stegaClean).catch(() => null)
 
-  try {
-    const post = await client.fetch<BlogPostData>(blogPostQuery, { slug })
-    if (!post) return { title: 'Article Not Found' }
-
-    const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
-    const ownerName = settings.ownerName ?? '[Owner Name]'
-
-    const title = post.seoTitle ?? post.title
-    const description =
-      post.seoDescription ?? post.excerpt ?? `${title} — retail placement insights from ${ownerName}.`
-    const ogImage = post.coverImage
-      ? urlFor(post.coverImage).width(1200).height(630).fit('crop').auto('format').url()
-      : undefined
-
+  if (!post) {
     return {
+      title: 'Article Not Found',
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
+  const ownerName = settings.ownerName ?? '[Owner Name]'
+
+  const seo = post.seo ?? {}
+  const title = seo.title ?? post.title
+  const description = seo.description ?? `${title} — retail placement insights from ${ownerName}.`
+  const ogImage = seo.ogImage
+    ? urlFor(seo.ogImage).width(1200).height(630).fit('crop').auto('format').url()
+    : undefined
+
+  return {
+    title,
+    description,
+    alternates: { canonical: seo.canonical || `/blog/${slug}` },
+    openGraph: {
+      type: 'article',
+      url: `${SITE_URL}/blog/${slug}`,
       title,
       description,
-      alternates: { canonical: `/blog/${slug}` },
-      openGraph: {
-        type: 'article',
-        url: `${SITE_URL}/blog/${slug}`,
-        title,
-        description,
-        publishedTime: post.publishedAt,
-        authors: [ownerName],
-        ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630, alt: title }] } : {}),
-      },
-      twitter: {
-        card: 'summary_large_image',
-        title,
-        description,
-        ...(ogImage ? { images: [ogImage] } : {}),
-      },
-    }
-  } catch {
-    return { title: 'Article Not Found' }
+      publishedTime: post.publishedAt,
+      authors: [ownerName],
+      ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
+    robots: seo.noindex ? { index: false, follow: false } : undefined,
   }
 }
 
@@ -78,7 +81,7 @@ function formatDate(dateString: string): string {
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params
 
-  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? '[Owner Name]'
 
   let post: BlogPostData | null = await sanityFetch({ query: blogPostQuery, params: { slug } })

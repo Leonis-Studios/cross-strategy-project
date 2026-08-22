@@ -25,15 +25,6 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
 
   if (!count) return null
 
-  const gridClass =
-    count <= 2
-      ? 'grid-cols-1 max-w-2xl mx-auto'
-      : count <= 6
-        ? 'grid-cols-1 md:grid-cols-2'
-        : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-
-  const cardPadding = count >= 7 ? 'p-5' : count >= 5 ? 'p-6' : 'p-8'
-
   return (
     <section
       id="faq"
@@ -62,48 +53,43 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
           )}
         </div>
 
-        {/* FAQ grid */}
-        <div className={`grid ${gridClass} gap-5`}>
+        {/* FAQ accordion */}
+        <div className="max-w-3xl mx-auto divide-y divide-brand-alabaster bg-white border border-brand-alabaster shadow-[var(--shadow-box)]">
           {faqs.map((item, i) => {
             const stagger = ['stagger-2', 'stagger-3', 'stagger-4', 'stagger-5'][i % 4]
             return (
-              <article
+              <details
                 key={item._id}
-                className={`fade-up-item ${stagger} bg-white border border-brand-alabaster shadow-[var(--shadow-box)] ${cardPadding}`}
+                className={`group fade-up-item ${stagger} px-6 py-5 md:px-8`}
                 itemScope
                 itemType="https://schema.org/Question"
+                {...(i === 0 ? { open: true } : {})}
               >
-                {/* Q label */}
-                <div className="flex items-start gap-4 mb-4">
-                  <div
-                    className="shrink-0 w-8 h-8 bg-brand-red flex items-center justify-center"
+                <summary
+                  className="flex items-center justify-between gap-4 cursor-pointer list-none font-barlow font-bold text-brand-jet-black text-subheadline leading-snug marker:content-none [&::-webkit-details-marker]:hidden"
+                  itemProp="name"
+                >
+                  <span>{item.question}</span>
+                  <span
                     aria-hidden="true"
+                    className="shrink-0 w-8 h-8 bg-brand-red flex items-center justify-center font-barlow font-bold text-white text-lg leading-none transition-transform duration-200 group-open:rotate-45"
                   >
-                    <span className="font-barlow font-bold text-white text-xs leading-none">Q</span>
-                  </div>
-                  <h3
-                    className="font-barlow font-bold text-brand-jet-black text-subheadline leading-snug"
-                    itemProp="name"
-                  >
-                    {item.question}
-                  </h3>
-                </div>
-
-                <div className="w-full h-px bg-brand-alabaster mb-4" aria-hidden="true" />
-
+                    +
+                  </span>
+                </summary>
                 <div
                   itemScope
                   itemType="https://schema.org/Answer"
                   itemProp="acceptedAnswer"
                 >
                   <p
-                    className="font-barlow text-brand-dim-grey text-label leading-relaxed"
+                    className="font-barlow text-brand-dim-grey text-label leading-relaxed mt-4"
                     itemProp="text"
                   >
                     {item.answer}
                   </p>
                 </div>
-              </article>
+              </details>
             )
           })}
         </div>

@@ -1,3 +1,4 @@
+import { stegaClean } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
 import { blogFeedQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import type { SiteSettingsData } from '@/sanity/types'
@@ -21,12 +22,12 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? 'CrossStrat'
 
   let posts: FeedPost[] = []
   try {
-    posts = (await client.fetch<FeedPost[]>(blogFeedQuery)) ?? []
+    posts = stegaClean((await client.fetch<FeedPost[]>(blogFeedQuery)) ?? [])
   } catch {
     posts = []
   }

@@ -3,6 +3,8 @@ import { client } from '@/sanity/lib/client'
 import { blogSitemapQuery } from '@/sanity/lib/queries'
 import { SITE_URL } from '@/lib/site'
 
+export const revalidate = 3600
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
@@ -34,7 +36,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     }))
     return [...staticPages, ...blogPages]
-  } catch {
+  } catch (err) {
+    console.error('sitemap: failed to fetch blog posts, falling back to static pages only', err)
     return staticPages
   }
 }

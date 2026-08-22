@@ -13,6 +13,7 @@ export const homePage = defineType({
     { name: 'cta', title: 'Call To Action' },
     { name: 'faq', title: 'FAQ' },
     { name: 'contact', title: 'Contact / Booking Form' },
+    { name: 'seo', title: 'SEO' },
   ],
   fields: [
     // ─── HERO ────────────────────────────────────────────────────────────────
@@ -565,6 +566,14 @@ export const homePage = defineType({
       rows: 2,
       group: 'contact',
       description: 'Message shown after the form is submitted successfully. e.g. "Message received. We\'ll be in touch within one business day."',
+    }),
+
+    // ─── SEO ─────────────────────────────────────────────────────────────────
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'seo',
     }),
   ],
 })

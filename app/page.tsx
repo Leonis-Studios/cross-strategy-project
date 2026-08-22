@@ -1,5 +1,8 @@
+import type { Metadata } from 'next'
+import { stegaClean } from 'next-sanity'
 import { sanityFetch } from '@/sanity/lib/live'
 import { client } from '@/sanity/lib/client'
+import { urlFor } from '@/sanity/lib/image'
 import { homePageQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import type { HomePageData, SiteSettingsData } from '@/sanity/types'
 import Hero from '@/components/Hero'
@@ -30,10 +33,48 @@ import {
   FALLBACK_CONTACT_SECTION,
 } from '@/lib/fallbacks'
 
+export async function generateMetadata(): Promise<Metadata> {
+  const [homeData, settings] = await Promise.all([
+    client.fetch<HomePageData>(homePageQuery).then(stegaClean),
+    client.fetch<SiteSettingsData>(siteSettingsQuery).then(stegaClean),
+  ])
+  const ownerName = settings?.ownerName ?? '[Owner Name]'
+  const seo = homeData?.seo ?? {}
+
+  const title = seo.title ?? `${ownerName} — Retail Placement Consultant | Amazon & DTC to Shelf`
+  const description =
+    seo.description ??
+    'I help Amazon and DTC sellers get their products on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors. Book a strategy call.'
+  const ogImageUrl = seo.ogImage
+    ? urlFor(seo.ogImage).width(1200).height(630).fit('crop').auto('format').url()
+    : undefined
+
+  return {
+    title,
+    description,
+    alternates: { canonical: seo.canonical || '/' },
+    openGraph: {
+      type: 'website',
+      title,
+      description,
+      ...(ogImageUrl
+        ? { images: [{ url: ogImageUrl, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }] }
+        : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
+    },
+    robots: seo.noindex ? { index: false, follow: false } : undefined,
+  }
+}
+
 export default async function Home() {
   const { data: rawData } = await sanityFetch({ query: homePageQuery })
   const data: HomePageData = (rawData as HomePageData | null) ?? {}
-  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? '[Owner Name]'
 
   const hero            = { ...FALLBACK_HERO, ...(data.hero ?? {}) }

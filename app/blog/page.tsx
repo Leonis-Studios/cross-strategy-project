@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { stegaClean } from 'next-sanity'
 import { sanityFetch } from '@/sanity/lib/live'
 import { client } from '@/sanity/lib/client'
 import { blogListQuery, mosaicQuery, siteSettingsQuery } from '@/sanity/lib/queries'
@@ -11,7 +12,7 @@ import AnimateIn from '@/components/AnimateIn'
 import { SITE_URL } from '@/lib/site'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? 'CrossStrat'
 
   const description =
@@ -43,7 +44,7 @@ export default async function BlogPage() {
   let categories: BlogCategoryData[] = FALLBACK_BLOG_CATEGORIES
   let mosaicItems: MosaicItemData[] = []
 
-  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? '[Owner Name]'
 
   try {

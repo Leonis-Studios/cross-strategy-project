@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import { stegaClean } from 'next-sanity'
 import { client } from '@/sanity/lib/client'
 import { sanityFetch } from '@/sanity/lib/live'
 import { urlFor } from '@/sanity/lib/image'
@@ -12,26 +13,38 @@ import AnimateIn from '@/components/AnimateIn'
 import { SITE_URL } from '@/lib/site'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = (await client.fetch<AboutPageData>(aboutPageQuery)) ?? FALLBACK_ABOUT_PAGE
+  const data = stegaClean((await client.fetch<AboutPageData>(aboutPageQuery)) ?? FALLBACK_ABOUT_PAGE)
   const ownerName = data.ownerName ?? FALLBACK_ABOUT_PAGE.ownerName
+  const seo = data.seo ?? {}
 
-  const description = `${ownerName} has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors — generating over $180M in retail revenue.`
+  const title = seo.title ?? `About ${ownerName} | Retail Placement Consultant`
+  const description =
+    seo.description ??
+    `${ownerName} has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors — generating over $180M in retail revenue.`
+  const ogImageUrl = seo.ogImage
+    ? urlFor(seo.ogImage).width(1200).height(630).fit('crop').auto('format').url()
+    : undefined
 
   return {
-    title: `About ${ownerName} | Retail Placement Consultant`,
+    title,
     description,
-    alternates: { canonical: '/about' },
+    alternates: { canonical: seo.canonical || '/about' },
     openGraph: {
       type: 'profile',
       url: `${SITE_URL}/about`,
-      title: `About ${ownerName} | Retail Placement Consultant`,
+      title,
       description,
+      ...(ogImageUrl
+        ? { images: [{ url: ogImageUrl, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }] }
+        : {}),
     },
     twitter: {
       card: 'summary_large_image',
-      title: `About ${ownerName} | Retail Placement Consultant`,
+      title,
       description,
+      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
     },
+    robots: seo.noindex ? { index: false, follow: false } : undefined,
   }
 }
 

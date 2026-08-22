@@ -1,1 +1,1 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com' // TODO: replace with live domain
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://example.com'

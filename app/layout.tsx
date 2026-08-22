@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Barlow } from 'next/font/google'
 import './globals.css'
 import { draftMode } from 'next/headers'
+import { stegaClean } from 'next-sanity'
 import { VisualEditing } from 'next-sanity/visual-editing'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import JsonLd from '@/components/JsonLd'
@@ -29,7 +30,7 @@ const barlow = Barlow({
 const OG_IMAGE = `${SITE_URL}/og-image.png`  // TODO: add 1200×630 og-image.png to /public
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings: SiteSettingsData = (await client.fetch(siteSettingsQuery)) ?? {}
+  const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? '[Owner Name]'
 
   return {

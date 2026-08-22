@@ -74,6 +74,11 @@ export const aboutPage = defineType({
       rows: 3,
       description: 'A memorable quote from you, shown between your bio and the contact form',
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   preview: {
     select: { title: 'ownerName', subtitle: 'ownerTitle' },

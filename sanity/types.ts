@@ -112,6 +112,14 @@ export interface FaqData {
   displayOrder?: number
 }
 
+export interface SeoData {
+  title?: string
+  description?: string
+  ogImage?: SanityImage
+  canonical?: string
+  noindex?: boolean
+}
+
 export interface AboutPageData {
   ownerName?: string
   ownerTitle?: string
@@ -119,6 +127,7 @@ export interface AboutPageData {
   photo?: SanityImage
   statsHighlight?: { value: string; label: string }[]
   standoutQuote?: string
+  seo?: SeoData
 }
 
 export interface HomePageData {
@@ -136,6 +145,7 @@ export interface HomePageData {
   faqSection?: FaqSection
   faqs?: FaqData[]
   contactSection?: ContactSection
+  seo?: SeoData
 }
 
 export interface SiteSettingsData {
@@ -181,6 +191,7 @@ export interface BlogPostData extends BlogPostSummary {
   body?: unknown[]
   seoTitle?: string
   seoDescription?: string
+  seo?: SeoData
 }
 
 export interface MosaicItemData {
