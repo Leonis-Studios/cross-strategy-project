@@ -51,7 +51,7 @@ export default function BlogSearch({ posts, categories }: Props) {
   return (
     <>
       {/* ── Search + filter bar ── */}
-      <div className="bg-brand-jet-black border-b border-brand-silver/15 py-6 px-6 lg:px-12 sticky top-[72px] z-10">
+      <div className="bg-brand-jet-black border-b border-brand-silver/15 py-6 px-6 lg:px-12 sticky top-16 z-10">
         <div className="max-w-7xl mx-auto flex flex-wrap gap-x-6 gap-y-3 items-center">
           {/* Search input */}
           <div className="relative w-full md:w-72 shrink-0">
