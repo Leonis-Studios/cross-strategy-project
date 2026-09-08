@@ -10,6 +10,7 @@ import MediaMosaic from '@/components/blog/MediaMosaic'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
 import { SITE_URL } from '@/lib/site'
+import { getYouTubeId, getYouTubeThumbnail } from '@/lib/youtube'
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
@@ -83,6 +84,33 @@ export default async function BlogPage() {
     },
   }
 
+  const videoItems = mosaicItems
+    .filter((item) => item.mediaType === 'youtube')
+    .map((item) => {
+      const id = getYouTubeId(item.youtubeUrl)
+      return id ? { item, id } : null
+    })
+    .filter((v): v is { item: MosaicItemData; id: string } => v !== null)
+
+  const videoSchema = videoItems.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        itemListElement: videoItems.map(({ item, id }, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'VideoObject',
+            name: item.caption ?? `${ownerName} retail placement video`,
+            description: item.caption ?? 'Behind-the-scenes retail placement video.',
+            thumbnailUrl: getYouTubeThumbnail(id),
+            embedUrl: `https://www.youtube.com/embed/${id}`,
+            url: item.youtubeUrl,
+          },
+        })),
+      }
+    : null
+
   const itemListSchema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
@@ -101,6 +129,7 @@ export default async function BlogPage() {
     <main>
       <JsonLd schema={blogSchema} />
       <JsonLd schema={itemListSchema} />
+      {videoSchema && <JsonLd schema={videoSchema} />}
 
       {/* ── Blog header ── */}
       <section

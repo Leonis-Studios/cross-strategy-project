@@ -4,7 +4,7 @@ export const mosaicItem = defineType({
   name: 'mosaicItem',
   title: 'Media Mosaic Item',
   type: 'document',
-  description: 'A single photo or video (MP4) shown in the media mosaic on the Content page. The mosaic is hidden entirely when there are no items.',
+  description: 'A single photo or YouTube video shown in the media mosaic on the Content page. YouTube videos embed and play in place — visitors never leave the site. The mosaic is hidden entirely when there are no items.',
   fields: [
     defineField({
       name: 'mediaType',
@@ -13,7 +13,7 @@ export const mosaicItem = defineType({
       options: {
         list: [
           { title: 'Image', value: 'image' },
-          { title: 'Video (MP4)', value: 'video' },
+          { title: 'YouTube Video', value: 'youtube' },
         ],
       },
       initialValue: 'image',
@@ -24,6 +24,13 @@ export const mosaicItem = defineType({
       title: 'Image',
       type: 'image',
       options: { hotspot: true },
+      hidden: ({ parent }) => parent?.mediaType !== 'image',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { mediaType?: string } | undefined
+          if (parent?.mediaType === 'image' && !value) return 'Image is required when Media Type is Image.'
+          return true
+        }),
       fields: [
         defineField({
           name: 'alt',
@@ -34,10 +41,21 @@ export const mosaicItem = defineType({
       ],
     }),
     defineField({
-      name: 'video',
-      title: 'Video File (MP4)',
-      type: 'file',
-      options: { accept: 'video/mp4' },
+      name: 'youtubeUrl',
+      title: 'YouTube URL',
+      type: 'url',
+      description: 'Paste a YouTube link, e.g. https://www.youtube.com/watch?v=xxxxxxxxxxx or https://youtu.be/xxxxxxxxxxx',
+      hidden: ({ parent }) => parent?.mediaType !== 'youtube',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { mediaType?: string } | undefined
+          if (parent?.mediaType !== 'youtube') return true
+          if (!value) return 'YouTube URL is required when Media Type is YouTube Video.'
+          const isYouTube = /^https?:\/\/(www\.)?(youtube\.com\/(watch\?v=|shorts\/|embed\/)|youtu\.be\/)/.test(
+            value
+          )
+          return isYouTube || 'Enter a valid YouTube URL (youtube.com or youtu.be).'
+        }),
     }),
     defineField({
       name: 'caption',
@@ -54,8 +72,8 @@ export const mosaicItem = defineType({
     },
     prepare({ title, mediaType, media }) {
       return {
-        title: title || (mediaType === 'video' ? 'Video' : 'Image'),
-        subtitle: mediaType === 'video' ? 'Video (MP4)' : 'Image',
+        title: title || (mediaType === 'youtube' ? 'YouTube Video' : 'Image'),
+        subtitle: mediaType === 'youtube' ? 'YouTube Video' : 'Image',
         media,
       }
     },

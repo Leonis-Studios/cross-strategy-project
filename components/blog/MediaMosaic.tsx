@@ -1,5 +1,7 @@
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
+import { getYouTubeId } from '@/lib/youtube'
+import YouTubeEmbed from './YouTubeEmbed'
 import type { MosaicItemData } from '@/sanity/types'
 
 interface Props {
@@ -17,6 +19,12 @@ export default function MediaMosaic({
 }: Props) {
   if (items.length === 0) return null
 
+  // Fills a dangling last row (like the blog grid) instead of leaving empty cells.
+  const rem2 = items.length % 2
+  const rem4 = items.length % 4
+  const lastColSpanBase = rem2 === 1 ? 'col-span-2' : ''
+  const lastColSpanMd = { 0: '', 1: 'md:col-span-4', 2: 'md:col-span-3', 3: 'md:col-span-2' }[rem4]
+
   return (
     <section className="bg-brand-jet-black py-24 px-6 lg:px-12 border-t border-brand-silver/15" aria-label="Media gallery">
       <div className="max-w-7xl mx-auto">
@@ -30,24 +38,18 @@ export default function MediaMosaic({
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-px bg-brand-dim-grey/20 [grid-auto-flow:dense]">
+        <div className="grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-px bg-brand-dim-grey/20">
           {items.map((item, i) => {
-            const isLarge = i % 5 === 0
-            const spanClass = isLarge ? 'col-span-2 row-span-2' : ''
+            const isLast = i === items.length - 1
+            const spanClass = isLast ? `${lastColSpanBase} ${lastColSpanMd}`.trim() : ''
+            const youtubeId = item.mediaType === 'youtube' ? getYouTubeId(item.youtubeUrl) : null
             return (
               <div
                 key={item._id}
                 className={`group relative overflow-hidden bg-brand-jet-black ${spanClass}`}
               >
-                {item.mediaType === 'video' && item.videoUrl ? (
-                  <video
-                    src={item.videoUrl}
-                    className="absolute inset-0 w-full h-full object-cover"
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                  />
+                {youtubeId ? (
+                  <YouTubeEmbed videoId={youtubeId} title={item.caption ?? 'YouTube video'} />
                 ) : item.image ? (
                   <Image
                     src={urlFor(item.image).width(800).height(800).fit('crop').auto('format').url()}
@@ -59,7 +61,7 @@ export default function MediaMosaic({
                 ) : null}
 
                 {item.caption && (
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-brand-jet-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-brand-jet-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
                     <p className="font-barlow text-brand-alabaster text-xs p-3">{item.caption}</p>
                   </div>
                 )}

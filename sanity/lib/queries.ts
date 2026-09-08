@@ -85,7 +85,7 @@ export const mosaicQuery = groq`
     mediaType,
     caption,
     image { ..., alt },
-    "videoUrl": video.asset->url
+    youtubeUrl
   }
 `
 

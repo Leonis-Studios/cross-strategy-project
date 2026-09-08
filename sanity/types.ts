@@ -196,8 +196,8 @@ export interface BlogPostData extends BlogPostSummary {
 
 export interface MosaicItemData {
   _id: string
-  mediaType: 'image' | 'video'
+  mediaType: 'image' | 'youtube'
   caption?: string
   image?: SanityImage
-  videoUrl?: string
+  youtubeUrl?: string
 }
