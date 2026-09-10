@@ -80,7 +80,7 @@ export default function Partners({ partners = FALLBACK_PARTNERS, section }: Part
 
                 <div className="flex flex-col items-center text-center px-7 pt-5 flex-1">
                   {/* Logo window, styled like a shelf-tag label */}
-                  <div className="w-full h-16 flex items-center justify-center mb-5 bg-brand-alabaster/50 border border-dashed border-brand-dim-grey/40 px-4 py-2">
+                  <div className="w-full min-h-16 flex items-center justify-center mb-5 bg-brand-alabaster/50 border border-dashed border-brand-dim-grey/40 px-4 py-4">
                     {logoUrl ? (
                       <Image
                         src={logoUrl}
@@ -90,7 +90,7 @@ export default function Partners({ partners = FALLBACK_PARTNERS, section }: Part
                         className="max-h-12 w-auto object-contain"
                       />
                     ) : (
-                      <span className="font-playfair text-subheadline text-brand-jet-black">
+                      <span className="font-playfair text-subheadline text-brand-jet-black leading-snug">
                         {partner.name}
                       </span>
                     )}
