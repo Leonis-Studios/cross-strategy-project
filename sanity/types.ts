@@ -52,6 +52,13 @@ export interface FaqSection {
   faqHeadlineAccent?: string
 }
 
+export interface PartnersSection {
+  partnersEyebrow?: string
+  partnersHeadline?: string
+  partnersHeadlineAccent?: string
+  partnersSubheadline?: string
+}
+
 export interface ContactSection {
   contactEyebrow?: string
   contactHeadline?: string
@@ -112,6 +119,16 @@ export interface FaqData {
   displayOrder?: number
 }
 
+export interface PartnerData {
+  _id: string
+  name: string
+  blurb: string
+  logo?: SanityImage
+  websiteUrl: string
+  buttonLabel?: string
+  displayOrder?: number
+}
+
 export interface SeoData {
   title?: string
   description?: string
@@ -144,6 +161,8 @@ export interface HomePageData {
   cta?: CtaData
   faqSection?: FaqSection
   faqs?: FaqData[]
+  partnersSection?: PartnersSection
+  partners?: PartnerData[]
   contactSection?: ContactSection
   seo?: SeoData
 }

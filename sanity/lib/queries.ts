@@ -214,6 +214,17 @@ export const homePageQuery = groq`
         "_id": _id, question, answer
       }
     ),
+    "partnersSection": *[_type == "homePage"][0] {
+      partnersEyebrow, partnersHeadline, partnersHeadlineAccent, partnersSubheadline
+    },
+    "partners": select(
+      count(*[_type == "homePage"][0].partners) > 0 => *[_type == "homePage"][0].partners[] {
+        "_id": _key, name, blurb, logo { ..., alt }, websiteUrl, buttonLabel
+      },
+      *[_type == "partner" && active != false] | order(displayOrder asc) {
+        "_id": _id, name, blurb, logo { ..., alt }, websiteUrl, buttonLabel
+      }
+    ),
     "contactSection": *[_type == "homePage"][0] {
       contactEyebrow, contactHeadline, contactHeadlineAccent,
       contactSubheadline, contactSuccessMessage

@@ -31,8 +31,8 @@ export async function sendContactMessage(
 
   const { error } = await resend.emails.send({
     // swap 'from' to a verified domain address once crossstrat.com is verified in Resend
-    from: 'CrossStrat <onboarding@resend.dev>',
-    to: 'contact@crossstrat.com',
+    from: process.env.RESEND_FROM_EMAIL || 'CrossStrat <onboarding@resend.dev>',
+    to: process.env.RESEND_TO_EMAIL || 'contact@crossstrat.com',
     replyTo: email,
     subject: `New lead: ${name}`,
     html: `

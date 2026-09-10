@@ -15,6 +15,8 @@ import type {
   HeroData,
   HowItWorksSection,
   HowItWorksStepData,
+  PartnerData,
+  PartnersSection,
   SocialProofSection,
   TestimonialData,
 } from "@/sanity/types";
@@ -75,6 +77,14 @@ export const FALLBACK_FAQ_SECTION: FaqSection = {
   faqEyebrow: "Common Questions",
   faqHeadline: "Everything you need to know before we talk",
   faqHeadlineAccent: "know before we talk",
+};
+
+export const FALLBACK_PARTNERS_SECTION: PartnersSection = {
+  partnersEyebrow: "Who We Work With",
+  partnersHeadline: "Trusted by the partners who move brands to shelf",
+  partnersHeadlineAccent: "move brands to shelf",
+  partnersSubheadline:
+    "The agencies, brokers, and platforms I work alongside to get brands from first pitch to purchase order.",
 };
 
 export const FALLBACK_CONTACT_SECTION: ContactSection = {
@@ -260,6 +270,33 @@ export const FALLBACK_FAQS: FaqData[] = [
     answer:
       "Fees vary based on scope, target retailers, and engagement model. Common structures include a project retainer, a monthly advisory fee, or a success fee tied to purchase orders. Book a strategy call to discuss the right model for your brand.",
     displayOrder: 5,
+  },
+];
+
+export const FALLBACK_PARTNERS: PartnerData[] = [
+  {
+    _id: "fallback-partner-1",
+    name: "Shelfwise Analytics",
+    blurb: "Category and planogram data that shows buyers exactly where a brand fits on the shelf.",
+    websiteUrl: "https://example.com",
+    buttonLabel: "Visit Website",
+    displayOrder: 1,
+  },
+  {
+    _id: "fallback-partner-2",
+    name: "Buyer Bridge Group",
+    blurb: "A national broker network that opens doors with regional and independent grocery chains.",
+    websiteUrl: "https://example.com",
+    buttonLabel: "Visit Website",
+    displayOrder: 2,
+  },
+  {
+    _id: "fallback-partner-3",
+    name: "Retail Ready Co.",
+    blurb: "Compliance and packaging consultants who get brands audit-ready before the first buyer meeting.",
+    websiteUrl: "https://example.com",
+    buttonLabel: "Visit Website",
+    displayOrder: 3,
   },
 ];
 

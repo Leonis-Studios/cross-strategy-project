@@ -13,6 +13,7 @@ import Features from '@/components/Features'
 import HowItWorks from '@/components/HowItWorks'
 import CallToAction from '@/components/CallToAction'
 import FAQ from '@/components/FAQ'
+import Partners from '@/components/Partners'
 import ContactForm from '@/components/ContactForm'
 import JsonLd from '@/components/JsonLd'
 import SectionDivider from '@/components/SectionDivider'
@@ -29,6 +30,8 @@ import {
   FALLBACK_CTA,
   FALLBACK_FAQS,
   FALLBACK_FAQ_SECTION,
+  FALLBACK_PARTNERS,
+  FALLBACK_PARTNERS_SECTION,
   FALLBACK_SOCIAL_PROOF_SECTION,
   FALLBACK_CONTACT_SECTION,
 } from '@/lib/fallbacks'
@@ -90,6 +93,8 @@ export default async function Home() {
   const cta             = { ...FALLBACK_CTA,                     ...(data.cta             ?? {}) }
   const faqs            = data.faqs?.length            ? data.faqs            : FALLBACK_FAQS
   const faqSection      = { ...FALLBACK_FAQ_SECTION,             ...(data.faqSection      ?? {}) }
+  const partners        = data.partners?.length         ? data.partners        : FALLBACK_PARTNERS
+  const partnersSection = { ...FALLBACK_PARTNERS_SECTION,        ...(data.partnersSection ?? {}) }
   const contactSection  = { ...FALLBACK_CONTACT_SECTION,         ...(data.contactSection  ?? {}) }
 
   const faqSchema = {
@@ -169,6 +174,7 @@ export default async function Home() {
       <SectionDivider from="dark" to="light" />
       <FAQ faqs={faqs} section={faqSection} />
       <SectionDivider from="light" to="dark" />
+      <Partners partners={partners} section={partnersSection} />
       <ContactForm section={contactSection} />
     </main>
   )

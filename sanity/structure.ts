@@ -104,6 +104,7 @@ export const structure: StructureResolver = (S) =>
                 ),
 
               S.documentTypeListItem('faq').title('FAQs'),
+              S.documentTypeListItem('partner').title('Partners'),
 
               S.divider(),
 
