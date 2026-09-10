@@ -13,9 +13,12 @@ import PortableTextRenderer from '@/components/blog/PortableTextRenderer'
 import BlogCard from '@/components/blog/BlogCard'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-import { SITE_URL } from '@/lib/site'
+import { SITE_URL, DEFAULT_OG_IMAGE, metaDescription } from '@/lib/site'
 
 type Props = { params: Promise<{ slug: string }> }
+
+// Sanity's webhook revalidates on publish; this is the safety net if it misfires.
+export const revalidate = 3600
 
 export async function generateStaticParams() {
   try {
@@ -42,10 +45,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const seo = post.seo ?? {}
   const title = seo.title ?? post.title
-  const description = seo.description ?? `${title} — retail placement insights from ${ownerName}.`
+  const description =
+    metaDescription(seo.description) ?? `${title} — retail placement insights from ${ownerName}.`
   const ogImage = seo.ogImage
     ? urlFor(seo.ogImage).width(1200).height(630).fit('crop').auto('format').url()
-    : undefined
+    : DEFAULT_OG_IMAGE.url
 
   return {
     title,
@@ -58,13 +62,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       publishedTime: post.publishedAt,
       authors: [ownerName],
-      ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }] } : {}),
+      images: [{ url: ogImage, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      ...(ogImage ? { images: [ogImage] } : {}),
+      images: [ogImage],
     },
     robots: seo.noindex ? { index: false, follow: false } : undefined,
   }
@@ -299,18 +303,21 @@ export default async function BlogPostPage({ params }: Props) {
         <AnimateIn className="max-w-4xl mx-auto text-center">
           <div className="w-12 h-0.5 bg-brand-red mx-auto mb-6 fade-up-item stagger-1" aria-hidden="true" />
           <h2 className="font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight mb-4 fade-up-item stagger-2">
-            Ready to get on shelves?
+            {settings.articleCtaHeadline ?? 'Ready to get on shelves?'}
           </h2>
           <p className="font-barlow text-brand-silver text-body leading-relaxed max-w-xl mx-auto mb-8 fade-up-item stagger-3">
-            Book a free 30-minute strategy call. We&rsquo;ll audit your brand for retail readiness and
-            map out the right retailer targets for your category.
+            {settings.articleCtaBody ??
+              'Book a free 30-minute strategy call. We’ll audit your brand for retail readiness and map out the right retailer targets for your category.'}
           </p>
           <div className="fade-up-item stagger-4">
             <Link
-              href="/#contact"
+              href={settings.calendarUrl || '/#contact'}
+              {...(/^https?:\/\//.test(settings.calendarUrl ?? '')
+                ? { target: '_blank', rel: 'noopener noreferrer' }
+                : {})}
               className="inline-block bg-brand-red font-barlow font-bold text-white text-label tracking-widest uppercase px-10 py-4 hover:bg-brand-alabaster hover:text-brand-jet-black transition-colors"
             >
-              Book a Strategy Call
+              {settings.articleCtaButton ?? 'Book a Strategy Call'}
             </Link>
           </div>
         </AnimateIn>

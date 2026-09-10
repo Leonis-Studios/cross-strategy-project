@@ -61,13 +61,10 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
               <details
                 key={item._id}
                 className={`group fade-up-item ${stagger} px-6 py-5 md:px-8`}
-                itemScope
-                itemType="https://schema.org/Question"
                 {...(i === 0 ? { open: true } : {})}
               >
                 <summary
                   className="flex items-center justify-between gap-4 cursor-pointer list-none font-barlow font-bold text-brand-jet-black text-subheadline leading-snug marker:content-none [&::-webkit-details-marker]:hidden"
-                  itemProp="name"
                 >
                   <span>{item.question}</span>
                   <span
@@ -77,18 +74,9 @@ export default function FAQ({ faqs = FALLBACK_FAQS, section }: FAQProps) {
                     +
                   </span>
                 </summary>
-                <div
-                  itemScope
-                  itemType="https://schema.org/Answer"
-                  itemProp="acceptedAnswer"
-                >
-                  <p
-                    className="font-barlow text-brand-dim-grey text-label leading-relaxed mt-4"
-                    itemProp="text"
-                  >
-                    {item.answer}
-                  </p>
-                </div>
+                <p className="font-barlow text-brand-dim-grey text-label leading-relaxed mt-4">
+                  {item.answer}
+                </p>
               </details>
             )
           })}

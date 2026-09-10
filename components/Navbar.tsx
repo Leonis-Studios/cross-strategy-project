@@ -13,10 +13,13 @@ const NAV_LINKS = [
 
 interface NavbarProps {
   logoText?: string
+  calendarUrl?: string
 }
 
-export default function Navbar({ logoText = "[Owner Name]" }: NavbarProps) {
+export default function Navbar({ logoText = "[Owner Name]", calendarUrl }: NavbarProps) {
   const [open, setOpen] = useState(false);
+  const bookHref = calendarUrl || "/#contact";
+  const bookIsExternal = /^https?:\/\//.test(bookHref);
 
   return (
     <header className="bg-brand-jet-black border-b border-brand-dim-grey sticky top-0 z-50">
@@ -36,20 +39,21 @@ export default function Navbar({ logoText = "[Owner Name]" }: NavbarProps) {
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="font-barlow font-semibold text-brand-silver hover:text-brand-alabaster transition-colors duration-200 text-label"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="/#contact"
+          <Link
+            href={bookHref}
+            {...(bookIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             className="font-barlow font-bold text-brand-alabaster bg-brand-red px-5 py-2 hover:opacity-90 transition-opacity duration-200 text-label"
           >
             Book a Call
-          </a>
+          </Link>
         </div>
 
         {/* Mobile hamburger */}
@@ -75,22 +79,23 @@ export default function Navbar({ logoText = "[Owner Name]" }: NavbarProps) {
       {open && (
         <div className="md:hidden bg-brand-jet-black border-t border-brand-dim-grey px-6 pb-6 flex flex-col gap-4">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               className="font-barlow font-semibold text-brand-silver hover:text-brand-alabaster transition-colors duration-200 text-label py-2"
               onClick={() => setOpen(false)}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a
-            href="/#contact"
+          <Link
+            href={bookHref}
+            {...(bookIsExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
             className="font-barlow font-bold text-brand-alabaster bg-brand-red px-5 py-3 hover:opacity-90 transition-opacity duration-200 text-label text-center"
             onClick={() => setOpen(false)}
           >
             Book a Call
-          </a>
+          </Link>
         </div>
       )}
     </header>

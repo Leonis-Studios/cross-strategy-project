@@ -10,7 +10,10 @@ import { FALLBACK_ABOUT_PAGE } from '@/lib/fallbacks'
 import ContactForm from '@/components/ContactForm'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-import { SITE_URL } from '@/lib/site'
+import { SITE_URL, DEFAULT_OG_IMAGE, metaDescription } from '@/lib/site'
+
+// Sanity's webhook revalidates on publish; this is the safety net if it misfires.
+export const revalidate = 3600
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = stegaClean((await client.fetch<AboutPageData>(aboutPageQuery)) ?? FALLBACK_ABOUT_PAGE)
@@ -18,12 +21,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const seo = data.seo ?? {}
 
   const title = seo.title ?? `About ${ownerName} | Retail Placement Consultant`
+  // seo.description falls back to the full bio in GROQ, which runs far past what
+  // search results and social cards show — trim it here.
   const description =
-    seo.description ??
+    metaDescription(seo.description) ??
     `${ownerName} has placed 240+ Amazon and DTC brands on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors — generating over $180M in retail revenue.`
   const ogImageUrl = seo.ogImage
     ? urlFor(seo.ogImage).width(1200).height(630).fit('crop').auto('format').url()
-    : undefined
+    : DEFAULT_OG_IMAGE.url
 
   return {
     title,
@@ -34,15 +39,13 @@ export async function generateMetadata(): Promise<Metadata> {
       url: `${SITE_URL}/about`,
       title,
       description,
-      ...(ogImageUrl
-        ? { images: [{ url: ogImageUrl, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }] }
-        : {}),
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
+      images: [ogImageUrl],
     },
     robots: seo.noindex ? { index: false, follow: false } : undefined,
   }

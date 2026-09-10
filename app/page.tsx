@@ -4,6 +4,7 @@ import { sanityFetch } from '@/sanity/lib/live'
 import { client } from '@/sanity/lib/client'
 import { urlFor } from '@/sanity/lib/image'
 import { homePageQuery, siteSettingsQuery } from '@/sanity/lib/queries'
+import { SITE_URL, DEFAULT_OG_IMAGE, metaDescription } from '@/lib/site'
 import type { HomePageData, SiteSettingsData } from '@/sanity/types'
 import Hero from '@/components/Hero'
 import SocialProof from '@/components/SocialProof'
@@ -36,6 +37,9 @@ import {
   FALLBACK_CONTACT_SECTION,
 } from '@/lib/fallbacks'
 
+// Sanity's webhook revalidates on publish; this is the safety net if it misfires.
+export const revalidate = 3600
+
 export async function generateMetadata(): Promise<Metadata> {
   const [homeData, settings] = await Promise.all([
     client.fetch<HomePageData>(homePageQuery).then(stegaClean),
@@ -46,11 +50,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
   const title = seo.title ?? `${ownerName} — Retail Placement Consultant | Amazon & DTC to Shelf`
   const description =
-    seo.description ??
+    metaDescription(seo.description) ??
     'I help Amazon and DTC sellers get their products on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors. Book a strategy call.'
   const ogImageUrl = seo.ogImage
     ? urlFor(seo.ogImage).width(1200).height(630).fit('crop').auto('format').url()
-    : undefined
+    : DEFAULT_OG_IMAGE.url
 
   return {
     title,
@@ -58,17 +62,16 @@ export async function generateMetadata(): Promise<Metadata> {
     alternates: { canonical: seo.canonical || '/' },
     openGraph: {
       type: 'website',
+      url: SITE_URL,
       title,
       description,
-      ...(ogImageUrl
-        ? { images: [{ url: ogImageUrl, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }] }
-        : {}),
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: seo.ogImage?.alt ?? title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      ...(ogImageUrl ? { images: [ogImageUrl] } : {}),
+      images: [ogImageUrl],
     },
     robots: seo.noindex ? { index: false, follow: false } : undefined,
   }

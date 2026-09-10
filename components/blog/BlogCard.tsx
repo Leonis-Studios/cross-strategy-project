@@ -44,6 +44,7 @@ export default function BlogCard({ post, variant = 'grid', index }: Props) {
             alt={(post.coverImage as { alt?: string })?.alt ?? post.title}
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
+            priority
             className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
           />
         ) : null}
