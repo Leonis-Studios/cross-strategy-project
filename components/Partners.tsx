@@ -22,8 +22,13 @@ function SplitHeadline({ headline, accent, className }: { headline: string; acce
   )
 }
 
-export default function Partners({ partners = FALLBACK_PARTNERS, section = FALLBACK_PARTNERS_SECTION }: PartnersProps) {
+export default function Partners({ partners = FALLBACK_PARTNERS, section }: PartnersProps) {
   if (!partners.length) return null
+
+  const eyebrow       = section?.partnersEyebrow       ?? FALLBACK_PARTNERS_SECTION.partnersEyebrow
+  const headline       = section?.partnersHeadline       ?? FALLBACK_PARTNERS_SECTION.partnersHeadline
+  const headlineAccent = section?.partnersHeadlineAccent ?? FALLBACK_PARTNERS_SECTION.partnersHeadlineAccent
+  const subheadline     = section?.partnersSubheadline     ?? FALLBACK_PARTNERS_SECTION.partnersSubheadline
 
   return (
     <section
@@ -34,26 +39,26 @@ export default function Partners({ partners = FALLBACK_PARTNERS, section = FALLB
       <AnimateIn className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-16">
-          {section.partnersEyebrow && (
+          {eyebrow && (
             <p className="fade-up-item stagger-1 small-caps font-barlow font-bold text-brand-dim-grey tracking-widest text-label">
-              {section.partnersEyebrow}
+              {eyebrow}
             </p>
           )}
           <div className="w-12 h-0.5 bg-brand-red mx-auto mt-3 mb-6" aria-hidden="true" />
           <SplitHeadline
-            headline={section.partnersHeadline ?? ''}
-            accent={section.partnersHeadlineAccent}
+            headline={headline ?? ''}
+            accent={headlineAccent}
             className="fade-up-item stagger-2 font-playfair text-display-sm md:text-display-md text-brand-alabaster leading-tight max-w-2xl mx-auto"
           />
-          {section.partnersSubheadline && (
+          {subheadline && (
             <p className="fade-up-item stagger-3 font-barlow text-brand-silver text-body mt-6 max-w-xl mx-auto leading-relaxed">
-              {section.partnersSubheadline}
+              {subheadline}
             </p>
           )}
         </div>
 
-        {/* Partner cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Partner cards — auto-fit grid so any number of cards lays out cleanly */}
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(270px,320px))] justify-center gap-6">
           {partners.map((partner, i) => {
             const stagger = ['stagger-2', 'stagger-3', 'stagger-4', 'stagger-5'][i % 4]
             const logoUrl = partner.logo
@@ -63,39 +68,60 @@ export default function Partners({ partners = FALLBACK_PARTNERS, section = FALLB
             return (
               <article
                 key={partner._id}
-                className={`fade-up-item ${stagger} group flex flex-col items-center text-center bg-white border-t-2 border-t-brand-red p-8 shadow-box transition-all duration-200 hover:-translate-y-1`}
+                className={`fade-up-item ${stagger} group relative flex flex-col bg-white border-t-4 border-t-brand-red shadow-box transition-all duration-200 hover:-translate-y-1 hover:shadow-[8px_8px_0px_#ef2626]`}
               >
-                <div className="h-14 flex items-center justify-center mb-6">
-                  {logoUrl ? (
-                    <Image
-                      src={logoUrl}
-                      alt={(partner.logo as { alt?: string })?.alt ?? partner.name}
-                      width={160}
-                      height={56}
-                      className="max-h-14 w-auto object-contain"
-                    />
-                  ) : (
-                    <span className="font-playfair text-subheadline text-brand-jet-black">
-                      {partner.name}
-                    </span>
-                  )}
+                {/* Tag header strip */}
+                <div className="flex items-center justify-between px-6 pt-5">
+                  <span className="font-barlow font-bold text-[10px] tracking-[0.2em] uppercase text-brand-dim-grey">
+                    Partner
+                  </span>
+                  <span className="w-1.5 h-1.5 bg-brand-red" aria-hidden="true" />
                 </div>
 
-                {logoUrl && (
-                  <h3 className="font-barlow font-bold text-brand-jet-black text-label tracking-wide mb-3">
-                    {partner.name}
-                  </h3>
-                )}
+                <div className="flex flex-col items-center text-center px-7 pt-5 flex-1">
+                  {/* Logo window, styled like a shelf-tag label */}
+                  <div className="w-full h-16 flex items-center justify-center mb-5 bg-brand-alabaster/50 border border-dashed border-brand-dim-grey/40 px-4 py-2">
+                    {logoUrl ? (
+                      <Image
+                        src={logoUrl}
+                        alt={(partner.logo as { alt?: string })?.alt ?? partner.name}
+                        width={160}
+                        height={56}
+                        className="max-h-12 w-auto object-contain"
+                      />
+                    ) : (
+                      <span className="font-playfair text-subheadline text-brand-jet-black">
+                        {partner.name}
+                      </span>
+                    )}
+                  </div>
 
-                <p className="font-barlow text-brand-dim-grey text-label leading-relaxed mb-8">
-                  {partner.blurb}
-                </p>
+                  {logoUrl && (
+                    <h3 className="font-barlow font-bold text-brand-jet-black text-label tracking-wide mb-3">
+                      {partner.name}
+                    </h3>
+                  )}
+
+                  <p className="font-barlow text-brand-dim-grey text-label leading-relaxed mb-6">
+                    {partner.blurb}
+                  </p>
+                </div>
+
+                {/* Barcode flourish */}
+                <div
+                  className="h-3 mx-7 mb-5 opacity-60"
+                  style={{
+                    backgroundImage:
+                      'repeating-linear-gradient(90deg, #1a1a1a 0px, #1a1a1a 2px, transparent 2px, transparent 4px, #1a1a1a 4px, #1a1a1a 5px, transparent 5px, transparent 8px)',
+                  }}
+                  aria-hidden="true"
+                />
 
                 <a
                   href={partner.websiteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto font-barlow font-bold text-brand-alabaster bg-brand-jet-black px-6 py-3 group-hover:bg-brand-red transition-colors duration-200 text-label"
+                  className="font-barlow font-bold text-brand-alabaster bg-brand-jet-black px-6 py-3 text-center group-hover:bg-brand-red transition-colors duration-200 text-label"
                 >
                   {partner.buttonLabel || 'Visit Website'} →
                 </a>

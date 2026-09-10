@@ -175,6 +175,7 @@ export default async function Home() {
       <FAQ faqs={faqs} section={faqSection} />
       <SectionDivider from="light" to="dark" />
       <Partners partners={partners} section={partnersSection} />
+      <SectionDivider from="dark" to="dark" />
       <ContactForm section={contactSection} />
     </main>
   )
