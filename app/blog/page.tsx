@@ -9,15 +9,19 @@ import BlogSearch from '@/components/blog/BlogSearch'
 import MediaMosaic from '@/components/blog/MediaMosaic'
 import JsonLd from '@/components/JsonLd'
 import AnimateIn from '@/components/AnimateIn'
-import { SITE_URL } from '@/lib/site'
+import { SITE_URL, DEFAULT_OG_IMAGE, metaDescription } from '@/lib/site'
 import { getYouTubeId, getYouTubeThumbnail } from '@/lib/youtube'
+
+// Sanity's webhook revalidates on publish; this is the safety net if it misfires.
+export const revalidate = 3600
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? 'CrossStrat'
 
   const description =
-    'Tactics, frameworks, and firsthand insights on getting Amazon and DTC brands onto shelves at Walmart, Target, Whole Foods, and beyond. Written by someone who has done it 240+ times.'
+    metaDescription(settings.blogSeoDescription) ??
+    'Tactics, frameworks, and firsthand insights on getting Amazon and DTC brands onto retail shelves at Walmart, Target, Whole Foods, and beyond.'
 
   return {
     title: `Retail Insights Content | ${ownerName} — Retail Placement Consultant`,
@@ -31,11 +35,13 @@ export async function generateMetadata(): Promise<Metadata> {
       url: `${SITE_URL}/blog`,
       title: `Retail Insights Content | ${ownerName}`,
       description,
+      images: [{ ...DEFAULT_OG_IMAGE, alt: `Retail Insights — ${ownerName}` }],
     },
     twitter: {
       card: 'summary_large_image',
       title: `Retail Insights Content | ${ownerName}`,
       description,
+      images: [DEFAULT_OG_IMAGE.url],
     },
   }
 }
@@ -138,15 +144,15 @@ export default async function BlogPage() {
       >
         <AnimateIn className="max-w-7xl mx-auto">
           <p className="font-barlow font-bold text-brand-dim-grey tracking-widest text-xs uppercase mb-4 fade-up-item stagger-1">
-            Retail Insights
+            {settings.blogEyebrow ?? 'Retail Insights'}
           </p>
           <h1 className="font-playfair text-display-lg md:text-display-xl leading-none mb-5 fade-up-item stagger-2">
-            <span className="text-brand-red">The</span>
-            <span className="text-brand-alabaster"> Content</span>
+            <span className="text-brand-red">{settings.blogHeadline ?? 'The'}</span>
+            <span className="text-brand-alabaster"> {settings.blogHeadlineAccent ?? 'Content'}</span>
           </h1>
           <p className="font-barlow text-brand-silver text-body max-w-2xl leading-relaxed fade-up-item stagger-3">
-            Tactics, frameworks, and firsthand insights on getting consumer brands into major retail
-            chains — written by someone who has done it 240+ times.
+            {settings.blogSubheadline ??
+              'Tactics, frameworks, and firsthand insights on getting consumer brands into major retail chains — written by someone who has done it 240+ times.'}
           </p>
         </AnimateIn>
       </section>

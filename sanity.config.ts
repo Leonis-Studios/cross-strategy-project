@@ -5,6 +5,7 @@ import { defineLocations, presentationTool } from 'sanity/presentation'
 import {
   homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost, mosaicItem,
   hero, cta, testimonial, metric, benefit, feature, howItWorksStep, faq, credential, retailer,
+  partner,
 } from './sanity/schemas'
 import { structure } from './sanity/structure'
 
@@ -105,6 +106,7 @@ export default defineConfig({
     types: [
       homePage, siteSettings, seo, aboutPage, blogCategory, blogTag, blogPost, mosaicItem,
       hero, cta, testimonial, metric, benefit, feature, howItWorksStep, faq, credential, retailer,
+      partner,
     ],
   },
 })

@@ -4,6 +4,8 @@ import { blogFeedQuery, siteSettingsQuery } from '@/sanity/lib/queries'
 import type { SiteSettingsData } from '@/sanity/types'
 import { SITE_URL } from '@/lib/site'
 
+export const revalidate = 3600
+
 interface FeedPost {
   title: string
   slug: string

@@ -27,8 +27,6 @@ const barlow = Barlow({
   display: 'swap',
 })
 
-const OG_IMAGE = `${SITE_URL}/og-image.png`  // TODO: add 1200×630 og-image.png to /public
-
 export async function generateMetadata(): Promise<Metadata> {
   const settings: SiteSettingsData = stegaClean((await client.fetch(siteSettingsQuery)) ?? {})
   const ownerName = settings.ownerName ?? '[Owner Name]'
@@ -51,14 +49,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${ownerName} — Retail Placement Consultant | Amazon & DTC to Shelf`,
       description:
         'I help Amazon and DTC sellers get their products on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors. Book a strategy call.',
-      images: [
-        {
-          url: OG_IMAGE,
-          width: 1200,
-          height: 630,
-          alt: `${ownerName} — Retail Placement Consultant`,
-        },
-      ],
       locale: 'en_US',
     },
     twitter: {
@@ -66,7 +56,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${ownerName} — Retail Placement Consultant | Amazon & DTC to Shelf`,
       description:
         'I help Amazon and DTC sellers get their products on shelves at Walmart, Target, Whole Foods, and 1,200+ retail doors.',
-      images: [OG_IMAGE],
     },
     robots: {
       index: true,
@@ -179,7 +168,7 @@ export default async function RootLayout({
         <JsonLd schema={websiteSchema} />
         <JsonLd schema={organizationSchema} />
         <JsonLd schema={serviceSchema} />
-        <Navbar logoText={logoText} />
+        <Navbar logoText={logoText} calendarUrl={settings.calendarUrl} />
         <div className="flex-1">
           {children}
         </div>

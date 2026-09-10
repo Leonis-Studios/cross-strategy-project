@@ -107,13 +107,24 @@ export const aboutPageQuery = groq`
   }
 `
 
+export const contactEmailQuery = groq`*[_type == "siteSettings"][0].contactEmail`
+
 export const siteSettingsQuery = groq`
   *[_type == "siteSettings"][0] {
     ownerName,
     ownerTitle,
     logoText,
     calendarUrl,
+    contactEmail,
     footerTagline,
+    blogEyebrow,
+    blogHeadline,
+    blogHeadlineAccent,
+    blogSubheadline,
+    blogSeoDescription,
+    articleCtaHeadline,
+    articleCtaBody,
+    articleCtaButton,
     mosaicEyebrow,
     mosaicHeadline,
     mosaicHeadlineAccent,
@@ -231,7 +242,7 @@ export const homePageQuery = groq`
     },
     "seo": *[_type == "homePage"][0] {
       "title": seo.title,
-      "description": coalesce(seo.description, hero.subheadline, hero.bioText),
+      "description": coalesce(seo.description, hero.bioText, hero.subheadline),
       "ogImage": coalesce(seo.ogImage, hero.image) { ..., alt },
       "canonical": seo.canonical,
       "noindex": coalesce(seo.noindex, false)

@@ -7,7 +7,10 @@ export const client = createClient({
   useCdn: process.env.NODE_ENV === 'production',
   token: process.env.SANITY_API_READ_TOKEN,
   stega: {
-    enabled: true,
+    // Off by default: direct client.fetch calls (metadata, sitemap, footer) must
+    // return clean strings. sanityFetch re-enables stega per-request in draft
+    // mode, so Presentation overlays still work — it needs studioUrl to do that.
+    enabled: false,
     studioUrl: '/studio',
   },
 })

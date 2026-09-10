@@ -33,7 +33,7 @@ export async function GET() {
     '',
     '## Pages',
     `- [Home](${SITE_URL}/): Retail placement consulting for Amazon and DTC brands seeking shelf space at major US retailers.`,
-    `- [About](${SITE_URL}/about): About ${ownerName}.`,
+    `- [About](${SITE_URL}/about): About ${ownerName.replace(/\.$/, '')}.`,
     `- [Blog](${SITE_URL}/blog): Retail insights, tactics, and frameworks.`,
     '',
     '## Blog Posts',

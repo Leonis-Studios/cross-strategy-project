@@ -172,7 +172,16 @@ export interface SiteSettingsData {
   ownerTitle?: string
   logoText?: string
   calendarUrl?: string
+  contactEmail?: string
   footerTagline?: string
+  blogEyebrow?: string
+  blogHeadline?: string
+  blogHeadlineAccent?: string
+  blogSubheadline?: string
+  blogSeoDescription?: string
+  articleCtaHeadline?: string
+  articleCtaBody?: string
+  articleCtaButton?: string
   mosaicEyebrow?: string
   mosaicHeadline?: string
   mosaicHeadlineAccent?: string
